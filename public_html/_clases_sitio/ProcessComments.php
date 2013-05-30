@@ -2,7 +2,8 @@
 
 class ProcessComments {
     
-        // devuelve todos los comentarios desde el pr_orden 1 hasta el anterior al pr_orden del tabla_proc actual
+    // devuelve todos los comentarios desde el pr_orden 1 hasta el anterior al pr_orden del tabla_proc actual
+    // esto hace tal y tal cosa
     public static function getAll($pr_proceso, $id_tabla_proc, $debug = 'n') {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
