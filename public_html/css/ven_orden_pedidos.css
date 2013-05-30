@@ -1,0 +1,300 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.block{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.inline{
+    display: inline-block;
+    line-height: 32px;
+    height: 32px;
+    margin-right: 15px;
+}
+
+#primerElement{
+    margin-top: 0px;
+}
+
+.padding10{
+    padding: 10px;
+}
+
+form #agregar{
+    padding: 5px;
+}
+
+form #agregar #boton{
+    float: right;
+}
+
+form .box-entrada{
+    padding: 0px;
+}
+
+form .box-entrada .cliente {
+    margin: 10px 0 0 20px;
+    float: left;
+
+}
+
+form .box-entrada .cliente label {
+    width: 100%;
+
+}
+
+form .box-entrada .cliente select {
+    margin: 10px 0 0 0;
+    width: 400px;
+
+}
+
+form .box-entrada .pais {
+    /*margin: 10px 0 0 10px;*/
+    width: 300px;
+}
+
+form .box-entrada .pais label {
+    width: 100%;
+
+}
+
+form .box-entrada .pais select {
+    margin: 10px 0 0 20px;
+    width: 270px;
+}
+
+form .box-entrada .direccion {
+    /*margin: 10px 0 0 10px;*/
+
+}
+
+form .box-entrada .direccion label {
+    width: 100%;
+
+}
+
+form .box-entrada .direccion select {
+    margin: 10px 0 0 20px;
+    width: 270px;
+
+}
+
+form .box-entrada .observaciones label {
+    float:left;
+    margin-left: 10px;
+
+}
+
+form .box-entrada .observaciones textarea {
+    float:left;
+    width: 570px;
+    height: 60px;
+    margin-left: 10px;
+}
+
+form .box-entrada input.agregar_observaciones {
+    margin: 20px 45px 20px 0;
+    float: right;
+    width: 200px;
+    color: #4685CA;
+}
+
+.tableTitle{
+    background-color: #4685CA;
+}
+
+.referencia, .producto{
+    width: 100px;
+}
+
+
+table #tituloTabla td{
+    text-align: center;
+    padding-left: 5px;
+    padding: 5px;
+}
+form table td input{
+    border: 1px solid rgb(70, 133, 202);
+    border-radius: 5px 5px 5px 5px;
+    color: rgb(119, 133, 142);
+    font-size: 16px;
+    height: 30px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+
+#enviar{
+    margin: 0px 0px 20px 0px;
+    float: right;
+}
+
+.box-entrada .izq {
+    float: left;
+    width: 300px;
+}
+
+.box-entrada .der {
+    float: right;
+    width: 300px;
+    margin: 0 40px 0 0;
+}
+
+
+.box-entrada .pais, .box-entrada .direccion {
+    display: inline-block;
+    width: 300px;
+}
+
+.box-entrada .pais label, .box-entrada .direccion label{
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .pais select, .box-entrada .direccion select, .box-entrada .pais input, .box-entrada .direccion input{
+    width: 270px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+.box-entrada .referencia {
+    float: left;
+    width: 300px;
+}
+
+.box-entrada .referencia label {
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .referencia select {
+    width: 270px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+.box-entrada .producto {
+    float: left;
+    width: 300px;
+}
+
+.box-entrada .producto label {
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .producto select {
+    width: 270px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+
+.box-entrada .cantidad , .box-entrada .precio {
+    float: left;
+    width: 120px;
+}
+
+.box-entrada .cantidad label, .box-entrada .precio label {
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .cantidad input, .box-entrada .precio input {
+    width: 100px;
+    margin: 10px 0 0 20px;
+}
+
+form.box-entrada .box-entrada .agregar_gasto {
+    float: right;
+    margin: 36px 30px 30px 190px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;  
+    font-size: 13px;
+    width: 100px;
+    font-size: 16px;
+    height: 30px;
+    /*background-color: #77858e;*/
+    /*padding: 0 0 0 2px;*/
+}
+
+.box-entrada .box-entrada .archivo {
+    float: left;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.archivo label{
+    margin-bottom: 10px;
+}
+
+.box-entrada .box-entrada .archivos {
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-left: 20px;
+}
+
+.box-entrada .box-entrada .archivos .file {
+    width: 100%;
+}
+
+.box-entrada .box-entrada .archivos a.file_name {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.file_name span {
+
+}
+
+.box-entrada .box-entrada .archivos a.del_file {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.del_file img {
+
+}
+
+/*PARA LOS COMENTARIOS*/
+
+form .box-entrada .archivo span {
+    margin: 10px 0 10px 10px;
+    width: 100%;
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.datoComent{
+    display: inline-block;
+    min-width: 150px;
+}
+
+.coment{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.box-entrada .paisComent, .box-entrada .direccionComent {
+    display: inline-block;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.box-entrada .paisComent label, .box-entrada .direccionComent label{
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .paisComent select, .box-entrada .direccionComent select, .box-entrada .paisComent input, .box-entrada .direccionComent input{
+    width: 270px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+
+

@@ -1,0 +1,138 @@
+<link href="css/ger_planificacion_gastos.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/ger_planificacion_gastos/abm-search.js"></script>
+<script type="text/javascript" src="js/meio.mask.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    // call setMask function on the document.ready event
+    jQuery(function($) {
+        $('input[name="monto"]').setMask();
+        $.mask.masks.decimal = {mask : '99,999999', type : 'reverse', defaultValue: '000'}
+        $('input[name="monto"]').setMask();
+        $.mask.masks = $.extend($.mask.masks, {decimal: { mask: '999' }});
+    });
+</script>
+
+
+
+<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+<div id="fondoCatalogo" style="background:url(img/fondos/bg_cuenta.jpg) center top repeat-y;">
+    <div class="ger_planificacion_gastos" id="proc-{$id_proces}"> <!-- lo uso para ver el id del proceso -->
+        <div class="flash_error"></div> <!-- estos van a saltar por AJAX -->
+        <div class="flash_notice"></div>
+        {if $flash_error != '' }
+            <div class="disp_error"> {$flash_error} </div> <!-- estos vienen del controlador -->                    
+        {/if}
+        {if $flash_notice != '' }
+            <div class="disp_notice"> {$flash_notice} </div> <!-- estos vienen del controlador -->                    
+        {/if}
+        {template tpl="menu_izq"}
+        <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
+            <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
+            <hr />
+            <h1 class="azul bold"><span class="txt22 normal">Gerencia</span> | Planificación de Gastos</h1>
+            <hr />
+            <p class="txt10 uppercase">Fecha de inicio del trámite: <span class="azul">10/19/2012</span></p>
+            <hr />
+            <p>Empleado: <span class="azul">Gabriel Pujol</span></p>
+            <p>
+                Monto: <span class="monto_total azul">{$suma_de_montos[0][MontoTot]}</span>
+            </p>
+            <form class="box-entrada" name="add_observaciones" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
+                <div class="box-entrada" height="40" bgcolor="#D2E1F2">
+                    <div class="observaciones">
+                        <label> Observaciones: </label>
+                        <textarea name="observaciones" rows="2">{$observaciones[0][observaciones]}</textarea>
+                    </div>
+                    <input name="id_tabla" type="hidden" value="{$id_tabla}" />
+                    <input name="id_proccess" type="hidden" value="{$id_proces}" />
+                    <input name="observacion" type="hidden" value="{$observaciones[0][observaciones]}" />
+                    <input name="new_observacion" type="hidden" value="{$new_observacion}" />
+                    {if $new_observacion == 'true' }
+                        <input name="agregar_observaciones" class="agregar_observaciones" type="submit" value="Agregar Observación" />
+                    {elseif $new_observacion == 'false'}
+                        <input name="modificar_observaciones" class="agregar_observaciones" type="submit" value="Modificar Observación" />
+                    {/if}
+                </div>
+            </form>
+            <hr />
+            <p class="azul txt18" style="margin:0px 0 10px 0;">Planilla de Gastos:</p>
+            <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
+                <tr>
+                    <td  width="100" bgcolor="#4685CA"><p class="blanco">Cuenta </p></td>
+                    <td  width="100" align="left" bgcolor="#4685CA"><p class="blanco">Descripción</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Proveedor</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Mes</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Monto</p></td>
+                    <td  width="42"  bgcolor="#4685CA"><p class="blanco">Acción</p></td>
+                </tr>
+
+                <!-- traigo de la base de datos, los hoteles cargados -->
+                {foreach item=gd from=$gast_detalles }
+                <tr id="id_gastos-{$$gd[id]}">
+                    <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
+                    <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
+                    <td> <span class="detalle">{$$gd[detalle]}</span> </td>
+                    <td> <span class="proveedor">{$$gd[proveedor]}</span> </td>
+                    <td> <span class="mes">{$$gd[mes]}</span> </td>
+                    <td> <span class="monto">{$$gd[monto]|number_format:2:",":""}</span> </td>
+                    <td>
+                        <a href="#">
+                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
+                        </a> 
+                        <a href="#">
+                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
+                        </a>
+                    </td>
+                </tr>
+                {/foreach}
+            </table>
+            <form class="box-entrada" name="add_hotel" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
+                <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
+                    <div class="izq">
+                        <div class="cuenta">
+                            <label> Cuenta: </label>
+                            <input name="cuenta" class="cuenta" type="text" value="{$cuenta}"  />
+                        </div>
+                        <div class="detalle">
+                            <label> Detalle: </label>
+                            <input name="detalle" class="detalle" type="text" value="{$detalle}" />
+                        </div>
+                        <div class="mes">
+                            <label> Mes: </label>
+                            <input name="mes" class="mes" type="text" value="{$mes}" />
+                        </div>
+                        <div class="monto">
+                            <label> Monto: </label>
+                            <input name="monto" id="decimal" class="monto" type="text" value="{$monto}" alt="decimal" />
+                        </div>
+                    </div>
+                    <div class="der">
+                        <div class="descripcion">
+                            <label> Descripción: </label>
+                            <input name="descripcion" class="descripcion" type="text" value="{$descripcion}" />
+                        </div>
+                        <div class="proveedor">
+                            <label> Proveedor: </label>
+                            <select name="proveedor" class="proveedor">
+                                    {foreach item=pr from=$proveedores}
+                                        <option value="{$$pr[id]}" {if $$pr['id'] == $proveedor } selected {/if}> {$$pr[nombre]} </option>
+                                    {/foreach}    
+                            </select>
+                            <!-- <input name="proveedor" class="proveedor" type="text" /> -->
+                        </div>
+                        <input name="id_proccess" type="hidden" value="{$id_proces}" />
+                        <input name="agregar_gasto" class="agregar_gasto" type="submit" value="Agregar" />
+                    </div>
+                </div>
+            </form>
+            <div class="enviar_proceso">
+                <a class="enviar" href="/enviado.html">Enviar al siguiente Paso</a>
+                <!-- <button class="enviar" type="button">Enviar al siguiente Paso</button> -->
+            </div>
+            
+        </div>
+    </div>
+    <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
+    <br style="clear:both;" />
+</div>
+

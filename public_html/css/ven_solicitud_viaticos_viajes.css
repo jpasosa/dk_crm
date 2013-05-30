@@ -1,0 +1,179 @@
+/*.campo.start_date {
+    width: 120px;
+    text-align: center;
+}
+.campo.end_date {
+    width: 120px;
+    text-align: center;
+    margin: 5px 0 0 37px;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+form.box-entrada {
+    
+}
+
+.box-entrada {
+    
+}
+
+.box-entrada .referencia {
+    float: left;
+    width: 200px;
+}
+
+.box-entrada .referencia label {
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .referencia select {
+    width: 180px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+.box-entrada .detalle {
+    float: left;
+    width: 400px;
+}
+
+.box-entrada .detalle label {
+   float: left;
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .detalle input {
+    width: 370px;
+    margin: 10px 0 0 20px;
+}
+
+
+.box-entrada .monto {
+    float: left;
+    width: 150px;
+    margin: 0 0 0 270px;
+}
+
+.box-entrada .monto label {
+    float: left;
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .monto input {
+    width: 100px;
+    margin: 10px 0 0 20px;
+}
+
+form.box-entrada .box-entrada .agregar_ref {
+    /*background-color: #77858e;*/
+    /*padding: 0 0 0 2px;*/
+    border-radius: 5px 5px 5px 5px;
+    border: 1px solid #4685CA;
+    color: #4685CA;  
+    float: left;
+    font-size: 13px;
+    font-size: 16px;
+    height: 30px;
+    margin: 34px 0 20px 25px;
+    width: 150px;
+}
+
+
+
+
+
+
+
+
+
+
+.box-entrada .fecha_inicio {
+    float: left;
+    width: 300px;
+    margin: 0 0 0 40px;
+}
+
+.box-entrada .fecha_inicio label {
+   float: left;
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .fecha_inicio input {
+    width: 210px;
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .fecha_fin {
+    float: left;
+    width: 300px;
+}
+
+.box-entrada .fecha_fin label {
+   float: left;
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .fecha_fin input {
+    width: 210px;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .observaciones {
+    float:left;
+    margin: 0 0 0 40px;
+}
+
+form .box-entrada .observaciones label {
+    float:left;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .observaciones textarea {
+    float:left;
+    width: 510px;
+    margin: 10px 0 0 20px;
+    height: 60px;
+}
+
+form .box-entrada input.agregar_fechas {
+    margin: 20px 65px 20px 0;
+    float: right;
+    width: 100px;
+    color: #4685CA;
+}
+
+
+.box-entrada .cliente {
+    float: left;
+    width: 200px;
+}
+
+.box-entrada .cliente label {
+    margin: 10px 0 0 20px;
+}
+
+.box-entrada .cliente select {
+    width: 370px;
+    margin: 10px 0 20px 20px;
+    background-color: #FFFFFF;
+}
+
+form .box-entrada input.agregar_cliente {
+    margin: 33px 65px 20px 0;
+    float: right;
+    width: 130px;
+    color: #4685CA;
+}
+
+
+
+

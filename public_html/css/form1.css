@@ -1,0 +1,73 @@
+select.client {
+    float: left;
+    margin: 0 0 0 180px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;
+    width: 300px;
+    font-size: 13px;
+}
+
+
+
+button.add_client {
+    float: right;
+    margin: 0 20px 0 0;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;  
+    font-size: 13px;
+}
+
+select.referencias {
+    float: left;
+    margin: 2px 0 0 0;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;
+    width: 140px;
+    font-size: 13px;
+}
+
+input.detalle {
+    float: left;
+    margin: 2px 0 0 10px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;
+    width: 320px;
+    font-size: 13px;
+}
+
+input.monto {
+    float: left;
+    margin: 2px 0 0 10px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;
+    width: 90px;
+    font-size: 13px;
+}
+
+button.add_ref {
+    float: left;
+    margin: 2px 0 0 10px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;  
+    font-size: 13px;
+    width: 40px;
+}
+
+.campo.start_date {
+    width: 120px;
+    text-align: center;
+}
+.campo.end_date {
+    width: 120px;
+    text-align: center;
+    margin: 5px 0 0 37px;
+}
+
+
+

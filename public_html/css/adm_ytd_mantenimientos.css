@@ -1,0 +1,176 @@
+
+.box-entrada .box-entrada .asunto {
+    width: 100%;
+}
+
+.box-entrada .box-entrada .asunto label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .asunto input {
+    margin: 10px 0 0 10px;
+    width: 600px;
+}
+
+.box-entrada .box-entrada .observaciones {
+    width: 100%;  
+}
+
+.box-entrada .box-entrada .observaciones label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .observaciones textarea {
+    margin: 10px 0 0 10px;
+    width: 600px;
+    height: 60px;
+}
+
+.box-entrada .box-entrada .fecha_inicio {
+    float: left;
+    width: 200px;
+}
+
+.box-entrada .box-entrada .fecha_inicio label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .fecha_inicio input {
+    margin: 10px 0 0 10px;
+    width: 180px;
+}
+
+.box-entrada .box-entrada .x_tiempo {
+    float: left;
+    width: 100px;
+}
+
+.box-entrada .box-entrada .x_tiempo label {
+    margin: 10px 0 0 40px;
+}
+
+.box-entrada .box-entrada .x_tiempo input {
+    margin: 10px 0 0 40px;
+    width: 50px;
+}
+
+.box-entrada .box-entrada .periodicidad {
+    float:left;
+    width: 300px;
+}
+
+.box-entrada .box-entrada .periodicidad label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .periodicidad select.periodicidad {
+    margin: 10px 0 0 10px;
+    width: 300px;
+}
+
+.box-entrada .box-entrada .periodicidad select.periodicidad option {
+    
+}
+
+.box-entrada .box-entrada .archivo {
+    float: left;
+    width: 350px;
+}
+
+.box-entrada .box-entrada .archivo label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .archivo input {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada input.subir_archivo {
+    float: left;
+    margin: 33px 50px 0 0;
+}
+
+.box-entrada .box-entrada input.agregar_mantenimiento {
+    float:right;
+    margin: 50px 35px 20px 0;
+}
+
+
+.box-entrada .box-entrada .archivos {
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .archivos .file {
+    width: 100%;
+}
+
+.box-entrada .box-entrada .archivos a.file_name {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.file_name span {
+
+}
+
+.box-entrada .box-entrada .archivos a.del_file {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.del_file img {
+
+}
+
+
+
+/*PARA LOS COMENTARIOS*/
+
+form .box-entrada .archivo span {
+    margin: 10px 0 10px 10px;
+    width: 100%;
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+form .box-entrada .periodicidad input.periodicidad {
+    margin: 10px 0 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,983 @@
+/* Estilos default ==================================================== */ 
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	/* Textos default */
+	font-size:14px;
+	font-weight:normal;
+	color:#4b4b4b;
+	background:url(../img/fondos/bg_body.gif) center top no-repeat #2da1dc;
+	font-family:Arial, Helvetica, sans-serif;
+}
+/* Links */
+a, a:visited, a:active {
+	text-decoration: none;
+	border:none;
+	outline:none;
+}
+a:hover {
+	text-decoration: none;
+	border:none;
+	outline:none;
+}
+.centrado {
+	margin:0 auto;
+	text-align:center;
+}
+hr.celeste {
+	border:none;
+	border-top:1px solid #3290B4;
+	color:#ccc;
+	background-color:#A1DFF7;
+	height:2px;
+	margin:8px 0 9px 0;
+	_margin:4px 0; //margin:1px 0;
+}
+hr {
+	border:none;
+	border-top:1px solid #bfe2f4;
+	color:#ccc;
+	background-color:#fff;
+	height:2px;
+	margin:16px 0 19px 0;
+	_margin:8px 0; //margin:4px 0;
+}
+hr.punteado{
+	border:none;
+	border-top:1px dashed #1478AA;
+	/*color:#ccc;*/
+	background-color:#fff;
+	height:2px;
+	margin:8px 0 9px 0;
+	_margin:4px 0; //margin:1px 0;
+}
+/* Estilos de Body ====================================================================== */
+
+/* MENU SUPERIOR */
+body#Home #menuSuperior a.home, body#Empresa #menuSuperior a.empresa, body#RRHH #menuSuperior a.rrhh, body#Carrito #menuSuperior a.carrito, body#Pagos #menuSuperior a.formasdepago, body#Gastos #menuSuperior a.gastosdeenvio, body#Cuenta #menuSuperior a.micuenta, body#Contacto #menuSuperior a.contacto {
+	color:#FFFFFF;
+}
+
+
+/* Estilos de Head ====================================================================== */
+#head {
+	width:1022px;
+	position:relative;
+	height:157px;
+}
+#logo {
+	width:739px;
+	height:157px;
+	position:absolute;
+	z-index:100;
+	background:url(../img/logos/dreamkyds.png) left top no-repeat;
+}
+#logo a {
+	width:382px;
+	height:89px;
+	display:block;
+	margin:34px 0 0 22px;
+}
+#menuSuperior {
+	width:1012px;
+	height:23px;
+	position:absolute;
+	top:0px;
+	right:0px;
+	text-align:right;
+	background:url(../img/fondos/bg_menu_superior.png) right top no-repeat;
+	z-index:200;
+	color:#a8dcf6;
+	padding-top:5px;
+	padding-right:10px;
+}
+#menuSuperior a {
+	font-size:13px;
+	font-weight:bold;
+	color:#a8dcf6;
+	margin:0 4px;
+}
+#menuSuperior a:hover {
+	color:#FFFFFF;
+}
+#headLogin {
+	width:227px;
+	height:104px;
+	padding:8px 10px;
+	position:absolute;
+	top:36px;
+	right:14px;
+	background-color:#59B5E3;
+	z-index:200;
+}
+a#logout {
+	float: right;
+	color: #FFFFFF;
+	font-size: 11px;
+	text-decoration: none;
+	margin: 20px 20px 0 0;
+}
+a#logout:hover {
+	text-decoration: underline;
+}
+/* Estilos de Menu ====================================================================== */
+/* MAIN MENU */
+#mainMenu {
+	width:1022px;
+	height:70px;
+	z-index:100;
+	background:url(../img/fondos/bg_menu.jpg) center 10px repeat-x;
+	
+}
+#mainMenu ul {
+	list-style:none;
+	height:41px;
+	
+}
+#mainMenu ul li {
+	float:left;
+	height:41px;
+}
+#mainMenu ul li a {
+	font-size:13px;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding:13px 18px;
+	margin:0 2px;
+	display:block;
+	-webkit-border-top-right-radius:8px;
+	-webkit-border-top-left-radius:8px;
+	-moz-border-radius-topright: 8px;
+	-moz-border-radius-topleft: 8px;
+}
+#mainMenu ul li a:hover {
+	background:url(../img/fondos/bg_btn_hover.jpg) center top repeat-x !important;
+	color:#333;
+}
+#mainMenu ul li a.rojo {
+	background-color:#D60000;
+}
+#mainMenu ul li a.azul {
+	background-color:#167EB3;
+}
+#mainMenu #bandaColor {
+	width:100%;
+	height:33px;
+	
+}
+#mainMenu #bandaColor.rojo {
+	background-color:#D60000;
+}
+#mainMenu #bandaColor.azul {
+	background-color:#167EB3;
+}
+
+ul#menuCategoriasIzq{
+	list-style:none;
+	background-color:#167EB3;
+	padding-bottom:5px;
+	
+}
+ul#menuCategoriasIzq li{
+	background:url(../img/botones/bg_catmenuizq.jpg) center top repeat-x;
+}
+ul#menuCategoriasIzq li.first{
+	background:url(../img/botones/bg_catmenuizqfirst.jpg) center top repeat-x;
+}
+ul#menuCategoriasIzq li a{
+	color:#FFFFFF;
+	display:block;
+	font-size:14px; font-weight:bold; text-transform:uppercase;
+	padding:18px 0 14px 13px;
+	
+}
+ul#menuCategoriasIzq li a:hover,
+ul#menuCategoriasIzq li a.active{
+	background:url(../img/botones/bg_catmenuizqhover.jpg) center top repeat-x;
+	color:#0E5C83;
+}
+ul#menuCategoriasIzq li ul{ list-style:none;}
+ul#menuCategoriasIzq li ul li a.sub{
+	display:block;
+	font-size:13px; font-weight:bold; text-transform:none;
+	color:#c8e9f9;
+	background:url(../img/botones/bg_catmenuizqsub.jpg) center top repeat-x;
+	padding:18px 0 14px 25px;
+}
+ul#menuCategoriasIzq li ul li a.sub:hover,
+ul#menuCategoriasIzq li ul li a.subactive{
+	background:#156e9c;
+	color:#FFF76E;
+	font-size:13px; font-weight:bold; text-transform:none;
+	padding:18px 0 14px 25px;
+}
+/* MENU CATEGORIAS MI CUENTA - FORMULARIOS */
+body#Cuenta #fondoCatalogo{
+	width:994px;
+	margin:0 auto;
+	padding-bottom:20px;
+	
+	
+}
+body#Cuenta ul#menuCategoriasIzq{
+	list-style:none;
+	background:none !important;
+	padding-bottom:5px;
+	
+}
+body#Cuenta ul#menuCategoriasIzq li{
+	background:none;
+	
+}
+body#Cuenta ul#menuCategoriasIzq li.first{
+	background:none;
+}
+body#Cuenta ul#menuCategoriasIzq li a{
+	display:block;
+	font-size:12px !important; font-weight:normal; text-transform:none;
+	color:#4b4b4b;
+	padding:10px 0 10px 13px;border-bottom:1px solid #dcdcdc;
+	
+}
+body#Cuenta ul#menuCategoriasIzq li a:hover{
+	background:#fff;
+	color:#4b4b4b;
+}
+body#Cuenta ul#menuCategoriasIzq li a.active{
+	background:#fff;
+	color:#4b4b4b; font-weight:bold;border-bottom:1px solid #dcdcdc;
+}
+body#Cuenta ul#menuCategoriasIzq li ul{ list-style:none;}
+body#Cuenta ul#menuCategoriasIzq li ul li a.sub{
+	display:block;
+	font-size:12px; font-weight:normal; text-transform:none;
+	color:#4b4b4b;
+	background:#f2f2f2;
+	padding:10px 0 10px 25px;
+}
+body#Cuenta ul#menuCategoriasIzq li ul li a.sub:hover{
+	background:#fff;
+	color:#4b4b4b;
+}
+body#Cuenta ul#menuCategoriasIzq li ul li a.subactive{
+	background:#fff;
+	color:#4b4b4b;
+	font-size:12px; font-weight:bold; text-transform:none;
+	padding:10px 0 10px 25px;border-bottom:1px solid #dcdcdc;
+}
+/* ---------------------------------------------------------------------*/
+
+#hilo{
+	font-size:11px; color:#9f9f9f;
+	
+}
+#hilo a{ 
+	display:inline-block;
+	font-size:11px; color:#9f9f9f;
+	margin:0 6px;
+}
+#hilo a.active{ 
+	color:#167db1;
+}
+#hilo a:hover{
+	color:#167db1;
+}
+#paginador a{
+	font-size:10px; text-transform:uppercase; color:#9f9f9f;
+	margin:0 4px;
+}
+#paginador a:hover{
+	color:#167db1;
+}
+#paginador a.active{
+	display:inline-block;
+	padding:2px 4px;
+	color:#FFFFFF;
+	background-color:#167db1;
+	
+}
+/* Estilos de Sliders ====================================================================== */
+
+#marco{
+	width:1022px; height:448px; 
+	background: url(../img/fondos/bg_marco.png) center top no-repeat; 
+	position:absolute;
+	top:214px;
+	z-index:200;
+}
+
+/* Easy Slider */
+#slider {
+	margin:11px 22px 35px 24px;
+	width:974px !important;
+	height:402px;
+	z-index:100;
+	position:absolute;
+	overflow:hidden;
+	
+}
+#slider ul, #slider li {
+	width:974px;
+	margin:0;
+	padding:0;
+	list-style:none;
+	
+}
+#slider li {
+	width:974px;
+	height:402px;
+	position:relative;
+	
+}
+#prevBtn, #nextBtn,  #slider1next, #slider1prev {
+	display:block;
+	width:39px;
+	height:98px;
+	position:absolute;
+	left:-18px;
+	top:150px;
+	z-index:1000;
+}
+#nextBtn, #slider1next {
+	left:999px;
+}
+#prevBtn a, #nextBtn a,  #slider1next a, #slider1prev a {
+	display:block;
+	position:relative;
+	width:39px;
+	height:98px;
+	background:url(../img/botones/slider_prev.png) center top no-repeat;
+}
+#nextBtn a, #slider1next a {
+	background:url(../img/botones/slider_next.png) center top no-repeat;
+}
+#prevBtn a:focus, #nextBtn a:focus {
+	outline:none;
+}
+#slider1prev a:hover, #slider1next a:hover {
+	background-position:center -98px;
+}
+/* // Easy Slider */
+
+/* Estilos de Texto ===================================================================== */
+p{
+	margin:4px 0;
+}
+.normal {
+	font-weight:normal;
+}
+.bold {
+	font-weight:bold;
+}
+.uppercase {
+	text-transform:uppercase;
+}
+.justify{
+	text-align:justify;
+}
+a.underline:hover {
+	text-decoration:underline;
+}
+.txt10 {
+	font-size:10px;
+}
+.txt11 {
+	font-size:11px;
+}
+.txt12 {
+	font-size:12px;
+}
+.txt13 {
+	font-size:13px;
+}
+.txt14 {
+	font-size:14px;
+}
+.txt15 {
+	font-size:15px;
+}
+.txt16 {
+	font-size:16px;
+}
+.txt18 {
+	font-size:18px;
+}
+.txt20 {
+	font-size:20px;
+}
+.txt22 {
+	font-size:22px;
+}
+.txt24 {
+	font-size:24px;
+}
+.txt26 {
+	font-size:26px;
+}
+h1{ font-size:26px;}
+.blanco {
+	color:#ffffff;
+}
+.celeste {
+	color:#d7f6ff;
+}
+.celeste2{
+	color:#72c5ef;
+}
+.celeste3{
+	color:#b9def1;
+}
+.azulino {
+	color:#0e7ab0;
+}
+.azul{
+	color:#177fb3;
+}
+.azul2{
+	color:#167eb3;
+}
+.rojo{
+	color:#d60000;
+}
+.rojo_suave{
+	color:#fdafaf;
+}
+.naranja{
+	color:#ef8701;
+}
+.rosa{
+	color:#fc9ab5;
+}
+.gris{
+	color:#9f9f9f;
+}
+.beige{
+	color:#B4AF9B;
+}
+.verde{
+	color:#009933;
+}
+.verde_suave{
+	color:#bdf9b9;
+}
+.amarillo{
+	color:#d4ec0b;
+}
+.amarillo_suave{
+	color:#ecf4a5;
+}
+/* Estilos de Contenidos ===================================================================== */
+#wrapper {
+	width:1022px;
+	margin:0 auto;
+	
+}
+#contenido {
+	width:1022px;
+	background:url(../img/fondos/bg_contenido.jpg) center bottom repeat-x #E5E1D6;
+	position:relative;
+	
+	
+}
+#izquierda{ float:left;}
+#derecha{ float:right;}
+
+#destacados{
+	width:994px;
+}
+#destacados ul{
+	width:100%;
+	list-style:none;
+	padding:0 14px;
+	
+}
+#destacados ul li{
+	float:left;
+	width:319px;
+}
+#destacados ul li #producto{
+	width:299px;
+	height:202px;
+	background:url(../img/fondos/bg_destacado_home.png) center top no-repeat;
+	padding:10px 10px 35px 10px;
+	margin-top:10px;
+	position:relative;
+
+}
+#destacados ul li #producto img{ z-index:100;}
+#destacados ul li #producto p.caption{ 
+	z-index:200;
+	display:block;
+	width:276px;
+	padding:12px;
+	font-size:12px;
+	color:#FFFFFF;
+	background:url(../img/fondos/bg_blue_80.png) repeat;
+	position:absolute; bottom:30px;
+	
+}
+#destacados ul li #producto p.caption a.mas{
+	font-size:11px; font-weight:bold; color:#fc9ab5; text-transform:uppercase;
+}
+#destacados ul li #producto p.caption a.mas:hover{ text-decoration:underline;}
+
+#marcotop{
+	width:1022px;
+	height:16px;
+	background:url(../img/fondos/bg_marco_top.png) center top no-repeat;
+	position:absolute;
+	top:-16px;
+	
+}
+#marcobody{
+	background:url(../img/fondos/bg_marco_body.png) center top repeat-y;
+	width:922px;
+	padding:18px 50px;
+	margin:0 auto;
+}
+#marcofoot{
+	background:url(../img/fondos/bg_marco_foot.png) center top no-repeat;
+	width:1022px; height:49px;
+}
+body#Catalogo #marco{
+	width:974px;
+	height:157px;
+	border:10px solid #E5E1D6;
+	position:absolute; 
+	top:-16px;
+	left:14px;
+}
+#mensaje{
+	background-color:#E4EFF3;
+	border-top:1px solid #BFE2F5; border-bottom:1px solid #BFE2F5;
+	padding:18px 12px;
+	margin:17px 0;
+}
+#mensajebeige{
+	background-color:#F0EFEB;
+	border-top:1px solid #BFE2F5; border-bottom:1px solid #BFE2F5;
+	padding:18px 12px;
+	margin:17px 0;
+}
+#mensajebco{
+	background-color:#fff;
+	border-top:1px solid #BFE2F5; border-bottom:1px solid #BFE2F5;
+	padding:18px 12px;
+	margin:17px 0;
+}
+#fondoCatalogo{
+	width:994px;
+	margin:0 auto;
+	
+	
+	
+}
+#derecha.catalogo{
+	width:642px; 
+	background:url(../img/fondos/bg_derecha_catalogo.jpg) right repeat-y;
+	padding:0 43px 0 56px;
+}
+
+#articulo{
+	width:100%;
+	padding:18px 0 25px 0;
+	border-bottom:1px dashed #1478AA;
+}
+#envio{
+	width:100%;
+	padding:18px 0 25px 0;
+	border-bottom:1px dashed #1478AA;
+}
+
+#articulo #imagen{
+	width:204px;
+	border:10px solid #2DA1DC;
+	text-align:center;
+}
+#articulo #imagen img{
+ 	width:200px;
+	
+	border:none;
+	outline:none;
+}
+p.marca{
+	font-size:10px;
+	text-transform:uppercase;
+	color:#9f9f9f;
+}
+p.titulo{
+	font-size:20px;
+	font-weight:bold;
+	color:#177fb3;
+}
+p.descripcion{ 
+	line-height:20px;
+	margin:8px 0;
+}
+p.descripcion strong{
+	font-size:15px;
+	color:#696969;
+}
+a.detalles{
+	font-size:11px;
+	font-weight:bold;
+	color:#2da1dc;
+	display:block;
+	margin-bottom:20px;
+}
+#cuadro, #cuadrobeige, #cuadroazul{
+	width:auto;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	display:inline;
+	background:url(../img/fondos/bg_cuadro.jpg) center bottom repeat-x #fff;
+	border:1px solid #CCDDE5;
+	padding:11px 14px;
+	margin-right:15px;
+	
+}
+#cuadrobeige{
+	background:url(../img/fondos/bg_cuadrobeige.jpg) center bottom repeat-x #fff;
+}
+#cuadroazul{
+	background:url(../img/fondos/bg_cuadroazul.jpg) center top repeat-x #146C9C;
+	color:#FFFFFF;
+}
+a.comprar{
+	width:auto;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	display:inline;
+	background:url(../img/botones/bg_comprar.jpg) center top repeat-x #9D0504;
+	padding:12px 14px;
+	font-size:12px; font-weight:bold; text-transform:uppercase;
+	color:#FFFFFF;
+}
+a.comprar:hover{
+	background:none;
+	background-color:#760504;
+}
+a.seguir{
+	width:auto;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	display:inline;
+	background:url(../img/botones/bg_seguir.jpg) center top repeat-x #74C6EC;
+	padding:12px 14px;
+	font-size:12px; font-weight:bold;
+	color:#15638A;
+}
+a.seguir:hover{
+	background:none;
+	background-color:#8BD0F1;
+	color:#0A364B;
+}
+
+#blockrojo{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#FD4336;
+	margin-top:6px;
+}
+#blocknegro{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#000;
+	margin-top:6px;
+}
+#blockverde{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#69A44A;
+	margin-top:6px;
+}
+#blockamarillo{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#FFCC00;
+	margin-top:6px;
+}
+#blockgris{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#878AA9;
+	margin-top:6px;
+}
+#blockblanco{
+	width:20px; height:20px;
+	display:inline-block;
+	border:1px solid #dcdcda;
+	margin-right:5px;
+	background-color:#fff;
+	margin-top:6px;
+}
+#blockazul{
+	width:21px; height:21px;
+	display:inline-block;
+	margin-right:5px;
+	background-color:#006699;
+	margin-top:6px;
+}
+
+#datos{
+	width:auto;
+	background-color:#E4EFF3;
+	border-bottom:1px dashed #1478AA;
+	padding:16px;
+	font-size:16px; color:#177fb3;
+	margin-top:10px;
+	
+	
+}
+
+/* POP UPS =========================================================================================================*/
+body#pop{ background:url(../img/fondos/bg_pop.jpg) top repeat-x #fff;}
+body#pop #logo {
+	width:616px;
+	height:139px;
+	position:relative;
+	z-index:100;
+	background:url(../img/logos/dreamkydspop.png) left top no-repeat;
+}
+
+/* Estilos de Foot ====================================================================== */
+#foot{
+	width:1022px;
+	height:401px;
+	position:relative;
+	background:url(../img/fondos/bg_foot.jpg) center top no-repeat;
+}
+#foot ul{ list-style:none; line-height:18px;}
+#foot ul li{ font-size:13px;}
+
+/* Estilos de Botones ================================================================ */
+a.btn_rojo{
+	font-size:12px;
+	font-weight:bold;
+	color:#FFFFFF;
+	text-transform:uppercase;
+	padding:6px 24px;
+	background:url(../img/botones/btn_rojo.jpg) center top repeat-x #9C0404;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	text-align:center;
+	width:55px;
+	display:block;	
+	margin-top:6px;
+}
+a.btn_rojo:hover{
+	background: none #990000;
+}
+a.btn_arriba{
+	width:71px;
+	background:url(../img/botones/btn_arriba.jpg) center top repeat-x #1A78CD;
+	text-align:center;
+	padding:8px 0;
+	font-size:11px;
+	color:#b8eed8;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+}
+a.btn_arriba:hover{ text-decoration:underline; color:#FFFFFF;}
+
+a.btn_kirke{
+	width:100px;
+	padding:20px 20px;
+}
+a.btn_kirke:hover{ text-decoration:underline; color:#FFFFFF;}
+
+a.ampliar{
+	display:block;
+	text-align:center;
+	text-decoration:underline;
+	font-size:12px;
+	color:#9e9e9d;
+	margin-top:10px;
+}
+a.ampliar:hover{
+	text-decoration:none;
+	color:#4b4b4b;
+}
+a.pdf{
+	font-size:11px;
+	font-weight:normal;
+	color:#b9300b;
+	padding:6px 24px;
+	background:url(../img/botones/bg_pdf.jpg) center top repeat-x #EAE5DF;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	text-align:center;
+	width:auto;
+}
+a.pdf:hover{
+	background:none;
+	background-color:#F5F5F5;
+}
+
+a.eliminar{
+	font-size:11px;
+	font-weight:bold;
+	color:#928c7b;
+	padding:6px 8px;
+	background:url(../img/botones/bg_pdf.jpg) center top repeat-x #EAE5DF;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	text-align:center;
+	width:auto;
+	float: right;
+	margin: 0 20px 0 0;
+
+}
+a.eliminar:hover{
+	background:none;
+	background-color:#F5F5F5;
+}
+
+/* Estilos de Formularios ================================================================ */
+
+input.login {
+	padding:0 0 4px 4px;
+	font-size:11px;
+	color:#FFFFFF;
+	background-color:#2DA1DC;
+	border:none;
+	border-top:2px solid #177ECA;
+	border-left:2px solid #177ECA;
+}
+a.login {
+	width:28px;
+	height:21px;
+	display:block;
+	background:url(../img/botones/login.png) center top no-repeat;
+}
+a.login:hover {
+	background-position:center bottom;
+}
+
+input.celeste{
+	padding:4px 0 4px 4px;
+	font-size:11px;
+	color:#4b4b4b;
+	background-color:#fff;
+	border:none;
+	border-top:2px solid #D0CCC1;
+	border-left:2px solid #D0CCC1;
+}
+#campo{ 
+	width:300px; 
+	float:left;
+	padding-right:10px;
+}
+#campodoble{
+	width:600px;
+	clear:both;
+	padding-right:20px;
+}
+#campo label, #campodoble label, label{ 
+	font-size:10px; 
+	color:#197EB4; 
+	text-transform:uppercase;
+}
+#campo input, input.campo{
+	width:96%;
+	height:18px;
+	padding:6px 0 6px 4px;
+	font-size:11px;
+	color:#4b4b4b;
+	background-color:#F7F6F2;
+	border:none;
+	border-top:2px solid #C9C5B9;
+	border-left:2px solid #C9C5B9;
+	margin:10px 0;
+}
+#campodoble textarea, textarea{
+	width:100%;
+	height:200px;
+	padding:6px 0 6px 4px;
+	font-size:11px;
+	color:#4b4b4b;
+	background-color:#F7F6F2;
+	border:none;
+	border-top:2px solid #C9C5B9;
+	border-left:2px solid #C9C5B9;
+	margin:10px 0;
+}
+
+#campo input.error, input.error{
+	background-color:#fff2f2;
+	border:none;
+	border-left:2px solid #fe7d7d; border-top:2px solid #fe7d7d;
+	color:#891414; 
+}
+
+#campo .selecto select, .selecto select{
+	background:transparent;
+	height:30px; border:none;
+	padding-left:4px;
+	font-size:11px; color:#4b4b4b; 
+	
+}
+
+#campo .selecto, .selecto{
+	overflow:hidden; height:30px; 
+	background:url(../img/botones/select.jpg) right no-repeat #F7F6F2;
+	border-left:2px solid #C9C5B9; border-top:2px solid #C9C5B9;
+	margin:10px 0;
+}
+#campo .selecto select.error, .selecto select.error{
+	color:#891414; 
+	height:30px; border:none;
+	padding-left:4px;
+	font-size:11px; color:#891414;
+}
+table.formulario{
+	border:0px solid #ffffff;
+}
+table.formulario td{ padding:4px;border:1px solid #ffffff; height:20px;}
+/* hack para IE, no tocar ni alterar ==================================================== */ 
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+/* Hides from IE-mac \*/
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+/* End hide from IE-mac */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

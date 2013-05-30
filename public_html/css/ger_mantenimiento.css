@@ -1,0 +1,447 @@
+.paddingBot20{
+    padding-bottom: 20px;
+}
+
+.box-entrada .izq {
+    float: left;
+    width: 300px;
+}
+
+.box-entrada .der {
+    float: right;
+    width: 300px;
+    margin: 0 0 0 20px;
+}
+
+.campania{
+    float: left;
+    width: 300px;
+}
+
+.campania label{
+    float: left;
+    margin: 10px 0 0 0; 
+}
+
+.campania input{
+    width: 270px;
+    margin: 10px 0 0 0;
+}
+
+.campania select{
+    background: #FFF;
+    clear: both;
+    margin: 10px 0 0 0;
+    width: 275px;
+}
+
+.observacionesChico label {
+    float:left;
+    margin: 10px 0 0 0 ;
+}
+
+.observacionesChico textarea {
+    float:left;
+    width: 618px;
+    height: 5em;
+}
+
+.inputChico input{
+    width: 100px;
+    clear: both;
+    margin: 10px 0 0 25px;
+}
+
+.inputChico label{
+    clear: both;
+    margin: 10px 0 0 25px;
+}
+
+
+
+/*Maquetado en común para todos los formularios*/
+
+.block{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.inline{
+    display: inline-block;
+    line-height: 32px;
+    height: 32px;
+    margin-right: 15px;
+}
+
+
+.box-entrada .box-entrada .primerElement{
+    margin-top: 0px;
+}
+
+.box-entrada .box-entrada .ultimoElement{
+    margin-bottom: 20px;
+}
+
+.padding10{
+    padding: 10px;
+}
+
+.paddingLat10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#agregar{
+    clear: both;
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+form .box-entrada input.agregar_fechas {
+    margin: 20px 65px 20px 0;
+    float: right;
+    width: 100px;
+    color: #4685CA;
+}
+
+
+.observaciones label {
+    float:left;
+    margin: 10px 0 0 20px;
+}
+
+.observaciones textarea {
+    float:left;
+    width: 600px;
+    margin: 10px 0 0 20px;
+    height: 60px;
+}
+
+.clear{
+    clear: both;
+}
+
+.marginTop20{
+    margin-top: 20px;
+}
+
+/*LISTAS CEBRA*/
+
+table tr {
+    background-color: #edece3;
+}
+
+table tr.striped {
+    background-color: #D2E1F2;
+}
+
+
+
+table tr td.box-entrada {
+    border-top: 1px solid #4685CA;
+    border-bottom: 2px solid #4685CA;
+}
+
+.espacio-box-entrada {
+    height: 20px;
+    
+}
+
+
+/*NOTICIAS FLASH*/
+
+.flash_error,
+.flash_notice {
+    display: none;
+    position: absolute;
+    font-size: 13px;
+    /*margin: 0 0 0 60px;*/
+    width: 100%;
+    /*float: left;*/
+    height: 17px;
+    margin: 0 0 10px 60px;
+    padding-top: 2px;
+    text-align: center;
+    /*width: 650px;*/
+    top: 0;
+    right: 0;
+}
+
+.disp_error,
+.disp_notice {
+    /*display: none;*/
+    position: absolute;
+    font-size: 13px;
+    /*margin: 0 0 0 60px;*/
+    width: 100%;
+    /*float: left;*/
+    height: 17px;
+    margin: 0 0 10px 60px;
+    padding-top: 2px;
+    text-align: center;
+    /*width: 650px;*/
+    top: 0;
+    right: 0;
+}
+
+.flash_error {
+    background-color: #ef3535;
+    color: #FFFFFF;
+}
+
+.flash_notice {
+    background-color: #4de88f;
+    color: #6d7b73;
+}
+
+.disp_error {
+    background-color: #ef3535;
+    color: #FFFFFF;
+}
+
+.disp_notice {
+    background-color: #4de88f;
+    color: #6d7b73;
+}
+
+/*FORMULARIOS DE TABLA PRINC EN LOS COMMENTS*/
+
+
+
+
+/*FORMULARIOS BOX DE ENTRADA*/
+
+
+form.box-entrada {
+    width: 642px;
+    background-color: #D2E1F2;
+    border-top: 1px solid #4685CA;
+    border-bottom: 2px solid #4685CA;
+    margin: 20px 0 20px 0;
+    float: left;
+}
+
+form.box-entrada .box-entrada {
+    
+}
+
+form.box-entrada .box-entrada label {
+    float: left;
+}
+
+form.box-entrada .box-entrada input {
+    float: left;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+
+form.box-entrada .box-entrada textarea {
+    float: left;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    font-size: 16px;
+    /*height: 30px;*/
+    padding: 2px 0 0 2px;
+}
+
+form.box-entrada .box-entrada select {
+    float: left;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+
+/*FORMULARIOS BOX DE ENTRADA EN LOS COMENTS*/
+
+form.box-coment {
+    
+}
+
+form.box-coment .title {
+    font-size: 22px;
+    color: #197EB4;
+    width: 100%;
+    margin: 40px 0 20px 0;
+}
+
+form.box-coment .coment_ant {
+    width: 100%;
+    float: left;
+    margin: 5px 0 0 0;
+    padding: 10px 0 10px 0;
+    border-top: 1px solid #197EB4;
+    color: #197EB4;
+    background-color: #F7F6F2;
+    
+}
+
+form.box-coment .coment_ant .area {
+    float:left;
+    width: 150px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+form.box-coment .coment_ant .fecha {
+    float:left;
+    width: 150px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+    font-size: 12px;
+}
+form.box-coment .coment_ant .estado {
+    float:left;
+    width: 150px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+form.box-coment .coment_ant .comentario {
+    min-width: 400px;
+    margin: 5px 10px 0 10px;
+    text-align: justify;
+    float: left;
+}
+
+form.box-coment .coment_actual {
+    width: 100%;
+    float: left;
+    margin: 30px 0 0 0;
+}
+
+form.box-coment .coment_actual .comentario {
+    width: 100%;
+    float: left;
+    margin: 30px 0 0 0;
+}
+
+form.box-coment .coment_actual .comentario .area {
+    width: 150px;
+    color: #197EB4;
+    font-size: 15px;
+    font-weight: bold;
+    float: left;
+}
+
+form.box-coment .coment_actual .comentario .fecha {
+    color: #197EB4;
+    font-size: 15px;
+    width: 150px;
+    font-weight: bold;  
+    float: left;
+}
+
+form.box-coment .coment_actual .comentario label {
+    margin: 10px 0 0 0;
+    width: 100%;
+    float: left;
+}
+
+form.box-coment .coment_actual .comentario textarea {
+    float: left;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    font-size: 16px;
+    height: 80px;
+    padding: 2px 0 0 2px;
+}
+
+form.box-coment .coment_actual .aceptar {
+   float: right;
+   margin: 20px 0 0 0;
+}
+
+
+
+form.box-coment .coment_actual .aceptar .aprobar,
+form.box-coment .coment_actual .aceptar .solicitar_correccion,
+form.box-coment .coment_actual .aceptar .desaprobar {
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858E;
+    float: left;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+
+form.box-coment .coment_actual .aceptar .aprobar:hover,
+form.box-coment .coment_actual .aceptar .solicitar_correccion:hover,
+form.box-coment .coment_actual .aceptar .desaprobar:hover {
+    cursor: pointer;
+}
+
+form.box-coment .coment_actual .aceptar .aprobar {
+    margin: 0 10px 0 0;
+}
+
+form.box-coment .coment_actual .aceptar .solicitar_correccion {
+    margin: 0 10px 0 0;
+}
+
+form.box-coment .coment_actual .aceptar .desaprobar {
+    margin: 0;
+}
+
+
+/*ENVIAR AL SIGUIENTE PROCESO*/
+
+.enviar_proceso {
+    width: 100%;
+    background-color: #86AEDB;
+    float: left;
+}
+
+.enviar_proceso .enviar {
+    background-color: #EDECE3;
+    border-radius: 5px 5px 5px 5px;
+    border: 2px solid #4685CA;
+    color: #4685CA;
+    float: right;
+    font-size: 15px;
+    font-weight: bold;
+    height: 27px;
+    height: 30px;
+    margin: 10px 45px 10px 0;
+    padding: 0;
+    text-align: center;
+    width: 200px;
+}
+
+.enviar_proceso .enviar:hover {
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+/* FIN ENVIAR AL SIGUIENTE PROCESO*/
+
+
+
+
+/* PROPIO DEL TPL */
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+
+
+.box-entrada .asunto {
+    width: 150px;
+    margin: 10px 0 0 0;
+}
+
+.box-entrada .asunto label {
+    width: 100%;
+}
+
+.box-entrada .asunto input {
+    width: 600px;
+    margin: 10px 0 0 0;
+}
+
+
+
+.box-entrada .observaciones {
+    
+}
+
+.box-entrada .observaciones label {
+    margin: 10px 0 0 0;
+    width: 100%;
+}
+
+.box-entrada .observaciones textarea {
+    width: 600px;
+    margin: 10px 0 30px 0;
+}
+
+
+
+
+
+form .box-entrada{
+    padding: 10px;
+}
+
+#enviar{
+    clear: both;
+    float: right;
+    margin: 10px;
+}
+.box-entrada .box-entrada .archivo {
+    float: left;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.box-entrada .box-entrada .archivos {
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .archivos .file {
+    width: 100%;
+}
+
+.box-entrada .box-entrada .archivos a.file_name {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.file_name span {
+
+}
+
+.box-entrada .box-entrada .archivos a.del_file {
+    float: left;
+}
+
+.box-entrada .box-entrada .archivos a.del_file img {
+
+}
+
+/*PARA LOS COMENTARIOS*/
+
+form .box-entrada .archivo span {
+    margin: 10px 0px 10px 10px;
+    width: 100%;
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.datoComent{
+    display: inline-block;
+    min-width: 150px;
+}
+
+.coment{
+    display: block;
+    margin-bottom: 10px;
+}

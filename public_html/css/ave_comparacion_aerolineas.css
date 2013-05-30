@@ -1,0 +1,189 @@
+
+/*observaciones*/
+
+
+form .box-entrada .pais_ciudad{
+    float: left;
+    width: 400px;
+}
+
+form .box-entrada .pais_ciudad label {
+    float: left;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .pais_ciudad select.pais_ciudad {
+    width: 500px;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .pais_ciudad option {
+
+}
+
+form .box-entrada .fecha_inicio {
+    float: left;
+    width: 300px;
+}
+
+form .box-entrada .fecha_inicio label {
+    float: left;
+    margin: 10px 0 0 20px;
+    width: 100%;
+}
+
+form .box-entrada .fecha_inicio input {
+    width: 200px;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .fecha_fin {
+    float: left;
+    width: 300px;
+}
+
+form .box-entrada .fecha_fin label {
+    float: left;
+    margin: 10px 0 0 20px;
+    width: 100%;
+}
+
+form .box-entrada .fecha_fin input {
+    width: 200px;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .observaciones {
+    float:left;
+    width: 100%;
+}
+
+form .box-entrada .observaciones label {
+    float:left;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .observaciones textarea {
+    float:left;
+    width: 570px;
+    margin: 10px 0 0 20px;
+    height: 60px;
+}
+
+form .box-entrada input.agregar_observaciones {
+    margin: 20px 45px 20px 0;
+    float: right;
+    width: 200px;
+    color: #4685CA;
+}
+
+
+
+/*HOTEL*/
+div.hotel {
+    width: 139px;
+    margin: 15px 0 0 10px;
+    float: left;
+}
+div.hotel label {
+    float: left;
+    margin: 0 0 5px 0;
+}
+input.hotel {
+    float: left;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    width: 100%;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+/*COMENTARIO*/
+div.comentario {
+    float: left;
+    width: 320px;
+    margin: 15px 0 0 5px;
+}
+div.comentario label {
+    float: left;
+    margin: 0 0 5px 10px;
+    width: 100%;
+}
+input.comentario {
+    float: left;
+    margin: 0 0 0 10px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    width: 100%;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+/*COSTO*/
+div.costo {
+    width: 100px;
+    margin: 15px 0 0 15px;
+    float: left;
+}
+div.costo label {
+    float: left;
+    margin: 0 0 5px 10px;
+}
+input.costo {
+    float: left;
+    margin: 0 0 0 10px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    width: 100%;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+
+div.archivo {
+    float: left;
+    width: 280px;
+    margin: 5px 0 20px 165px;
+}
+
+div.archivo label {
+    float: left;
+    margin: 0 0 5px 1px;
+    width: 100%;
+}
+
+input.archivo {
+    float: left;
+    /*margin: 2px 0 0 10px;*/
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #77858e;
+    width: 100%;
+    font-size: 16px;
+    height: 30px;
+    padding: 0 0 0 2px;
+}
+
+
+input.agregar_hotel {
+    float: left;
+    margin: 25px 0 0 55px;
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;  
+    font-size: 13px;
+    width: 100px;
+    font-size: 16px;
+    height: 30px;
+    /*background-color: #77858e;*/
+    /*padding: 0 0 0 2px;*/
+}
+
+
+
+
+
+

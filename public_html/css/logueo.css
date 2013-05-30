@@ -1,0 +1,56 @@
+form.box-entrada .box-entrada {
+    /*padding: 0 0 0 40px;*/
+    margin: 0 0 0 160px;
+    float: left;
+
+}
+.box-entrada .box-entrada .user {
+    width: 100%;
+    float: left;
+}
+
+.box-entrada .box-entrada .user label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .user input {
+    clear: left;
+    margin: 10px 0 0 10px;
+    width: 300px;
+}
+
+
+.box-entrada .box-entrada .pass {
+    width: 100%;
+    float: left;
+    margin: 0 0 20px 0;
+}
+
+.box-entrada .box-entrada .pass label {
+    margin: 10px 0 0 10px;
+}
+
+.box-entrada .box-entrada .pass input {
+    clear: left;
+    margin: 10px 0 0 10px;
+    width: 300px;
+}
+
+form .box-entrada .login {
+    
+}
+
+form .box-entrada .login input {
+    border: 1px solid #4685CA;
+    border-radius: 5px 5px 5px 5px;
+    color: #4685CA;
+    float: left;
+    font-size: 16px;
+    height: 30px;
+    margin: 0 0 20px 165px;
+    width: 150px;
+}
+
+form .box-entrada .login input:hover {
+    cursor
+}

@@ -1,0 +1,8 @@
+# robots.txt for http://kirke.ws/
+
+# Mapa del sitio en:
+Sitemap: http://192.168.143.10/sitemap.xml
+
+# Ocultar para todos los robots de busqueda:
+User-agent: *
+		
