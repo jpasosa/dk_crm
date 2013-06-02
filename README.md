@@ -7,9 +7,11 @@ CRM realizado para Sitekirke desarrollos
 
 -- Crear Carpetas:
 
-public_html/upload_archivos/formularios_nombres_xxx
-
+/public_html/upload_archivos/formularios_nombres_xxx
 Con permisos, acá van a subirse los archivos que carguen en el sistema de cada formulario.
+
+/_cache
+Acá el framework guarda los archivos cache
 
 
 
