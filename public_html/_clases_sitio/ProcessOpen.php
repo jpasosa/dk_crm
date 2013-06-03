@@ -211,6 +211,8 @@ class ProcessOpen {
                 } // Cierra el if, que pregunta si de los procesos accesibles, encontró algun proceso abierto.
             } // cierra el foreach de los procesos accesibles.
             
+        
+        
             // Busco si hay ven_rendicion_viaticos. . . . solamente puede comenzar área 1 (ventas)
             if($id_area == 1) {
                 // busca procesos cerrados con fecha_fin < date
@@ -239,6 +241,35 @@ class ProcessOpen {
             }
 
         }while(0);
+
+
+        // BUSCO MANTENIMIENTOS ABIERTOS
+        $search_mant_cerrados = BDConsulta::consulta('search_mant_cerrados', array(), 'n');
+
+        foreach($search_mant_cerrados as $k => $mant) {
+            // echo 'ID_TABLA: ' , $mant['id_adm_ytd_mantenimientos'] , '<br />';
+            $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], 'n');
+            if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
+                $mantenimiento[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
+                $mantenimiento[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
+                $mantenimiento[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
+                $mantenimiento[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
+                $mantenimiento[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
+            }
+        }
+        /*
+        Busco registros en mente_recordatorio, relacionado con "id_mant_tabla_proc"
+        Si existen:
+            Orden y tomo el último. agarro la fecha, le pongo $fecha_ultima
+            con esa fecha, paso a
+            CalculateMant($ultima_fecha, $fecha_ult_calculada, $period, $x_tiempo)
+            eso me debe calcular las fechas de los mantenimientos y poner en verde, rojo o amarillo, segun corresponda
+            mandando el id, del proceso a id_adm_ytd_mantenimientos_recordatorio. . . .
+
+
+        */
+        
+        
 
         // $area = BDConsulta::consulta('user_area', array($user), 'n');
         return $all_process;

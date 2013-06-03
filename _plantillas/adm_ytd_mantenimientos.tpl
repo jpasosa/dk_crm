@@ -6,22 +6,16 @@
 <script type="text/javascript" src="js/adm_ytd_mantenimientos/del_file.js"></script>
 <script> $(function() {$( "#fecha_inicio" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
 
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;">
-</div>
+<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
-        <div class="flash_error"></div> <!-- estos van a saltar por AJAX -->
+        <div class="flash_error"></div>
         <div class="flash_notice"></div>
-        {if $flash_error != '' }
-            <div class="disp_error"> {$flash_error} </div> <!-- estos vienen del controlador -->                    
-        {/if}
-        {if $flash_notice != '' }
-            <div class="disp_notice"> {$flash_notice} </div> <!-- estos vienen del controlador -->                    
-        {/if}
+        {if $flash_error != '' }<div class="disp_error"> {$flash_error} </div>{/if}
+        {if $flash_notice != '' }<div class="disp_notice"> {$flash_notice} </div>{/if}
         {template tpl="menu_izq"}
         <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
             <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
             <hr />
-
             <h1 class="azul bold"><span class="txt22 normal">Administración</span> | YTD Mantenimientos </h1>
             <hr />
             <p class="txt10 uppercase">Fecha de inicio del trámite: <span class="azul">{$date}</span></p>
@@ -58,8 +52,8 @@
                         </select>
                     </div>
                     <div class="archivo">
-                                <label class="archivo"> Archivo </label>
-                                <input type="file" class="archivo" name="archivo" value="quepasavieja" />
+                        <label class="archivo"> Archivo </label>
+                        <input type="file" class="archivo" name="archivo" value="quepasavieja" />
                     </div>
                     <input name="subir_archivo" class="subir_archivo" type="submit" value="Subir Archivo" />
                     {if $files['error'] == false }
@@ -76,46 +70,13 @@
                             {/foreach}
                         </div>
                     {/if}
+                    <input name="first_time" type="hidden" value="{$first_time}" />
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                     <input name="agregar_mantenimiento" class="agregar_mantenimiento" type="submit" value="Agregar Mantenimiento" />
                 </div>
             </form>
             <hr />
-
-            <p class="azul txt18" style="margin:0px 0 10px 0;">Mantenimientos anteriores:</p>
-            <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
-                <tr>
-                    <td  width="100" bgcolor="#4685CA"><p class="blanco">Fecha </p></td>
-                    <td  width="100" align="left" bgcolor="#4685CA"><p class="blanco">Resultado</p></td>
-                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
-                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Costo</p></td>
-                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Adjuntos</p></td>
-                </tr>
-
-
-
-                <!-- traigo de la base de datos, los hoteles cargados -->
-                {foreach item=gd from=$gast_detalles }
-                <tr id="id_gastos-{$$gd[id]}">
-                    <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
-                    <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
-                    <td> <span class="detalle">{$$gd[detalle]}</span> </td>
-                    <td> <span class="proveedor">{$$gd[proveedor]}</span> </td>
-                    <td> <span class="mes">{$$gd[mes]}</span> </td>
-                    <td> <span class="monto">{$$gd[monto]}</span> </td>
-                    <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
-                </tr>
-                {/foreach}
-            </table>
-            
             <form class="box-entrada" name="add_hotel" action="/adm_ytd_mantenimientos.html" method="post" enctype="multipart/form-data" >
                 <div class="enviar_proceso">
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />

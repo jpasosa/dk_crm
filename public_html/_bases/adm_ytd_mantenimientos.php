@@ -65,56 +65,6 @@ class adm_ytd_mantenimientos extends FormCommon {
     }
 
 
-    //  IN:     ($id_proccess)
-    //  OUT:    me crea un registro, vacio con ese id_proccess, en adm_ytd_mantenimientos_arch (para poner archivo en mantenimientos)
-    // public  function insert_arch_blanco ($valores=NULL){
-    //     return "
-    //         INSERT
-    //         INTO adm_ytd_mantenimientos_arch
-    //                 (id_adm_ytd_mantenimientos_proc)
-    //         VALUES
-    //                 ($valores[0])
-    //         ;  
-    //     ";
-    // }
-
-
-    //  hace un update para poner el nombre del archivo ya teniendo proceso e id_arch, pone activo en uno.
-    //  IN:     (0->id_adm_ytd_mantenimientos_arch   1->nombre del archivo)
-    //  OUT:    consulta
-    // public  function insert_archivo ($valores=NULL){
-    //     return "
-    //         UPDATE adm_ytd_mantenimientos_arch
-    //         SET activo = 1, archivo = '$valores[1]'
-    //         WHERE id_adm_ytd_mantenimientos_arch = $valores[0];
-    //         ;   
-    //     ";
-    // }
-
-    //  me trae todos los nombres de los archivos que están activos para ese proceso
-    //  IN:     (0->id_proccess)
-    //  OUT:    consulta
-    // public  function nombres_archivos ($valores=NULL){
-    //     return "
-    //         SELECT archivo AS nombre
-    //         FROM adm_ytd_mantenimientos_arch
-    //         WHERE id_adm_ytd_mantenimientos_proc = $valores[0] AND activo = 1;
-    //         ;   
-    //     ";
-    // }
-
-    //  nos dá la cantidad de archivos que tiene activo en ese proceso
-    //  IN:     ($id_proccess)
-    //  OUT:    nos devuelve el registro entero con ese id 
-    // public  function cant_arch ($valores=NULL){
-    //     return "
-    //         SELECT COUNT( * )  AS cant_reg
-    //         FROM adm_ytd_mantenimientos_arch
-    //         WHERE id_adm_ytd_mantenimientos_proc = $valores[0] AND activo =1
-    //         ;
-    //     ";
-    // }
-
     //  Hace el update de la tabla principal.
     //  IN:     (0->id_tabla | 1->asunto | 2->observaciones  |  3->fecha_inicio | 4->periodicidad | 5->x_tiempo | )
     //  OUT:    Hace el update

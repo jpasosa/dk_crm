@@ -387,6 +387,36 @@ class Process {
         return $first_process;
     }
 
+    // Una version mejorada de getFisrtProcess(la anterior)
+    public static function getOnlyFirstProcess($pr_proceso, $id_tabla, $debug) {
+        $notice_error = ''; $notice_success = ''; $error = false;
+        $debug == 's' ? $deb = 's' : $deb = 'n';
+        if($pr_proceso == '') {
+            $pr_proceso = self::NameProcess();
+        }
+        do {
+            $first_process = BDConsulta::consulta('first_process', array($pr_proceso, $id_tabla), $deb);
+            if(is_null($first_process)) {
+                $error = true;
+                $notice_error = 'No existe un primer proceso para ese registro.';
+                break;
+            }
+            $first_process = $first_process[0];
+        }while(0);
+
+        if($error == false) {
+            $resp = $first_process; // Si no hubo errores, devuelve el array
+        }else{ // HUBO ERRORES
+            $resp = array(
+                'error' => $error,
+                 'notice_error' => $notice_error,
+                  'notice_success' => $notice_success,
+                 );
+        }
+
+        return $resp;
+    }
+
     public static function getLastProcess($pr_proceso, $id_tabla_proc) {
         $notice_error = ''; $notice_success = ''; $error = false;
         $all_proc = self::getAllTablaProc($pr_proceso, $id_tabla_proc);

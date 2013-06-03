@@ -36,28 +36,68 @@
                         <label> Tiempo: </label>
                         <input name="x_tiempo" class="x_tiempo" readonly="true" value="{$tabla[0][cada_x_tiempo]}" />
                     </div>
+
                     <div class="periodicidad">
                         <label> Periodicidad </label>
                         <input name="periodicidad" class="periodicidad" readonly="true" value="{$tabla[0][periodicidad]}" />
                     </div>
-                    {if $files['error'] == false }
-                        <div class="archivos">
-                            {foreach item=n from=$files}
-                                <div class="file">
-                                    <a class="file_name" target="_blank" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                                        <span>Archivo: {$$n[nombre]}</span>
-                                    </a>
-                                </div>
-                            {/foreach}
-                        </div>
-                    {/if}
+                    
+
+
+{if $files['error'] == false }
+                    <div class="archivos">
+                        {foreach item=n from=$files}
+                            <div class="file">
+                                <a class="file_name" target="_blank" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
+
+
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
+                    <input name="new_tabla_proc" type="hidden" value="{$new_tabla_proc}" />
                 </div>
             </form>
             <hr />
 
+            <p class="azul txt18" style="margin:0px 0 10px 0;">Mantenimientos anteriores:</p>
+            <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
+                <tr>
+                    <td  width="100" bgcolor="#4685CA"><p class="blanco">Fecha </p></td>
+                    <td  width="100" align="left" bgcolor="#4685CA"><p class="blanco">Resultado</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Costo</p></td>
+                    <td  width="100"  bgcolor="#4685CA"><p class="blanco">Adjuntos</p></td>
+                </tr>
+
+
+
+                <!-- traigo de la base de datos, los hoteles cargados -->
+                {foreach item=gd from=$gast_detalles }
+                <tr id="id_gastos-{$$gd[id]}">
+                    <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
+                    <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
+                    <td> <span class="detalle">{$$gd[detalle]}</span> </td>
+                    <td> <span class="proveedor">{$$gd[proveedor]}</span> </td>
+                    <td> <span class="mes">{$$gd[mes]}</span> </td>
+                    <td> <span class="monto">{$$gd[monto]}</span> </td>
+                    <td>
+                        <a href="#">
+                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
+                        </a> 
+                        <a href="#">
+                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
+                        </a>
+                    </td>
+                </tr>
+                {/foreach}
+            </table>
             
+            <hr />
             <form class="box-coment" name="box_coment" action="/adm_ytd_mantenimientos_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
                 {if $all_comments['error'] != true }
                     {foreach item=com from=$all_comments }
