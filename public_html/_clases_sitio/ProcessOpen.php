@@ -251,7 +251,7 @@ class ProcessOpen {
         if(!is_null($search_mant_cerrados)) {
             foreach($search_mant_cerrados as $k => $mant) {
                 $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], 'n');
-
+                // TODO: acá voy a tener que sacar los que no pertenezcan al área que los inició
                 
                 if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
                     $mantenimientos[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
