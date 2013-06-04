@@ -118,6 +118,17 @@ class _ProcessOpen {
         ";
     }
 
+    // Busca todos los recordatorios que ya fueron realizados, por lo tanto ya están en la tabla _recordatorio
+    //  IN:     (0->id_tabla_proc)
+    public  function search_recordatorios ($valores=NULL){
+        return "
+            SELECT *
+            FROM adm_ytd_mantenimiento_recordatorio
+            WHERE id_adm_ytd_mantenimientos_proc = $valores[0]
+            ; 
+        ";
+    }
+
 
 
 
