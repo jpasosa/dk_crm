@@ -250,12 +250,16 @@ class ProcessOpen {
             // echo 'ID_TABLA: ' , $mant['id_adm_ytd_mantenimientos'] , '<br />';
             $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], 'n');
             if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
-                $mantenimiento[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
-                $mantenimiento[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
-                $mantenimiento[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
-                $mantenimiento[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
-                $mantenimiento[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
+                $mantenimientos[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
+                $mantenimientos[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
+                $mantenimientos[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
+                $mantenimientos[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
+                $mantenimientos[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
             }
+        }
+
+        foreach($mantenimientos as $mant) {
+            
         }
         /*
         Busco registros en mente_recordatorio, relacionado con "id_mant_tabla_proc"
@@ -268,6 +272,10 @@ class ProcessOpen {
 
 
         */
+        $rec = ProcessMaint::CalculateMant('1/5/2013', '30/9/2014', 5, 3);
+
+
+       
         
         
 
