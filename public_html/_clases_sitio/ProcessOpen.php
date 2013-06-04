@@ -250,7 +250,6 @@ class ProcessOpen {
         $search_mant_cerrados = BDConsulta::consulta('search_mant_cerrados', array(), 'n');
         if(!is_null($search_mant_cerrados)) {
             foreach($search_mant_cerrados as $k => $mant) {
-                echo 'ID_TABLA: ' , $mant['id_adm_ytd_mantenimientos'] , '<br />';
                 $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], 'n');
 
                 
