@@ -1,12 +1,22 @@
-<link href="/css/formCommon.css" rel="stylesheet" type="text/css" />
 <link href="/css/adm_ytd_mantenimientos.css" rel="stylesheet" type="text/css" />
+<link href="/css/jquery-ui.css" rel="stylesheet" type="text/css" /><!-- para del datepicker -->
+<script> $(function() {$( "#fecha" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
+<script type="text/javascript" src="/js/meio.mask.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    jQuery(function($) {
+        $('input[name="costo"]').setMask();
+        $.mask.masks.decimal = {mask : '99,999999', type : 'reverse', defaultValue: '000'}
+        $('input[name="costo"]').setMask();
+        $.mask.masks = $.extend($.mask.masks, {decimal: { mask: '999' }});
+    });
+</script>
 
 <div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;">
 </div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
         <div class="flash_error"></div>
         <div class="flash_notice"></div>
-        {if $flash_error != '' } <div class="disp_error"> {$flash_error} </div>{/if}
+        {if $flash_error != '' }<div class="disp_error"> {$flash_error} </div>{/if}
         {if $flash_notice != '' }<div class="disp_notice"> {$flash_notice} </div>{/if}
         {template tpl="menu_izq"}
         <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
@@ -44,7 +54,7 @@
                     
 
 
-{if $files['error'] == false }
+                {if $files['error'] == false }
                     <div class="archivos">
                         {foreach item=n from=$files}
                             <div class="file">
@@ -77,68 +87,76 @@
 
 
                 <!-- traigo de la base de datos, los hoteles cargados -->
-                {foreach item=gd from=$gast_detalles }
+                {foreach item=rec from=$recordatorios }
                 <tr id="id_gastos-{$$gd[id]}">
-                    <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
-                    <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
-                    <td> <span class="detalle">{$$gd[detalle]}</span> </td>
-                    <td> <span class="proveedor">{$$gd[proveedor]}</span> </td>
-                    <td> <span class="mes">{$$gd[mes]}</span> </td>
-                    <td> <span class="monto">{$$gd[monto]}</span> </td>
-                    <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
+                    <td> <span class="cuenta">{$$rec[fecha]|date_format:"d/m/Y"}</span> </td>
+                    <td> <span class="descripcion">{$$rec[resultado]}</span> </td>
+                    <td> <span class="detalle">{$$rec[detalle]}</span> </td>
+                    <td> <span class="proveedor">{$$rec[costo]}</span> </td>
+                    <td> <span class="mes">{$$rec[archivo_1]}</span> </td>
                 </tr>
                 {/foreach}
             </table>
             
-            <hr />
-            <form class="box-coment" name="box_coment" action="/adm_ytd_mantenimientos_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
-                {if $all_comments['error'] != true }
-                    {foreach item=com from=$all_comments }
-                        <div class="coment_ant">
-                            <div class="fecha"> {$$com[fecha_alta]} </div>
-                            <div class="area"> {$$com[area]} </div>
-                            <div class="estado"> {$$com[estado]} </div>
-                            <div class="comentario"> {$$com[comentario]} </div>
-                        </div>
-                    {/foreach}
-                {else}
-                    No existen comentarios
-                {/if}
-                <div class="coment_actual">
-                    <div class="comentario">
-                        <div class="fecha"> {$date} </div>
-                        <div class="area"> {$area[0]['area']} </div>
-                        <label> Comentario: </label>
-                        <textarea name="comentario" rows="2" redonly="true"></textarea>
-                    </div>
-                    <div class="aceptar">
-                        <input name="aprobar" class="aprobar" type="submit" value="Aprobar" />
-                        {if $first_process != true}
-                            {if $repeat_process != true}
-                                <input name="solicitar_correccion" class="solicitar_correccion" type="submit" value="Solicitar Corrección" />
-                            {/if}
-                        {/if}
-                        {if $first_process != true }
-                            <input name="desaprobar" class="desaprobar" type="submit" value="Desaprobar" />
-                        {/if}
-                    </div>
+        <!-- MANTENIMIENTO -->
+        <form class="box-entrada" name="add_mantenimiento" action="/adm_ytd_mantenimientos_recordatorio/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+            <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
+                
+                <div class="fecha">
+                    <label> fecha: </label>
+                    <input name="fecha" class="fecha" type="text" value="{$costo}" id="fecha" alt="decimal" />
                 </div>
-            </form>
+                <div class="resultado">
+                    <label> resultado: </label>
+                    <input type="radio" name="resultado" id="correcto" value="1" />
+                    <label for="correcto">OK / Correcto</label>
+                    <input type="radio" name="resultado" id="incorrecto" value="0" />
+                    <label for="incorrecto">Mal</label>
+                </div>
+                
+                <div class="costo">
+                    <label> costo: </label>
+                    <input name="costo" class="costo" type="text" value="{$costo}" id="decimal" alt="decimal" />
+                </div>
+
+                <div class="detalle">
+                    <label> detalle: </label>
+                    <textarea name="detalle" class="detalle" type="text" value="{$comentario}"></textarea>
+                </div>
+                
+                <div class="archivo">
+                    <label class="block"> Archivo : </label>
+                    <input type="file" class="inline" name="archivo" value="" id="file"/>
+                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
+                </div>
+                <div class="archivos">
+                    {if $file != null }
+                        <div class="file">
+                            <a class="file_name" id="file_name-{$id_tabla}" href="/upload_archivos/adm_pedido_caja_chica/{$file}">
+                                <span>{$file}</span>
+                            </a>
+                            <a class="del_file" id="file-{$id_tabla}" href="#" style="float:left;">
+                                <img border="0" alt="quitar" src="/img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
+                            </a>
+                        </div>
+                    {/if}
+                </div>
+
+                 <input name="first_time" type="hidden" value="{$first_time}" />
+                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
+                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
+                 <input name="add_mant" class="add_mant" type="submit" value="Modificar Mantenimiento" />
+            </div>
+        </form>            
 
 
 
-            <form class="box-entrada" name="add_hotel" action="/adm_ytd_mantenimientos.html" method="post" enctype="multipart/form-data" >
+
+            <form class="box-entrada" name="add_hotel" action="/adm_ytd_mantenimientos_recordatorio/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
                 <div class="enviar_proceso">
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                    <input name="enviar" class="enviar" type="submit" value="Enviar al siguiente Paso" />
+                    <input name="cerrar_mant" class="enviar" type="submit" value="Cerrar Mantenimiento" />
                 </div>
             </form>
     </div>

@@ -3,15 +3,23 @@
 class ProcessMaint {    
 
     // Selecciona los recordatorios correspondientes a ese proceso. me pasan id_tabla de adm_ytd_mantenimietnos
-    public static function getRecordatorys($id_tabla, $debug = 'n') {
+    // y además debe controlar que pertenezca al área que lo comenzó, que es la que está logueada y me pasa como parámetro.
+    public static function getRecordatorys($id_tabla, $id_area, $debug = 'n') {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
         do {
             $first_proc = Process::getOnlyFirstProcess('adm_ytd_mantenimientos', $id_tabla, $deb);
             if(isset($first_proc['error']) && $first_proc['error'] == true) {
                 $notice_error = $first_proc['notice_error'];
+                $error = true;
                 break;
             }
+            if($first_proc['id_sis_areas'] != $id_area) { // selecciona los recordatorios que pertenezcan al área que está logueada.
+                $error = true;
+                $notice_error = 'pertenece a otra área';
+                break;
+            }
+            
         }while(0);
         
         if($error == false) {

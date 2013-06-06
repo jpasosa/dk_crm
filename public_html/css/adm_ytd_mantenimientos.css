@@ -75,6 +75,7 @@
 .box-entrada .box-entrada .archivo {
     float: left;
     width: 350px;
+    margin: 20px 0 0 20px;
 }
 
 .box-entrada .box-entrada .archivo label {
@@ -143,6 +144,72 @@ form .box-entrada .periodicidad input.periodicidad {
 
 
 
+/*PARA LOS RECORDATORIOS*/
+
+form .box-entrada .fecha {
+    width: 180px;
+    float: left;
+    margin: 10px 70px 0 20px;
+}
+
+form .box-entrada .fecha label {
+    width: 100%;
+}
+
+form .box-entrada .fecha input {
+    width: 150px;
+    margin: 10px 0 0 0;
+}
+
+form .box-entrada .resultado {
+    width: 180px;
+    float: left;
+    margin: 10px 0 0 0;
+}
+
+form .box-entrada .resultado label {
+    margin: 0 0 10px 0;
+    width: 100%;
+}
+
+form .box-entrada .resultado input {
+    
+}
+
+form .box-entrada .costo {
+    width: 180px;
+    float: left;
+    margin: 10px 0 0 0;
+}
+
+form .box-entrada .costo label {
+    width: 100%;
+}
+
+form .box-entrada .costo input {
+  width: 150px;  
+}
+
+
+
+form .box-entrada .detalle {
+    float: left;
+    margin: 10px 0 0 20px;
+}
+
+form .box-entrada .detalle label {
+    width: 100%;
+}
+
+form .box-entrada .detalle textarea {
+  width: 580px;  
+  height: 100px;
+  margin: 10px 0 0 0;
+}
+
+form .box-entrada input.add_mant {
+  margin: 55px 0 0 35px;  
+}
 
 
 

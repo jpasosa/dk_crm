@@ -11,6 +11,9 @@ $pr_proceso = $file[0];
 if(!stristr($pr_proceso, '_coment') === FALSE) { // si tiene _coment, debe eliminarlo, para escribir bien el proceso.
     $pr_proceso = str_replace('_coment', '', $pr_proceso);
 }
+if(!stristr($pr_proceso, '_recordatorio') === FALSE) { // si tiene _recordatorio, debe eliminarlo, para escribir bien el proceso.
+    $pr_proceso = str_replace('_recordatorio', '', $pr_proceso);
+}
 
 
 $id_tabla_proc = $_GET[1];    

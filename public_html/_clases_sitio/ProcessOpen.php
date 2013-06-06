@@ -250,9 +250,7 @@ class ProcessOpen {
         $search_mant_cerrados = BDConsulta::consulta('search_mant_cerrados', array(), 'n');
         if(!is_null($search_mant_cerrados)) {
             foreach($search_mant_cerrados as $k => $mant) {
-                $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], 'n');
-                // TODO: acá voy a tener que sacar los que no pertenezcan al área que los inició
-                
+                $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], $id_area, 'n');
                 if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
                     $mantenimientos[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
                     $mantenimientos[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
@@ -262,32 +260,32 @@ class ProcessOpen {
                     
                 }
             }
+            if(isset($mantenimientos)) {
+                    foreach($mantenimientos as $mant) {
+                        // Va a buscar los recordatorios que ya fueron realizados de cada mantenimiento
+                        $search_recordatorios = BDConsulta::consulta('search_recordatorios', array($mant['id_mant_tabla_proc']), 'n');
+                        if(!is_null($search_recordatorios)) { // HAY ya cargado algun mantenimiento hecho
+                                $last_recordatorio = end($search_recordatorios); // agarro ultimo mantenimiento
+                                $last_fecha_mant = $last_recordatorio['fecha'];
+                                $last_fecha_mant = Dates::ConvertToPhpdate($last_fecha_mant);
+                                $rec = ProcessMaint::CalculateMant($last_fecha_mant, $mant['period'], $mant['x_tiempo'], $mant['id_mant_tabla_proc']);
+                        }else{      // Aún no se hizo el primer Mantenimiento. 
+                            $fecha_inicio = Dates::ConvertToPhpdate($mant['fecha_inicio']);
+                            $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);             
+                        }
 
-            foreach($mantenimientos as $mant) {
-                // Va a buscar los recordatorios que ya fueron realizados de cada mantenimiento
-                $search_recordatorios = BDConsulta::consulta('search_recordatorios', array($mant['id_mant_tabla_proc']), 'n');
-                if(!is_null($search_recordatorios)) { // HAY ya cargado algun mantenimiento hecho
-                        $last_recordatorio = end($search_recordatorios); // agarro ultimo mantenimiento
-                        $last_fecha_mant = $last_recordatorio['fecha'];
-                        $last_fecha_mant = Dates::ConvertToPhpdate($last_fecha_mant);
-                        $rec = ProcessMaint::CalculateMant($last_fecha_mant, $mant['period'], $mant['x_tiempo'], $mant['id_mant_tabla_proc']);
-                }else{      // Aún no se hizo el primer Mantenimiento. 
-                    $fecha_inicio = Dates::ConvertToPhpdate($mant['fecha_inicio']);
-                    $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);             
-                }
-
-                foreach($rec['rojo'] as $rec_rojo) { // cargo ROJO en all_process
-                    array_push($all_process['rojo']['propia'], $rec_rojo);    
-                }
-                foreach($rec['amarillo'] as $rec_amarillo) { // cargo AMARILLO en all_process
-                    array_push($all_process['amarillo']['propia'], $rec_amarillo);    
-                }
-                foreach($rec['verde'] as $rec_verde) { // cargo VERDE en all_process
-                    array_push($all_process['verde']['propia'], $rec_verde);    
-                } 
-
-                
-            }
+                        foreach($rec['rojo'] as $rec_rojo) { // cargo ROJO en all_process
+                            array_push($all_process['rojo']['propia'], $rec_rojo);    
+                        }
+                        foreach($rec['amarillo'] as $rec_amarillo) { // cargo AMARILLO en all_process
+                            array_push($all_process['amarillo']['propia'], $rec_amarillo);    
+                        }
+                        foreach($rec['verde'] as $rec_verde) { // cargo VERDE en all_process
+                            array_push($all_process['verde']['propia'], $rec_verde);    
+                        } 
+                    }    
+            } // si estaba seteado mantenimientos
+            
 
         }
 
