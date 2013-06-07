@@ -104,44 +104,63 @@
                 
                 <div class="fecha">
                     <label> fecha: </label>
-                    <input name="fecha" class="fecha" type="text" value="{$costo}" id="fecha" alt="decimal" />
+                    {if $mant_actual[0]['fecha'] == '' }
+                        <input name="fecha" class="fecha" type="text" value="" id="fecha" alt="decimal" />
+                    {else}
+                        <input name="fecha" class="fecha" type="text" value="{$mant_actual[0][fecha]|date_format:"d/m/Y"}" id="fecha" alt="decimal" />
+                    {/if}
                 </div>
                 <div class="resultado">
                     <label> resultado: </label>
-                    <input type="radio" name="resultado" id="correcto" value="1" />
+                    <input type="radio" name="resultado" id="correcto" value="1" {if 1 == $mant_actual[0][resultado] } checked="checked" {/if} />
                     <label for="correcto">OK / Correcto</label>
-                    <input type="radio" name="resultado" id="incorrecto" value="0" />
+                    <input type="radio" name="resultado" id="incorrecto" value="0" {if 0 == $mant_actual[0][resultado] } checked="checked" {/if} />
                     <label for="incorrecto">Mal</label>
                 </div>
                 
                 <div class="costo">
                     <label> costo: </label>
-                    <input name="costo" class="costo" type="text" value="{$costo}" id="decimal" alt="decimal" />
+                    <input name="costo" class="costo" type="text" value="{$mant_actual[0][costo]}" id="decimal" alt="decimal" />
                 </div>
 
                 <div class="detalle">
                     <label> detalle: </label>
-                    <textarea name="detalle" class="detalle" type="text" value="{$comentario}"></textarea>
+                    <textarea name="detalle" class="detalle" type="text" >{$mant_actual[0][detalle]}</textarea>
                 </div>
                 
                 <div class="archivo">
                     <label class="block"> Archivo : </label>
                     <input type="file" class="inline" name="archivo" value="" id="file"/>
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
-                </div>
-                <div class="archivos">
-                    {if $file != null }
-                        <div class="file">
-                            <a class="file_name" id="file_name-{$id_tabla}" href="/upload_archivos/adm_pedido_caja_chica/{$file}">
-                                <span>{$file}</span>
-                            </a>
-                            <a class="del_file" id="file-{$id_tabla}" href="#" style="float:left;">
-                                <img border="0" alt="quitar" src="/img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/if}
+                    <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
 
+                <div class="archivos">
+                    <div class="file">
+                        <a class="file_name" href="/upload_archivos/adm_ytd_mantenimiento_recordatorio/{$files_mant[0]['archivo_1']}" target="_blank" >
+                            <span>{$files_mant[0]['archivo_1']}</span>
+                        </a>
+                    </div>
+                    <div class="file">
+                        <a class="file_name" href="/upload_archivos/adm_ytd_mantenimiento_recordatorio/{$files_mant[0]['archivo_2']}" target="_blank" >
+                            <span>{$files_mant[0]['archivo_2']}</span>
+                        </a>
+                    </div>
+                    <div class="file">
+                        <a class="file_name" href="/upload_archivos/adm_ytd_mantenimiento_recordatorio/{$files_mant[0]['archivo_3']}" target="_blank" >
+                            <span>{$files_mant[0]['archivo_3']}</span>
+                        </a>
+                    </div>
+                    <div class="file">
+                        <a class="file_name" href="/upload_archivos/adm_ytd_mantenimiento_recordatorio/{$files_mant[0]['archivo_4']}" target="_blank" >
+                            <span>{$files_mant[0]['archivo_4']}</span>
+                        </a>
+                    </div>
+                    <div class="file">
+                        <a class="file_name" href="/upload_archivos/adm_ytd_mantenimiento_recordatorio/{$files_mant[0]['archivo_5']}" target="_blank" >
+                            <span>{$files_mant[0]['archivo_5']}</span>
+                        </a>
+                    </div>
+                </div>
                  <input name="first_time" type="hidden" value="{$first_time}" />
                  <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                  <input name="id_tabla" type="hidden" value="{$id_tabla}" />

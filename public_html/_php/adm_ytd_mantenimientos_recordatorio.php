@@ -7,8 +7,9 @@ if($_GET[1] != '' && $_GET[1] > 0):
     if(isset($_POST['add_mant'])):
        
         $fecha = trim($_POST['fecha']);                                  
-        $resultado = 'pepe';                                  
-        $costo = trim($_POST['costo']);                                  
+        $resultado = $_POST['resultado'];
+        $costo = trim($_POST['costo']);
+        $costo = Common::PutDot($costo);                             
         $detalle = trim($_POST['detalle']);                                  
         $first_time  = $_POST['first_time'];
         $id_tabla_proc  = $_POST['id_tabla_proc'];
@@ -23,48 +24,79 @@ if($_GET[1] != '' && $_GET[1] > 0):
                                             array('field' => $fecha, 'null' => false, 'validation' => 'is_day_off', 'notice_error' => 'La fecha de inicio cae un feriado.',
                                                         'extra' => '1')
                                             ));
-                    
                     if($validations['error'] == true) {
-                        
                        $flash_error = $validations['notice_error'];
                         break; 
                     }
-
-                    // Common::CreateMantRecordat();
+                    $fecha_unix = Dates::ConvertToUnix($fecha);
                     if($first_time == 'true' ) { // 1era VEZ que crea el MANTENIMIENTO
-                        $insert_record = BDConsulta::consulta('insert_record', array($id_tabla_proc, $resultado, $detalle, $costo, $fecha), 'n');
-                        var_dump($insert_record);die();
-
-
-                        if($new_process['error'] == true) {
-                            $flash_error = $new_process['notice_error'];
+                        $insert_record = BDConsulta::consulta('insert_record', array($id_tabla_proc, $resultado, $detalle, $costo, $fecha_unix), 's');
+                        if(is_null($insert_record)) {
+                            $flash_error = 'No pudo insertar el mantenimiento';
                             break;
                         }
-                        $id_tabla_proc = $new_process['id_tabla_proc'];     $id_tabla = $new_process['id_tabla'];
-                        $tpl->asignar('id_tabla_proc', $id_tabla_proc);       $tpl->asignar('id_tabla', $new_process['id_tabla']);
-                        $update_princ = Process::UpdatePrinc('', $id_tabla, $observaciones, 'n');
-                        if($update_princ['error'] == true){
-                            $flash_error = $update_princ['notice_error'];
-                        }
-                        $update_mant = BDConsulta::consulta('update_mant', array($id_tabla, $asunto, $observaciones, $fecha_inicio_unix, $periodicidad, $x_tiempo), 'n');
-                        if(is_null($update_mant)) {
-                            $flash_error = 'No pudo hacer la actualización del mantenimiento.';
-                            break;
-                        }
-                        $flash_notice = $update_princ['notice_success'];
+                        $id_tabla = $insert_record; 
+                        $flash_notice = 'Cargado nuevo mantenimiento correctamente';
                         $first_time = 'false';
                     }else{ // MODIFICA el MANTENIMIENTO
-                        $update_mant = BDConsulta::consulta('update_mant', array($id_tabla, $asunto, $observaciones, $fecha_inicio_unix, $periodicidad, $x_tiempo), 'n');
-                        if(is_null($update_mant)) {
+                        $update_record = BDConsulta::consulta('update_record', array($id_tabla, $resultado, $detalle, $costo, $fecha_unix), 's');
+                        if(is_null($update_record)) {
                             $flash_error = 'No pudo hacer la actualización del mantenimiento.';
                             break;
                         }
                         $flash_notice = 'Registro modificado correctamente';
                     }
             } while (0);
+            $tpl->asignar('id_tabla_proc', $id_tabla_proc);
+            $tpl->asignar('id_tabla', $id_tabla);
             $tpl->asignar('first_time', $first_time);
     endif;
      ///////////////////////////////// FIN DE POST, del FORM de agregar el mantenimiento principal  //////////////////////////////////
+
+     ///////////  Por POST, del FORM. SUBIDA DE ARCHIVOS.////////////////////////////////// (pertenece también a la tabla principal)
+    if(isset($_POST['subir_archivo'])):
+        $id_tabla_proc = $_POST['id_tabla_proc'];
+        $id_tabla = $_POST['id_tabla'];
+        $first_time = $_POST['first_time'];
+        do {
+            if($first_time == 'true'):
+                    $flash_error = 'Debe cargar primero el mantenimiento.';
+                    break;
+            endif;
+            $file = $_FILES['archivo'];
+            
+            $ver_arch_libres = BDConsulta::consulta('ver_arch_libres', array($id_tabla), 'n'); 
+            if(is_null($ver_arch_libres)) {
+                $flash_error = 'No se pudo recuperar el mantenimiento';
+                break;
+            }
+            if($ver_arch_libres[0]['archivo_1'] == '') {    // Tengo que controlar que archivo está sin subir
+                $archivo = '1';
+            }elseif($ver_arch_libres[0]['archivo_2'] == '') {
+                $archivo = '2';
+            }elseif($ver_arch_libres[0]['archivo_3'] == '') {
+                $archivo = '3';
+            }elseif($ver_arch_libres[0]['archivo_4'] == '') {
+                $archivo = '4';
+            }elseif($ver_arch_libres[0]['archivo_5'] == '') {
+                $archivo = '5';
+            }else{
+                $flash_error = 'No se pueden subir más archivos';
+                break;
+            }
+            $file_upload = ProcessFiles::FileUploadOnePrinc('adm_ytd_mantenimiento_recordatorio', 'archivo_' . $archivo, $id_tabla, $file, 'n', true);
+            if($file_upload['error'] == true) {
+                $flash_error = $file_upload['notice_error'];
+                break;
+            }
+            $flash_notice = $file_upload['notice_success'];
+        }while(0);
+        $tpl->asignar('first_time', $first_time);
+        $tpl->asignar('id_tabla', $id_tabla);
+        $tpl->asignar('id_tabla_proc', $id_tabla_proc);
+    endif;
+
+
 
      // RESETS
     if(!isset($id_tabla_proc))                  $id_tabla_proc = -10;
@@ -78,13 +110,16 @@ if($_GET[1] != '' && $_GET[1] > 0):
     // // NOMBRE DE ARCHIVOS CARGADOS
     $files = Process::getFiles('adm_ytd_mantenimientos', $id_tabla_proc);
     $tpl->asignar('files', $files);
-    // MANTENIMIENTOS REALIZADOS
+    // MANTENIMIENTOS YA REALIZADOS
     $get_recordatorios = BDConsulta::consulta('get_recordatorios', array($id_tabla_proc), 'n');
     $tpl->asignar('recordatorios', $get_recordatorios);
+    // MANTENIMIENTO ACTUAL
+    $get_actual = BDConsulta::consulta('get_actual', array($id_tabla), 'n');
+    $tpl->asignar('mant_actual', $get_actual);
+    // ARCHIVOS DEL MANTENIMIENTO ACTUAL Q CARGO
+    $archivos_mant = BDConsulta::consulta('archivos_mant', array($id_tabla), 'n');
+    $tpl->asignar('files_mant', $archivos_mant);
     require_once '_php/forms_end_coment.php';
-    
-
-    
     $tpl->obtenerPlantilla();
     unset($flash_error);
     unset($flash_notice);

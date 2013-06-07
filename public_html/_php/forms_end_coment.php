@@ -55,9 +55,13 @@ if(isset($_POST['comentario']) && $_POST['comentario'] != '' &&
 
 // Cierro un mantenimiento (caso especial en los recordatorios de los mantenimientos)
 if(isset($_POST['cerrar_mant'])) {
-    // cierra el mantenimiento
-    header('Location: /mant_cerrado.html');
-    exit();  
+    $update_cierre = BDConsulta::consulta('update_cierre', array($_POST['id_tabla']), 'n');
+    if(!is_null($update_cierre)) {
+        header('Location: /mant_cerrado.html');
+        exit();    
+    }else{
+        $flash_error = 'No pudo hacer el cierre del mantenimiento cargado.';
+    }
 }
 
 $tpl->asignar('flash_error', $flash_error);
