@@ -12,7 +12,7 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Alta de Clientes</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
                 <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
                     <div class="izq ultimoElement">
@@ -47,9 +47,13 @@
                             </select>
                         </div>
                     </div>
-                </div>    
+                <div class="observacionesChico clear">
+                    <label> Observaciones: </label>
+                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                </div> 
+                </div>   
         </form>
-        <p>Sucursales</p>
+        <p class="azul bold">SUCURSALES</p>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
                 <td width="188" bgcolor="#4685CA"><p class="blanco">Nombre </p></td>
@@ -68,9 +72,9 @@
         </table>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario marginTop20">
             <tr>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Nombre</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Apellido</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sucursal</p></td>
-                <td width="120" align="left" bgcolor="#4685CA"><p class="blanco">Mail</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sector</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Puesto</p></td>
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
@@ -78,9 +82,9 @@
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
+                        <td> <span>{$$ts[nombre]}</span></td>
                         <td><span>{$$ts[apellido]}</span></td>
                         <td> <span>{$$ts[sucursal]}</span></td>
-                        <td> <span>{$$ts[mail]}</span></td>
                         <td> <span>{$$ts[sector]}</span></td>
                         <td> <span>{$$ts[puesto]}</span></td>
                         <td>

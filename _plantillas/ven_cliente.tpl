@@ -18,41 +18,46 @@
                     <div class="izq">
                         <div class="campania">
                             <label> Empresa: </label>
-                            <input name="empresa" type="text" value="{$empresa}"  />
+                            <input name="empresa" type="text" value="{$tabla[0]['empresa']}"  />
                         </div>
                         <div class="campania">
                             <label> Sitio Web: </label>
-                            <input name="sitioWeb" type="text" value="{$sitioWeb}"  />
+                            <input name="sitio" type="text" value="{$tabla[0]['sitio_web']}"  />
                         </div>
                         <div class="campania">
                             <label> CUIT: </label>
-                            <input name="cuit" type="text" value="{$cuit}"  />
+                            <input name="cuit" type="text" value="{$tabla[0]['identificacion_tributaria']}"  />
                         </div>
                     </div>
                     <div class="der">
                         <div class="campania">
                             <label> Teléfono: </label>
-                            <input name="telefono" type="text" value="{$telefono}"  />
+                            <input name="telefono" type="text" value="{$tabla[0]['telefono']}"  />
                         </div>
                         <div class="campania">
                             <label> Mail solicitante: </label>
-                            <input name="mail" type="text" value="{$mail}"  />
+                            <input name="mail" type="text" value="{$tabla[0]['mail_solicitante']}"  />
                         </div>
                         <div class="campania">
                             <label> País / Ciudad: </label>
-                            <select name="pais">
-                                <option>OPTION 1</option>
-                                <option>OPTION 1</option>
-                                <option>OPTION 1</option>
+                            <select name="provincia">
+                                {foreach item=pais from=$paises}
+                                    <option value="{$$pais[id_sis_provincia]}" {if $$pais['id_sis_provincia'] == $tabla[0]['id_sis_provincia'] } selected {/if}> {$$pais[pais]} | {$$pais[provincia]}  </option>
+                                {/foreach}    
                             </select>
                         </div>
                     </div>
+                    <div class="observacionesChico clear">
+                    <label> Observaciones: </label>
+                    <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    </div>
+                    <input name="first_time" type="hidden" value="{$first_time}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                    <input type="submit" id="agregar" value="Agregar"/>
+                    <input type="submit" name="agregar" class="agregar" value="Agregar"/>
                 </div>    
         </form>
-        <p>Sucursales</p>
+        <p class="azul bold">SUCURSALES</p>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
                 <td width="188" bgcolor="#4685CA"><p class="blanco">Nombre </p></td>
@@ -74,7 +79,7 @@
                     <div class="izq">
                         <div class="campania">
                             <label> Nombre: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <input name="nombre" type="text" value="{$nombre}"  />
                         </div>
                         <div class="campania">
                             <label> Teléfono: </label>
@@ -87,16 +92,17 @@
                             <input name="direccion" type="text" value="{$direccion}"  />
                         </div>
                     </div>
+                    <input name="first_time" type="hidden" value="{$first_time}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                    <input type="submit" id="agregar" value="Agregar"/>
+                    <input type="submit" name="agregar_suc" class="agregar" value="Agregar"/>
                 </div>    
         </form>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Nombre</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Apellido</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sucursal</p></td>
-                <td width="120" align="left" bgcolor="#4685CA"><p class="blanco">Mail</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sector</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Puesto</p></td>
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
@@ -104,9 +110,9 @@
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
+                        <td> <span>{$$ts[nombre]}</span></td>
                         <td><span>{$$ts[apellido]}</span></td>
                         <td> <span>{$$ts[sucursal]}</span></td>
-                        <td> <span>{$$ts[mail]}</span></td>
                         <td> <span>{$$ts[sector]}</span></td>
                         <td> <span>{$$ts[puesto]}</span></td>
                         <td>
@@ -126,7 +132,7 @@
                     <div class="izq">
                         <div class="campania">
                             <label> Nombre: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <input name="nombre" type="text" value="{$nombre}"  />
                         </div>
                         <div class="campania">
                             <label> Apellido: </label>
@@ -134,7 +140,7 @@
                         </div>
                         <div class="campania">
                             <label> Sucursal:  </label>
-                            <select name="pais">
+                            <select name="sucursal">
                                 <option>OPTION 1</option>
                                 <option>OPTION 1</option>
                                 <option>OPTION 1</option>
@@ -142,34 +148,33 @@
                         </div>
                         <div class="campania">
                             <label> Mail: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <input name="mail" type="text" value="{$mail}"  />
                         </div>
                     </div>
                     <div class="der">
                         <div class="campania">
                             <label> Teléfono: </label>
-                            <input name="direccion" type="text" value="{$direccion}"  />
+                            <input name="telefono" type="text" value="{$telefono}"  />
                         </div>
                         <div class="campania">
                             <label> Celular: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <input name="celular" type="text" value="{$celular}"  />
                         </div>
                         <div class="campania">
-                            <label> Nombre: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <label> Sector: </label>
+                            <input name="sector" type="text" value="{$Sector}"  />
                         </div>
                         <div class="campania">
-                            <label> Nombre: </label>
-                            <input name="nomre" type="text" value="{$nombre}"  />
+                            <label> Puesto: </label>
+                            <input name="puesto" type="text" value="{$Puesto}"  />
                         </div>
 
                     </div>
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                    <input type="submit" id="agregar" value="Agregar"/>
+                    <input type="submit" class="agregar" value="Agregar"/>
                 </div>    
         </form>
-
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
