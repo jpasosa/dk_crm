@@ -181,7 +181,8 @@ class PlantillaReemplazos extends PlantillaFunciones {
 
 			if( $imprimir===true){
 				// para armar la plantilla
-				eval("?>".$plantilla."<?");
+                                                /* eval("?>".$plantilla."<?");    (esto me rompia las plantillas en firefox 21 y chrome 27)*/
+				eval("?>".$plantilla."");
 				/* // descomentar para controlar los problemas en la plantilla
 				echo $plantilla;
 				// */
