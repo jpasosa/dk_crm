@@ -160,7 +160,7 @@
             </tr>
             {foreach item=proc from=$all_proc[azul] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_fin]}</td>
                     <td align="center" class="txt11">{$$proc[aprobada]}</td>

@@ -20,7 +20,7 @@
     <li><a href="#" class="blanco  underline">Recuperar Contraseña</a></li>
   </ul>
   <ul style="position:absolute; left:170px; top:81px;">
-    <li><a href="#" class="celeste3 bold  underline">GRACHI&reg;</a></li>
-    <li><a href="#" class="celeste3 bold underline">ANGRY BIRDS&reg;</a></li>
+    <li><a href="#" class="celeste3 bold  underline">GRACHI®</a></li>
+    <li><a href="#" class="celeste3 bold underline">ANGRY BIRDS®</a></li>
   </ul>
 </div>
