@@ -1,7 +1,7 @@
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
-<div id="fondoCatalogo" style="background:url(img/fondos/bg_cuenta.jpg) center top repeat-y;">
+<div style="width:994px; height:23px; background:url(/img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+<div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
     {template tpl="menu_izq"}
-    <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
+    <div id="derecha" class="catalogo" style="background:url(/img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
         <hr />
         <h1 class="azul bold">{$id_area_nombre}</h1>
@@ -42,7 +42,7 @@
             </tr>
             {foreach item=proc from=$all_proc[rojo][terceros] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_vence]}</td>
                     <td align="center" class="txt11">{$$proc[pasaron_dias]}</td>
@@ -167,26 +167,6 @@
                 </tr>
             {/foreach}
         </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
     <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
     <br style="clear:both;" />

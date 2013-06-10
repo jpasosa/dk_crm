@@ -20,7 +20,8 @@ if ($desarrollo['mostrar_errores'] === false) {
     error_reporting(0);
 } elseif ($desarrollo['mostrar_errores'] === true) {
     ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+    // error_reporting(E_ALL);
+    error_reporting(E_ALL & E_DEPRECATED & ~E_STRICT); // no muestre los estrictos
 }
 
 // para que ciertas funciones se realicen en UTF-8
