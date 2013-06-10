@@ -70,7 +70,7 @@
             </tr>
             {foreach item=proc from=$all_proc[amarillo][propia] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_vence]}</td>
                     <td align="center" class="txt11">{$$proc[restan_dias]}</td>
@@ -87,7 +87,7 @@
             </tr>
             {foreach item=proc from=$all_proc[amarillo][terceros] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_vence]}</td>
                     <td align="center" class="txt11">{$$proc[restan_dias]}</td>
@@ -120,7 +120,7 @@
             </tr>
             {foreach item=proc from=$all_proc[verde][propia] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_vence]}</td>
                     <td align="center" class="txt11">{$$proc[restan_dias]}</td>
@@ -138,7 +138,7 @@
             </tr>
             {foreach item=proc from=$all_proc[verde][terceros] }
                 <tr>
-                    <td><a style="color:#4B4B4B;"href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
+                    <td><a style="color:#4B4B4B;" href="/{$$proc[proceso_proceso]}/{$$proc[id_tabla_proc]}.html">{$$proc[proceso_nombre]}</a></td>
                     <td align="center" class="txt11">{$$proc[fecha_inicio]}</td>
                     <td align="center" class="txt11">{$$proc[fecha_vence]}</td>
                     <td align="center" class="txt11">{$$proc[restan_dias]}</td>
