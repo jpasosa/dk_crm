@@ -18,25 +18,25 @@
                     <div class="izq ultimoElement">
                         <div class="campania">
                             <label> Empresa: </label>
-                            <input readonly="yes" name="empresa" type="text" value="{$empresa}"  />
+                            <input readonly="readonly" name="empresa" type="text" value="{$tabla[0][empresa]}"  />
                         </div>
                         <div class="campania">
                             <label> Sitio Web: </label>
-                            <input readonly="yes" name="sitioWeb" type="text" value="{$sitioWeb}"  />
+                            <input readonly="readonly" name="sitioWeb" type="text" value="{$tabla[0][sitio_web]}"  />
                         </div>
                         <div class="campania">
                             <label> CUIT: </label>
-                            <input readonly="yes" name="cuit" type="text" value="{$cuit}"  />
+                            <input readonly="readonly" name="cuit" type="text" value="{$tabla[0][identificacion_tributaria]}"  />
                         </div>
                     </div>
                     <div class="der ultimoElement">
                         <div class="campania">
                             <label> Teléfono: </label>
-                            <input readonly="yes" name="telefono" type="text" value="{$telefono}"  />
+                            <input readonly="readonly" name="telefono" type="text" value="{$tabla[0][telefono]}"  />
                         </div>
                         <div class="campania">
                             <label> Mail solicitante: </label>
-                            <input readonly="yes" name="mail" type="text" value="{$mail}"  />
+                            <input readonly="readonly" name="mail" type="text" value="{$tabla[0][mail_solicitante]}"  />
                         </div>
                         <div class="campania">
                             <label> País / Ciudad: </label>
@@ -49,7 +49,7 @@
                     </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div> 
                 </div>   
         </form>
@@ -61,9 +61,9 @@
                 <td width="149" align="left" bgcolor="#4685CA"><p class="blanco">Teléfono</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
-                {foreach item=ts from=$tabla_sec }
+                {foreach item=ts from=$tabla_suc }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>{$$ts[nombre]}</span></td>
+                        <td><span>{$$ts[nombre_sucursal]}</span></td>
                         <td><span>{$$ts[direccion]}</span></td>
                         <td> <span>{$$ts[telefono]}</span></td>
                     </tr>
