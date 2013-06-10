@@ -72,9 +72,9 @@
             <!-- {if $tabla_sec['error'] == false } -->
                 {foreach item=ts from=$tabla_suc }
                     <tr id="id_suc-{$$ts[id_ven_cliente_sucursales]}">
-                        <td><span>{$$ts[nombre_sucursal]}</span></td>
-                        <td><span>{$$ts[direccion]}</span></td>
-                        <td> <span>{$$ts[telefono]}</span></td>
+                        <td><span class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
+                        <td><span class="direccion">{$$ts[direccion]}</span></td>
+                        <td> <span class="telefono">{$$ts[telefono]}</span></td>
                         <td>
                             <a href="#">
                                 <img id="id_suc-{$$ts[id_ven_cliente_sucursales]}" class="del_suc" src="/img/iconos/delete.gif" alt="quitar" border="0" />
@@ -93,17 +93,17 @@
                 <div class="izq">
                     <div class="campania">
                         <label> Nombre: </label>
-                        <input name="nombre" type="text" value="{$nombre}"  />
+                        <input name="nombre" class="nombre_sucursal" type="text" value="{$nombre}"  />
                     </div>
                     <div class="campania">
                         <label> Teléfono: </label>
-                        <input name="telefono" type="text" value="{$telefono}"  />
+                        <input name="telefono" class="telefono" type="text" value="{$telefono}"  />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label> Dirección: </label>
-                        <input name="direccion" type="text" value="{$direccion}"  />
+                        <input name="direccion" class="direccion" type="text" value="{$direccion}"  />
                     </div>
                 </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
@@ -127,18 +127,18 @@
             </tr>
             <!-- {if $tabla_sec['error'] == false } -->
                 {foreach item=ts from=$tabla_contactos }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td> <span>{$$ts[nombre]}</span></td>
-                        <td><span>{$$ts[apellido]}</span></td>
-                        <td> <span>{$$ts[nombre_sucursal]}</span></td>
-                        <td> <span>{$$ts[sector]}</span></td>
-                        <td> <span>{$$ts[puesto]}</span></td>
+                    <tr id="id_contacto-{$$ts[id_ven_cliente_contacto]}">
+                        <td> <span class="nombre" title="{$$ts[mail]} | {$$ts[telefono_contacto]} | {$$ts[celular]}">{$$ts[nombre]}</span></td>
+                        <td><span class="apellido">{$$ts[apellido]}</span></td>
+                        <td> <span id="{$$ts[id_ven_cliente_sucursales]}" class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
+                        <td> <span class="sector">{$$ts[sector]}</span></td>
+                        <td> <span class="puesto">{$$ts[puesto]}</span></td>
                         <td>
                         <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
+                            <img id="id_contacto-{$$ts[id_ven_cliente_contacto]}" class="del_contacto" src="img/iconos/delete.gif" alt="quitar" border="0" />
                         </a> 
                         <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
+                            <img id="id_contacto-{$$ts[id_ven_cliente_contacto]}" class="edit_contacto" src="img/iconos/edit.gif" alt="editar" border="0" />
                         </a>
                     </td>
                     </tr>
@@ -151,15 +151,15 @@
                 <div class="izq">
                     <div class="campania">
                         <label> Nombre: </label>
-                        <input name="nombre" type="text" value="{$nombre}"  />
+                        <input name="nombre" class="nombre_cont" type="text" value="{$nombre}"  />
                     </div>
                     <div class="campania">
                         <label> Apellido: </label>
-                        <input name="apellido" type="text" value="{$telefono}"  />
+                        <input name="apellido" class="apellido_cont" type="text" value="{$telefono}"  />
                     </div>
                     <div class="campania">
                         <label> Sucursal:  </label>
-                        <select name="sucursal">
+                        <select name="sucursal" class="sucursal">
                             {foreach item=suc from=$select_suc}
                                 <option value="{$$suc[id]}"> {$$suc[nombre]} </option>
                             {/foreach}
@@ -167,25 +167,25 @@
                     </div>
                     <div class="campania">
                         <label> Mail: </label>
-                        <input name="mail" type="text" value="{$mail}"  />
+                        <input name="mail" class="mail_cont" type="text" value="{$mail}"  />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label> Teléfono: </label>
-                        <input name="telefono" type="text" value="{$telefono}"  />
+                        <input name="telefono" class="telefono_cont" type="text" value="{$telefono}"  />
                     </div>
                     <div class="campania">
                         <label> Celular: </label>
-                        <input name="celular" type="text" value="{$celular}"  />
+                        <input name="celular" class="celular_cont" type="text" value="{$celular}"  />
                     </div>
                     <div class="campania">
                         <label> Sector: </label>
-                        <input name="sector" type="text" value="{$Sector}"  />
+                        <input name="sector" class="sector" type="text" value="{$Sector}"  />
                     </div>
                     <div class="campania">
                         <label> Puesto: </label>
-                        <input name="puesto" type="text" value="{$Puesto}"  />
+                        <input name="puesto" class="puesto" type="text" value="{$Puesto}"  />
                     </div>
 
                 </div>
@@ -195,7 +195,7 @@
                 <input type="submit" name="agregar_contacto" class="agregar" value="Agregar" />
             </div>    
         </form>
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />

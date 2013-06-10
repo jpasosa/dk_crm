@@ -42,6 +42,7 @@ class ven_cliente extends FormCommon {
             SELECT *
             FROM ven_cliente_sucursales
             WHERE id_ven_cliente = $valores[0]
+                        AND activo = 1
             ;
         ";
     }
@@ -51,12 +52,12 @@ class ven_cliente extends FormCommon {
     //  IN:     (0->id_tabla, que es id_ven_cliente)
     public  function get_tabla_contactos ($valores=NULL){
         return "
-            SELECT *
+            SELECT *, cont.telefono AS telefono_contacto, suc.telefono AS telefono_sucursal
             FROM ven_cliente_contacto AS cont
             JOIN ven_cliente_sucursales AS suc
                 ON cont.id_ven_cliente_sucursales=suc.id_ven_cliente_sucursales
             WHERE suc.id_ven_cliente = $valores[0]
-                        AND suc.activo=1
+                        AND cont.activo=1
             ;
         ";
     }
@@ -69,6 +70,7 @@ class ven_cliente extends FormCommon {
             SELECT id_ven_cliente_sucursales AS id, nombre_sucursal AS nombre
             FROM ven_cliente_sucursales
             WHERE id_ven_cliente = $valores[0]
+                        AND activo = 1
             ;
         ";
     }

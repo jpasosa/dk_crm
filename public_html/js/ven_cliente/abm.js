@@ -27,7 +27,7 @@ $(document).ready(function() {
         }
     });
 
-    //##### ELIMINAR EN GASTOS  #########
+    //##### ELIMINAR SUCURSALES  #########
     $("body").on("click", ".del_suc", function(delRef) {
         delRef.returnValue = false;
         var clickedID = this.id.split('-');
@@ -54,44 +54,104 @@ $(document).ready(function() {
     });
 
     
-    //##### EDITAR EN GASTOS  #########
-    $("body").on("click", ".edit_gasto", function(e) {
+    //##### EDITAR SUCURSALES  #########
+    $("body").on("click", ".edit_suc", function(e) {
         e.returnValue = false;
         var clickedID = this.id.split('-');
-        var id_gasto = id_gasto_edit = clickedID[1];
-        var selector = "tr#id_gastos-" + id_gasto + " td span.cuenta";
-        var cuenta = $(selector).text();
-        var selector = "tr#id_gastos-" + id_gasto + " td span.descripcion";
-        var descripcion = $(selector).text();
-        var selector = "tr#id_gastos-" + id_gasto + " td span.detalle";
-        var detalle = $(selector).text();
-        var proveedor = $("tr#id_gastos-" + id_gasto + " td span.proveedor").attr('id');
-        var selector = "tr#id_gastos-" + id_gasto + " td span.factura";
-        var factura = $(selector).text();
-        var area = $("tr#id_gastos-" + id_gasto + " td span.area").attr('id');
-        var selector = "tr#id_gastos-" + id_gasto + " td span.monto";
-        var monto = $(selector).text();
-        var selector_area = "select.area option[value=" + area + "]";
-        var selector_proveedor = "select.proveedor option[value=" + proveedor + "]";
+        var id_suc = id_suc_edit = clickedID[1];
+        var selector = "tr#id_suc-" + id_suc + " td span.nombre_sucursal";
+        var nombre_sucursal = $(selector).text();
+        var selector = "tr#id_suc-" + id_suc + " td span.direccion";
+        var direccion = $(selector).text();
+        var selector = "tr#id_suc-" + id_suc + " td span.telefono";
+        var telefono = $(selector).text();
         jQuery.ajax({
                 type: "POST", 
-                url: "/adm_pedido_caja_chica.html",
+                url: "/ven_cliente.html",
                 dataType: "text",
                 data: {
-                    id_gasto_edit: id_gasto_edit,
-                    area: area,
-                    proveedor: proveedor
+                    id_suc_edit: id_suc_edit
                 },
                 success:function(response){
-                    $("input.cuenta").val(cuenta);
-                    $("input.descripcion").val(descripcion);
-                    $("input.detalle").val(detalle);
-                    $("input.factura").val(factura);
-                    $("input.monto").val(monto);
-                    $(selector_area).attr('selected','selected');
-                    $(selector_proveedor).attr('selected','selected');
-                    $("input.cuenta").focus();
-                    $('tr#id_gastos-'+id_gasto_edit).fadeOut("slow");
+                    $("input.nombre_sucursal").val(nombre_sucursal);
+                    $("input.direccion").val(direccion);
+                    $("input.telefono").val(telefono);
+                    $("input.nombre_sucursal").focus();
+                    $('tr#id_suc-'+id_suc_edit).fadeOut("slow");
+                    // $(".registros").append(response);
+                },
+                error:function (xhr, ajaxOptions, thrownError){
+                    alert(thrownError);
+                }
+        });
+    });
+
+    //##### ELIMINAR CONTACTOS  #########
+    $("body").on("click", ".del_contacto", function(delRef) {
+        delRef.returnValue = false;
+        var clickedID = this.id.split('-');
+        var id_contacto_del = clickedID[1];
+        if (confirm('Seguro de eliminarlo?')) {
+                jQuery.ajax({ 
+                        type: "POST", 
+                        url: "/ven_cliente.html",
+                        dataType: "text",
+                        data: {
+                            id_contacto_del: id_contacto_del
+                        },
+                        success:function(response, status, xhr){
+                            $('tr#id_contacto-'+id_contacto_del).fadeOut("slow");
+                            FlashMessFull(xhr.getResponseHeader("success_query"), 'El contacto fue eliminado con éxito', 'El contacto no pudo ser eliminado.', false, false)
+                        },
+                        error:function (xhr, ajaxOptions, thrownError){
+                            alert(thrownError);
+                        }
+                });
+        }
+        // location.reload();
+        // $("input.hotel").focus();
+    });
+
+    //##### EDITAR CONTACTOS  #########
+    $("body").on("click", ".edit_contacto", function(e) {
+        e.returnValue = false;
+        var clickedID = this.id.split('-');
+        var id_contacto = id_contacto_edit = clickedID[1];
+        var selector = "tr#id_contacto-" + id_contacto + " td span.nombre";
+        var nombre = $(selector).text();
+        var selector = "tr#id_contacto-" + id_contacto + " td span.apellido";
+        var apellido = $(selector).text();
+        var selector = "tr#id_contacto-" + id_contacto + " td span.sector";
+        var sector = $(selector).text();
+        var selector = "tr#id_contacto-" + id_contacto + " td span.puesto";
+        var puesto = $(selector).text();
+        var selector = "tr#id_contacto-" + id_contacto + " td span.nombre";
+        var datos = $(selector).attr('title');
+        var datos_separados = datos.split('|');
+        var mail = datos_separados[0];
+        var telefono = datos_separados[1];
+        var celular = datos_separados[2];
+        var selector = "tr#id_contacto-" + id_contacto + " td span.nombre_sucursal";
+        var id_sucursal = $(selector).attr('id');
+        var selector_sucursal = "select.sucursal option[value=" + id_sucursal + "]";
+        jQuery.ajax({
+                type: "POST", 
+                url: "/ven_cliente.html",
+                dataType: "text",
+                data: {
+                    id_contacto_edit: id_contacto_edit
+                },
+                success:function(response){
+                    $("input.nombre_cont").val(nombre);
+                    $("input.apellido_cont").val(apellido);
+                    $("input.sector").val(sector);
+                    $("input.puesto").val(puesto);
+                    $("input.celular_cont").val(celular);
+                    $("input.telefono_cont").val(telefono);
+                    $("input.mail_cont").val(mail);
+                    $(selector_sucursal).attr('selected','selected');
+                    $("input.nombre_cont").focus();
+                    $('tr#id_contacto-'+id_contacto_edit).fadeOut("slow");
                     // $(".registros").append(response);
                 },
                 error:function (xhr, ajaxOptions, thrownError){

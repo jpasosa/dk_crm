@@ -5,14 +5,24 @@ require_once '_php/forms_start.php';
 
 
 //////////////////////////////////////////////////////////////////////////////      AJAX      ////////////////////////////////////////
-if(isset($_POST['id_suc_del']) && $_POST['id_suc_del'] > 0):  // ELIMINAR item tabla secundaria
+if(isset($_POST['id_suc_del']) && $_POST['id_suc_del'] > 0):  // ELIMINAR una SUCURSAL
         $id_tabla_sec = $_POST['id_suc_del'];
         $del_tabla_sec = Process::DeleteSec('', 'sucursales', $id_tabla_sec);
         FormCommon::queryRespHeader($del_tabla_sec);
 endif;
-if(isset($_POST['id_tabla_sec_edit']) && $_POST['id_tabla_sec_edit'] > 0): // EDITAR  item tabla secundaria
-        $id_tabla_sec_edit = $_POST['id_tabla_sec_edit'];
-        $edit_tabla_sec = Process::ModifySec('', 'prod', $id_tabla_sec_edit);
+if(isset($_POST['id_suc_edit']) && $_POST['id_suc_edit'] > 0): // EDITAR una SUCURSAL
+        $id_tabla_sec_edit = $_POST['id_suc_edit'];
+        $edit_tabla_sec = Process::ModifySec('', 'sucursales', $id_tabla_sec_edit);
+        FormCommon::queryRespHeader($edit_tabla_sec);
+endif;
+if(isset($_POST['id_contacto_del']) && $_POST['id_contacto_del'] > 0):  // ELIMINAR un CONTACTO
+        $id_tabla_sec = $_POST['id_contacto_del'];
+        $del_tabla_sec = Process::DeleteSec('', 'contacto', $id_tabla_sec);
+        FormCommon::queryRespHeader($del_tabla_sec);
+endif;
+if(isset($_POST['id_contacto_edit']) && $_POST['id_contacto_edit'] > 0): // EDITAR una SUCURSAL
+        $id_tabla_sec_edit = $_POST['id_contacto_edit'];
+        $edit_tabla_sec = Process::ModifySec('', 'contacto', $id_tabla_sec_edit);
         FormCommon::queryRespHeader($edit_tabla_sec);
 endif;
 
@@ -170,7 +180,6 @@ $tpl->asignar('select_suc', $select_suc);
 // TABLA SECUNDARIA (contactos)
 $get_tabla_contactos = BDConsulta::consulta('get_tabla_contactos', array($id_tabla), 'n');
 $tpl->asignar('tabla_contactos', $get_tabla_contactos);
-
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);
 $tpl->obtenerPlantilla();
