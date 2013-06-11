@@ -11,14 +11,14 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Propuestas de Mejoras</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <hr/>
-        <p>Sector:<span class="azul">{$area_inicio}</span></p>
-        <p>Nombre:<span class="azul">{$nombre_inciio}</span></p>
+        <p class="txt10 uppercase">Sector:<span class="azul">DISEÑO</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">JUAN CARLOS</span></p>
         <form class="box-entrada">
             <div class="box-entrada paddingLat10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <label class="block">Asunto : </label>
-                <input readonly="yes" class="marginCero" id="asunto"type="text" value="AIRE ACONDICIONADO"/>
+                <input readonly="yes" class="marginCero" id="asunto" type="text" value="AIRE ACONDICIONADO"/>
                 <div class="observacionesGrande">
                     <label class="block">Mejora : </label>
                     <textarea readonly="yes">COMPRAR CALEFACTOR PARA EL DEPOSITO</textarea>
@@ -72,7 +72,6 @@
             </div>
         </form>
     </div>
-    </div><!-- cierro div class form1 id del proceso -->
     <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
     <br style="clear:both;" />
 </div>
