@@ -10,13 +10,13 @@ $file = explode('.', $file);
 $pr_proceso = $file[0];
 if(!stristr($pr_proceso, '_coment') === FALSE) { // si tiene _coment, debe eliminarlo, para escribir bien el proceso.
     $pr_proceso = str_replace('_coment', '', $pr_proceso);
+    $no_comments = false; // debe mostrar los comentarios, por que no es un recordatorio, es un coments comun y silvestre.
 }
 
 if(!stristr($pr_proceso, '_recordatorio') === FALSE) { // si tiene _recordatorio, debe eliminarlo, para escribir bien el proceso.
     $pr_proceso = str_replace('_recordatorio', '', $pr_proceso);
     $no_comments = true;
 }
-
 
 
 // COMENTARIOS

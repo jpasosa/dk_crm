@@ -12,46 +12,49 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Alta de Clientes</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <hr />
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
-                <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
-                    <div class="izq ultimoElement">
-                        <div class="campania">
-                            <label> Empresa: </label>
-                            <input readonly="readonly" name="empresa" type="text" value="{$tabla[0][empresa]}"  />
-                        </div>
-                        <div class="campania">
-                            <label> Sitio Web: </label>
-                            <input readonly="readonly" name="sitioWeb" type="text" value="{$tabla[0][sitio_web]}"  />
-                        </div>
-                        <div class="campania">
-                            <label> CUIT: </label>
-                            <input readonly="readonly" name="cuit" type="text" value="{$tabla[0][identificacion_tributaria]}"  />
-                        </div>
+            <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
+                <div class="izq ultimoElement">
+                    <div class="campania">
+                        <label> Empresa: </label>
+                        <input readonly="readonly" name="empresa" type="text" value="{$tabla[0][empresa]}"  />
                     </div>
-                    <div class="der ultimoElement">
-                        <div class="campania">
-                            <label> Teléfono: </label>
-                            <input readonly="readonly" name="telefono" type="text" value="{$tabla[0][telefono]}"  />
-                        </div>
-                        <div class="campania">
-                            <label> Mail solicitante: </label>
-                            <input readonly="readonly" name="mail" type="text" value="{$tabla[0][mail_solicitante]}"  />
-                        </div>
-                        <div class="campania">
-                            <label> País / Ciudad: </label>
-                            <select name="pais">
-                                <option>OPTION 1</option>
-                                <option>OPTION 1</option>
-                                <option>OPTION 1</option>
-                            </select>
-                        </div>
+                    <div class="campania">
+                        <label> Sitio Web: </label>
+                        <input readonly="readonly" name="sitioWeb" type="text" value="{$tabla[0][sitio_web]}"  />
                     </div>
-                <div class="observacionesChico clear">
-                    <label> Observaciones: </label>
-                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
-                </div> 
-                </div>   
+                    <div class="campania">
+                        <label> CUIT: </label>
+                        <input readonly="readonly" name="cuit" type="text" value="{$tabla[0][identificacion_tributaria]}"  />
+                    </div>
+                </div>
+                <div class="der ultimoElement">
+                    <div class="campania">
+                        <label> Teléfono: </label>
+                        <input readonly="readonly" name="telefono" type="text" value="{$tabla[0][telefono]}"  />
+                    </div>
+                    <div class="campania">
+                        <label> Mail solicitante: </label>
+                        <input readonly="readonly" name="mail" type="text" value="{$tabla[0][mail_solicitante]}"  />
+                    </div>
+                    <div class="campania">
+                        <label> País / Ciudad: </label>
+                        <select disabled="disabled" name="provincia">
+                            {foreach item=pais from=$paises}
+                                <option value="{$$pais[id_sis_provincia]}" {if $$pais['id_sis_provincia'] == $tabla[0]['id_sis_provincia'] } selected {/if}> {$$pais[pais]} | {$$pais[provincia]}  </option>
+                            {/foreach}    
+                        </select>
+                    </div>
+                </div>
+            <div class="observacionesChico clear">
+                <label> Observaciones: </label>
+                <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+            </div> 
+            </div>   
         </form>
         <p class="azul bold">SUCURSALES</p>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
@@ -60,7 +63,6 @@
                 <td width="310" align="left" bgcolor="#4685CA"><p class="blanco">Dirección</p></td>
                 <td width="149" align="left" bgcolor="#4685CA"><p class="blanco">Teléfono</p></td>
             </tr>
-            {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_suc }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
                         <td><span>{$$ts[nombre_sucursal]}</span></td>
@@ -68,7 +70,6 @@
                         <td> <span>{$$ts[telefono]}</span></td>
                     </tr>
                 {/foreach}
-            {/if}
         </table>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario marginTop20">
             <tr>
@@ -77,29 +78,18 @@
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sucursal</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Sector</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Puesto</p></td>
-                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
-            {if $tabla_sec['error'] == false }
-                {foreach item=ts from=$tabla_sec }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td> <span>{$$ts[nombre]}</span></td>
-                        <td><span>{$$ts[apellido]}</span></td>
-                        <td> <span>{$$ts[sucursal]}</span></td>
-                        <td> <span>{$$ts[sector]}</span></td>
-                        <td> <span>{$$ts[puesto]}</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
-                    </tr>
-                {/foreach}
-            {/if}
+            {foreach item=cont from=$tabla_contactos }
+                <tr id="id_cl-{$$cl[solicit_cliente]}">
+                    <td> <span title="{$$cont[mail]} | {$$cont[telefono_contacto]} | {$$cont[celular]}">{$$cont[nombre]}</span></td>
+                    <td><span>{$$cont[apellido]}</span></td>
+                    <td> <span>{$$cont[nombre_sucursal]}</span></td>
+                    <td> <span>{$$cont[sector]}</span></td>
+                    <td> <span>{$$cont[puesto]}</span></td>
+                </tr>
+            {/foreach}
         </table>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/ven_cliente_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
