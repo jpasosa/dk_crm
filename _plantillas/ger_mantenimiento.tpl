@@ -66,7 +66,7 @@
                     <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
                 {if $files['error'] == false }
-                    <div class="archivos clear">
+                    <div class="archivos clear files">
                         {foreach item=n from=$files}
                             <div class="file marginLat10">
                                 <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/ger_mantenimiento/{$$n[nombre]}" target="_blank">
@@ -85,14 +85,14 @@
                     <input type="submit" class="inline" name="subir_mail" value="Subir Mail" />
                 </div>
                 {if $mails['error'] == false }
-                    <div class="archivos clear">
+                    <div class="archivos clear mails">
                         {foreach item=m from=$mails}
                             <div class="file marginLat10">
-                                <a class="file_name" id="file_name-{$$m[id]}" >
+                                <a class="" id="mail-{$$m[id_ger_mantenimiento_mails]}" >
                                     <span>Mail: {$$m[mail]}</span>
                                 </a>
-                                <a class="del_file" id="file-{$$m[id]}" href="#" style="float:left;">
-                                    <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_file" id="id_gastos-">
+                                <a class="del_mail" id="mail-{$$m[id_ger_mantenimiento_mails]}" href="#" >
+                                    <img border="0" alt="quitar" src="/img/iconos/delete.gif" class="del_file">
                                 </a>
                             </div>
                         {/foreach}

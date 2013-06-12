@@ -11,6 +11,12 @@ if(isset($_POST['id_file']) && $_POST['id_file'] > 0)  {
     $delete_sec = Process::DeleteSec('',  'arch', $id_tabla_sec);
     FormCommon::queryRespHeader($delete_sec);
 }
+// ELIMINAR ARCHIVO
+if(isset($_POST['id_mail']) && $_POST['id_mail'] > 0)  {
+    $id_tabla_sec = $_POST['id_mail'];
+    $delete_sec = Process::DeleteSec('',  'mails', $id_tabla_sec, 's');
+    FormCommon::queryRespHeader($delete_sec);
+}
 
 
 
@@ -95,13 +101,21 @@ if(isset($_POST['subir_archivo'])) {
 ///////////  Por POST, del FORM. SUBIDA DE ARCHIVOS.//////////////////////////////////
 if(isset($_POST['subir_mail'])) {
     $first_time = $_POST['first_time'];
+    $id_tabla_proc = $_POST['id_tabla_proc'];
+    $id_tabla = $_POST['id_tabla'];
     do {
         if($first_time == 'true'):
                 $flash_error = 'Debe cargar primero el mantenimiento';
                 break;
         endif;
         $mail = $_POST['mail'];
-        $id_tabla_proc = $_POST['id_tabla_proc'];   $id_tabla = $_POST['id_tabla'];
+        $validations = Validations::General(array(
+                                        array('field' => $mail, 'null' => false, 'notice_error' => 'Debe completar el mail.')));
+        if($validations['error'] == true) {
+           $flash_error = $validations['notice_error'];
+            break; 
+        }
+        
         $create_sec = Process::CreateSec('', 'mails', $id_tabla_proc, 'n');
         if($create_sec['error'] == true) {
             $flash_error = $create_sec['notice_error'];
@@ -115,6 +129,8 @@ if(isset($_POST['subir_mail'])) {
         $flash_notice = 'Mail subido correctamente';
     }while(0);
     $tpl->asignar('first_time', $first_time);
+    $tpl->asignar('id_tabla', $id_tabla);
+    $tpl->asignar('id_tabla_proc', $id_tabla_proc);
 }
 ///////////////////////////////// FIN DE  POST, del FORM. //////////////////////////////////
 
