@@ -12,65 +12,55 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Mantenimientos</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Nombre:<span class="azul">DISEÑO</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">{$area_inicio}</span></p>
+        <form class="box-entrada">
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Tipo:</label>
-                        <select name="pais">
-                            <option>Mantenimiento de Central</option>
-                            <option>Mantenimiento de PBX</option>
-                            <option>Mantenimiento de Cámaras</option>
-                            <option>Mantenimiento de Alarmas</option>
-                            <option>Actualizar Versión de Software</option>
-                            <option>Hacer BackUps</option>
-                            <option>Antivirus</option>
-                            <option>Anti Hackers</option>
+                        <select name="pais" disabled="disabled">
+                            <option value="{$tabla_mant[0][id_sis_mantenimiento_opciones]}">{$tabla_mant[0][mantenimiento]}</option>
                         </select>
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Detalle: </label>
-                    <textarea readonly="yes" name="inicio">{$tabla[0]['inicio']}</textarea>
+                    <textarea readonly="yes" name="inicio">{$tabla[0]['detalle']}</textarea>
                 </div>
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Inicio:</label>
-                        <input readonly="yes" name="inicio" type="text" value=''  alt="Inicio" />
+                        <input readonly="readonly" name="inicio" type="text" value="{$tabla[0][fecha_inicio]|date_format:"d/m/Y"}"  alt="Inicio" />
                     </div>
                 </div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Periodicidad:</label>
-                        <select name="periodicidad">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
+                        <select name="periodicidad" disabled="disabled">
+                            <option value="{$tabla[0][id_sis_periodicidad]}">{$tabla[0][periodicidad]}</option>
                         </select>
                     </div>
                 </div>
                 <div class="izq">
                     <div class="campania inputChico">
                         <label>Cada:</label>
-                        <input class="ultimoElement" readonly="yes" name="cada" type="text" value=''  alt="Cada" />
+                        <input class="ultimoElement" readonly="yes" name="cada" type="text" value="{$tabla[0]['cada_x_tiempo']}"  alt="Cada" />
                     </div>
                 </div>
                 <div class="izq paddingBot20">
                     <p class"clear">Archivos : </p>
-                    <div class="archivos clear">
-                        {foreach item=n from=$nombres_archivos}
-                            <div class="file marginLat10">
-                                <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                                <span>Archivo: Archivo 1</span>
-                                </a>
-                                <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                                <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                                </a>
-                            </div>
-                        {/foreach}
-                    </div>
+                    {if $files['error'] == false }
+                        <div class="archivos clear">
+                            {foreach item=n from=$files}
+                                <div class="file marginLat10">
+                                    <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/ger_mantenimiento/{$$n[nombre]}" target="_blank">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                    </a>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
                 </div>
                 <div class="der paddingBot20">
                     <p class"clear">Mails : </p>
@@ -89,7 +79,7 @@
                 </div>
             </div>
         </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/ger_mantenimiento_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }

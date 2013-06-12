@@ -15,7 +15,24 @@ if(isset($_POST['enviar'])):
             $get_tabla = Process::getTabla($pr_proceso, $_POST['id_tabla_proc'], 'n');
             $id_sis_areas = $get_tabla[0]['id_sis_areas'];
             $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar_area', 'n', $id_sis_areas);
-        }else{ // VA AL SIGUIENTE PROCESO NORMALMENT
+        
+        }elseif($pr_proceso == 'ger_mantenimiento') { // Según caso debo mandar a un área específica.
+            $id_user = $_SESSION['id_user'];
+            $area = BDConsulta::consulta('area', array($id_user), 'n');
+            $id_area = $area[0]['id_sis_areas'];
+            if($id_area != 3){
+                // el area es distinta de tres. si esta en el paso 1, debe mandarlo a GERENCIA, si esta en el proceso_orden 3 debe cerrarlo
+                $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');    
+            }elseif($id_area == 3) { // GERENCIA
+                // debo investigar quien lo empezó y mandar al paso que corresponda. . . 
+                $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
+            }else { // Hay algun error desconocido, debe ir a pantalla de ERROR
+                header('Location: /error.html');
+                exit();  
+            }
+            
+
+        }else{ // VA AL SIGUIENTE PROCESO NORMALMENTE
             $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');    
         }
         
