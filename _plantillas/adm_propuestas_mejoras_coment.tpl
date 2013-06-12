@@ -1,43 +1,42 @@
 <link href="/css/adm_propuestas_mejoras.css" rel="stylesheet" type="text/css" />
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+<div style="width:994px; height:23px; background:url(/img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
     <div class="flash_error"></div>
     <div class="flash_notice"></div>
     {if $flash_error != '' }<div class="disp_error"> {$flash_error}</div>{/if}
     {if $flash_notice != '' }<div class="disp_notice"> {$flash_notice} </div>{/if}
     {template tpl="menu_izq"}
-    <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
+    <div id="derecha" class="catalogo" style="background:url(/img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div> 
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Propuestas de Mejoras</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
         <hr/>
-        <p class="txt10 uppercase">Sector:<span class="azul">DISEÑO</span></p>
-        <p class="txt10 uppercase">Nombre:<span class="azul">JUAN CARLOS</span></p>
+        <p class="txt10 uppercase">Sector:<span class="azul">{$area_inicio}</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada">
             <div class="box-entrada paddingLat10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <label class="block">Asunto : </label>
-                <input readonly="yes" class="marginCero" id="asunto" type="text" value="AIRE ACONDICIONADO"/>
+                <input readonly="yes" class="marginCero" id="asunto" readonly="readonly" type="text" value="{tabla[0]['asunto']}"/>
                 <div class="observacionesGrande">
                     <label class="block">Mejora : </label>
-                    <textarea readonly="yes">COMPRAR CALEFACTOR PARA EL DEPOSITO</textarea>
+                    <textarea readonly="readonly">{tabla[0]['mejora']}</textarea>
                 </div>
-                <div class="archivos">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
+                {if $files['error'] == false }
+                    <div class="archivos">
+                        {foreach item=n from=$nombres_archivos}
+                            <div class="file">
+                                <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_propuestas_mejoras/{$$n[nombre]}">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
             </div>
         </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/adm_propuestas_mejoras_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
