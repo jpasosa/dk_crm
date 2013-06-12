@@ -12,17 +12,22 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Mantenimientos</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
-        <p>Nombre:<span class="azul">{$area_inicio}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">DISEÑO</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Tipo:</label>
                         <select name="pais">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
+                            <option>Mantenimiento de Central</option>
+                            <option>Mantenimiento de PBX</option>
+                            <option>Mantenimiento de Cámaras</option>
+                            <option>Mantenimiento de Alarmas</option>
+                            <option>Actualizar Versión de Software</option>
+                            <option>Hacer BackUps</option>
+                            <option>Antivirus</option>
+                            <option>Anti Hackers</option>
                         </select>
                     </div>
                 </div>
@@ -39,7 +44,11 @@
                 <div class="izq clear">
                     <div class="campania">
                         <label>Periodicidad:</label>
-                        <input readonly="yes" name="periodicidad" type="text" value=''  alt="perdiodicidad" />
+                        <select name="periodicidad">
+                            <option>OPTION 1</option>
+                            <option>OPTION 1</option>
+                            <option>OPTION 1</option>
+                        </select>
                     </div>
                 </div>
                 <div class="izq">

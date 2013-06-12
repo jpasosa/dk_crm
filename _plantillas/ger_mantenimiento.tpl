@@ -13,51 +13,59 @@
         <h1 class="azul bold"><span class="txt22 normal">Mantenimientos</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p>Nombre:<span class="azul">DISEÑO</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Nombre:<span class="azul">{$area_empleado}</span></p>
+        <form class="box-entrada" name="add_hotel" action="/ger_mantenimiento.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Tipo:</label>
                         <select name="pais">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
+                            {foreach item=mant from=$mantenimientos}
+                                <option value="{$$mant[id]}"> {$$mant[nombre]} </option>
+                            {/foreach}
                         </select>
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Detalle: </label>
-                    <textarea name="inicio">{$tabla[0]['inicio']}</textarea>
+                    <textarea name="detalle">{$tabla[0]['detalle']}</textarea>
                 </div>
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Inicio:</label>
-                        <input name="inicio" type="text" value=''  alt="Inicio" />
+                        {if $tabla[0][fecha_inicio] == '' }
+                            <input name="fecha_inicio" id="fecha_inicio" class="fecha_inicio" value="" />
+                        {else}
+                            <input name="fecha_inicio" id="fecha_inicio" class="fecha_inicio" value='{$tabla[0][fecha_inicio]|date_format:"d/m/Y"}' />
+                        {/if}
                     </div>
                 </div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Periodicidad:</label>
-                        <input name="periodicidad" type="text" value=''  alt="perdiodicidad" />
+                        <select name="periodicidad">
+                            {foreach item=pe from=$sel_period}
+                                <option value="{$$pe[id_valor]}" {if $$pe['id_valor'] == $tabla[0]['id_sis_periodicidad'] } selected {/if}> {$$pe[valor]} </option>
+                            {/foreach}
+                        </select>
                     </div>
                 </div>
                 <div class="izq">
                     <div class="campania inputChico">
                         <label>Cada:</label>
-                        <input name="cada" type="text" value=''  alt="Cada" />
+                        <input name="cada_x_tiempo" type="text" value=''  alt="" />
                     </div>
                 </div>
                 <div class="archivo">
                     <label class="block"> Archivo : </label>
-                    <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
+                    <input type="file" class="inline" name="archivo" value="quepasavieja" />
+                    <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
                 <div class="archivos clear">
                     {foreach item=n from=$nombres_archivos}
                         <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
+                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/ger_mantenimiento/{$$n[nombre]}">
+                            <span>Archivo: {$$n[nombre]}</span>
                             </a>
                             <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
                             <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
@@ -67,8 +75,8 @@
                 </div>
                 <div class="archivo">
                     <label class="block"> Mail externo : </label>
-                    <input type="file" class="inline"name="mail" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_mail"value="Subir Mail" />
+                    <input type="file" class="inline" name="mail" value="" />
+                    <input type="submit" class="inline" name="subir_mail" value="Subir Mail" />
                 </div>
                 <div class="archivos clear">
                     {foreach item=n from=$nombres_mail}
@@ -82,13 +90,15 @@
                         </div>
                     {/foreach}
                 </div>                
+                <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/ger_mantenimiento.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
+                <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="enviar" class="enviar" type="submit" value="Enviar al siguiente Paso" />
