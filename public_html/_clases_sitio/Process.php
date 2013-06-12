@@ -807,7 +807,7 @@ class Process {
         return $resp;
     }
 
-    public static function getValuesSelectRel($tabla_uno, $tabla_dos, $tabla_tres, $tabla_cuatro, $where, $debug = 'n') {
+    public static function getValuesSelectRel($tabla_uno, $tabla_dos = '', $tabla_tres = '', $tabla_cuatro = '', $where = '', $debug = 'n') {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
 

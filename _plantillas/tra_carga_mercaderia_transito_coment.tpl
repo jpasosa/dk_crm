@@ -1,4 +1,4 @@
-<link href="/css/tra_packing_list.css" rel="stylesheet" type="text/css" />
+<link href="/css/tra_carga_mercaderia_transito.css" rel="stylesheet" type="text/css" />
 
 <div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
@@ -10,7 +10,7 @@
     <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
         <hr />
-        <h1 class="azul bold"><span class="txt22 normal">Alta de Clientes</span></h1>
+        <h1 class="azul bold"><span class="txt22 normal">Carga de Mercadería en Tránsito</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
@@ -18,27 +18,29 @@
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <select class="ultimoElement" name="pais">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                        </select>
+                        <input clasS="ultimoElement" readonly="yes" name="proveedor" type="text" value=''  alt="Proveedor" />
+                    </div>
+                </div>
+                <div class="der">
+                    <div class="campania">
+                        <label class="primerElement">Packing List:</label>
+                        <input readonly="yes" name="packingList" type="text" value=''  alt="Packing List" />
                     </div>
                 </div>
                 <div class="izq clear"><p class="azul bold">ENTREGA</p></div>
                 <div class="izq clear">
                     <div class="campania">
                         <label class="primerElement">Fecha Envío:</label>
-                        <input readonly="yes" name="cantidad_dias" type="text" value=''  alt="Cantidad Días" />
+                        <input readonly="yes" name="" type="text" value=''  alt="" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement">Fecha Llegada:</label>
-                        <input readonly="yes" name="fecha_fin" type="text" value=''  alt="Fecha Fin" />
-                    </div>
+                        <input readonly="yes" name="fechaLlegada" type="text" value=''  alt="Fecha Llegada" />
+                    </div>                    
                 </div>
-                <div class="observacionesChico">
+                <div class="observacionesChico clear">
                     <label> Observaciones: </label>
                     <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
@@ -49,11 +51,12 @@
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Referencia</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
-                <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Nro. Caja</p></td>
-                <td width="40" align="left" bgcolor="#4685CA"><p class="blanco">x caja</p></td>
-                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Volumen</p></td>
-                <td width="40" align="left" bgcolor="#4685CA"><p class="blanco">Peso Kg.</p></td>
-                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Precio</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Nro. Caja</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">x Caja</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Peso Kg.</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Foto</p></td>
+                <td align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
@@ -61,10 +64,11 @@
                         <td><span>{$$ts[referencia]}</span></td>
                         <td> <span>{$$ts[producto]}</span></td>
                         <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[nro]}</span></td>
-                        <td> <span>{$$ts[cantCaja]}</span></td>
-                        <td> <span>{$$ts[volumen]}</span></td>
+                        <td> <span>{$$ts[precio]}</span></td>
+                        <td> <span>{$$ts[nroCaja]}</span></td>
+                        <td> <span>{$$ts[xCaja]}</span></td>
                         <td> <span>{$$ts[peso]}</span></td>
+                        <td> <span>[VER]</span></td>
                         <td>
                         <a href="#">
                             <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
@@ -72,7 +76,7 @@
                         <a href="#">
                             <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
                         </a>
-                    </td>
+                        </td>
                     </tr>
                 {/foreach}
             {/if}

@@ -10,7 +10,7 @@
     <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
         <hr />
-        <h1 class="azul bold"><span class="txt22 normal">Alta de Clientes</span></h1>
+        <h1 class="azul bold"><span class="txt22 normal">Packing List</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
@@ -18,22 +18,22 @@
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <select name="pais">
+                        <select class="ultimoElement" name="pais">
                             <option>OPTION 1</option>
                             <option>OPTION 1</option>
                             <option>OPTION 1</option>
                         </select>
                     </div>
                 </div>
+                <div class="izq clear"><p class="azul bold">ENTREGA</p></div>
                 <div class="izq clear">
                     <div class="campania">
-                        <label>Fecha Envío:</label>
+                        <label class="primerElement" >Fecha Envío:</label>
                         <input name="cantidad_dias" type="text" value=''  alt="Cantidad Días" />
                     </div>
-                </div>
-                <div class="izq">
+                </div><div class="der">
                     <div class="campania">
-                        <label>Fecha Llegada:</label>
+                        <label class="primerElement">Fecha Llegada:</label>
                         <input name="fecha_fin" type="text" value=''  alt="Fecha Fin" />
                     </div>
                 </div>
@@ -41,26 +41,9 @@
                     <label> Observaciones: </label>
                     <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
-                <div class="archivo">
-                    <label class="block"> Archivo : </label>
-                    <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
-                </div>
-                <div class="archivos">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
@@ -68,9 +51,10 @@
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Referencia</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
-                <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Alto</p></td>
-                <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Ancho</p></td>
-                <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Fondo</p></td>
+                <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Nro. Caja</p></td>
+                <td width="40" align="left" bgcolor="#4685CA"><p class="blanco">x caja</p></td>
+                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Volumen</p></td>
+                <td width="40" align="left" bgcolor="#4685CA"><p class="blanco">Peso Kg.</p></td>
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
@@ -79,9 +63,10 @@
                         <td><span>{$$ts[referencia]}</span></td>
                         <td> <span>{$$ts[producto]}</span></td>
                         <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[alto]}</span></td>
-                        <td> <span>{$$ts[ancho]}</span></td>
-                        <td> <span>{$$ts[fondo]}</span></td>
+                        <td> <span>{$$ts[nro]}</span></td>
+                        <td> <span>{$$ts[cantCaja]}</span></td>
+                        <td> <span>{$$ts[volumen]}</span></td>
+                        <td> <span>{$$ts[peso]}</span></td>
                         <td>
                         <a href="#">
                             <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
@@ -139,7 +124,7 @@
                     </div>
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                     <input name="id_tabla" type="hidden" value="{$id_tabla}" />     
-                    <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />                  
+                    <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />                  
                 </div>    
         </form>
 

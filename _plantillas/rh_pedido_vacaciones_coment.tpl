@@ -12,10 +12,10 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Pedido de Vacaciones</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
-        <p class="txt10 uppercase">Sector: <span class="azul">{$area_inicio}</span>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Sector: <span class="azul">DISEÑO</span>
         </p>
-        <p class="txt10 uppercase">Empleado: <span class="azul">{$nombre_inicio}</span>
+        <p class="txt10 uppercase">Empleado: <span class="azul">JUAN CARLOS</span>
         </p>        
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">

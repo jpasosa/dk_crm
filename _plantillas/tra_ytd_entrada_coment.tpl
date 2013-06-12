@@ -12,11 +12,11 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">YTD Entradas</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
-        <p>Nombre:<span class="azul">{$nombre_inicio}</span></p>
-        <p>Packing List:<span class="azul">546521</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">DISEÑO</span></p>
+        <p class="txt10 uppercase">Packing List:<span class="azul">546521</span></p>
         <div class="marginTop20">
-            <p>Control de Productos</p>
+            <p class="azul bold">CONTROL DE PRODUCTOS</p>
         </div>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
@@ -58,7 +58,7 @@
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="observacionesChico clear">
-                    <label> Observaciones: </label>
+                    <label class="primerElement"> Observaciones: </label>
                     <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
                 <div class="archivos">

@@ -1,3 +1,7 @@
+table .tablaInput{
+    background-color: #D2E1F2;
+}
+
 .box-entrada .izq {
     float: left;
     width: 300px;
@@ -42,6 +46,20 @@
     height: 5em;
 }
 
+.inputChico{
+    float: left;
+}
+
+.inputChico input{
+    width: 100px;
+    clear: both;
+    margin: 10px 25px 0 0;
+}
+
+.inputChico label{
+    clear: both;
+    margin: 10px 25px 0 0;
+}
 
 /*Maquetado en común para todos los formularios*/
 
@@ -66,7 +84,9 @@
     margin-bottom: 20px;
 }
 
-
+table .marginTop20{
+    margin-top: 20px;
+}
 .padding10{
     padding: 10px;
 }

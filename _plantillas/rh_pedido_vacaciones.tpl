@@ -43,8 +43,8 @@
                 </div>
                 <div class="archivo">
                     <label class="block"> Archivo : </label>
-                    <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
+                    <input type="file" class="inline" name="archivo" value="quepasavieja" />
+                    <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
                 <div class="archivos">
                     {foreach item=n from=$nombres_archivos}
@@ -60,7 +60,7 @@
                 </div>
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >

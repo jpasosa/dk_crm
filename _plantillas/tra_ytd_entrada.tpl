@@ -13,10 +13,10 @@
         <h1 class="azul bold"><span class="txt22 normal">YTD Entradas</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p>Nombre:<span class="azul">DISEÑO</span></p>
-        <p>Packing List:<span class="azul">546521</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">DISEÑO</span></p>
+        <p class="txt10 uppercase">Packing List:<span class="azul">546521</span></p>
         <div class="marginTop20">
-            <p>Control de Productos</p>
+            <p class="azul bold">CONTROL DE PRODUCTOS</p>
         </div>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="der">
                     <div class="campania">
-                        <label id="primerElement">Subfamilia:</label>
+                        <label class="primerElement">Subfamilia:</label>
                         <input name="subfamilia" type="text" value=''  alt="Subfamilia" />
                     </div>
                     <div class="campania">
@@ -99,15 +99,15 @@
                     <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
                 <div class="archivo">
-                    <label class="block"> Archivo : </label>
-                    <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
+                    <label class="block"> Foto : </label>
+                    <input type="file" class="inline" name="archivo" value="quepasavieja" />
+                    <input type="submit" class="inline" name="subir_archivo" value="Subir Foto" />
                 </div>
                 <div class="archivos clear">
                     {foreach item=n from=$nombres_archivos}
                         <div class="file marginLat10">
                             <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
+                            <span>Foto: Foto 1</span>
                             </a>
                             <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
                             <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
@@ -117,7 +117,7 @@
                 </div>
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >

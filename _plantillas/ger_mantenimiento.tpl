@@ -1,4 +1,7 @@
 <link href="/css/ger_mantenimiento.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/ger_mantenimiento/del_file.js"></script>
+<link href="/css/jquery-ui.css" rel="stylesheet" type="text/css" /><!-- para del datepicker -->
+<script> $(function() {$( "#fecha_inicio" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
 
 <div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
@@ -13,15 +16,16 @@
         <h1 class="azul bold"><span class="txt22 normal">Mantenimientos</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Nombre:<span class="azul">{$area_empleado}</span></p>
+        <p class="txt10 uppercase">Sector:<span class="azul">{$area}</span></p>
+        <p class="txt10 uppercase">Nombre:<span class="azul">{$nombre_empleado}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ger_mantenimiento.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Tipo:</label>
-                        <select name="pais">
+                        <select name="tipo">
                             {foreach item=mant from=$mantenimientos}
-                                <option value="{$$mant[id]}"> {$$mant[nombre]} </option>
+                                <option value="{$$mant[id_sis_mantenimiento_opciones]}" {if $$mant['id_sis_mantenimiento_opciones'] == $tabla[0]['id_sis_mantenimiento_opciones'] } selected {/if}> {$$mant[mantenimiento]} </option>
                             {/foreach}
                         </select>
                     </div>
@@ -53,7 +57,7 @@
                 <div class="izq">
                     <div class="campania inputChico">
                         <label>Cada:</label>
-                        <input name="cada_x_tiempo" type="text" value=''  alt="" />
+                        <input name="cada_x_tiempo" type="text" value="{$tabla[0]['cada_x_tiempo']}"  alt="" />
                     </div>
                 </div>
                 <div class="archivo">
@@ -61,39 +65,43 @@
                     <input type="file" class="inline" name="archivo" value="quepasavieja" />
                     <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
-                <div class="archivos clear">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/ger_mantenimiento/{$$n[nombre]}">
-                            <span>Archivo: {$$n[nombre]}</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
+                {if $files['error'] == false }
+                    <div class="archivos clear">
+                        {foreach item=n from=$files}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/ger_mantenimiento/{$$n[nombre]}" target="_blank">
+                                <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                                <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
+                                <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
                 <div class="archivo">
                     <label class="block"> Mail externo : </label>
-                    <input type="file" class="inline" name="mail" value="" />
+                    <input type="text" class="inline" name="mail" value="" />
                     <input type="submit" class="inline" name="subir_mail" value="Subir Mail" />
                 </div>
-                <div class="archivos clear">
-                    {foreach item=n from=$nombres_mail}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Mail: Mail 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>                
+                {if $mails['error'] == false }
+                    <div class="archivos clear">
+                        {foreach item=m from=$mails}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$m[id]}" >
+                                    <span>Mail: {$$m[mail]}</span>
+                                </a>
+                                <a class="del_file" id="file-{$$m[id]}" href="#" style="float:left;">
+                                    <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_file" id="id_gastos-">
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}      
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
+                <input name="agregar_mant" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <form class="box-entrada" name="add_hotel" action="/ger_mantenimiento.html" method="post" enctype="multipart/form-data" >

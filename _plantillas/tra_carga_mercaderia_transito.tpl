@@ -18,16 +18,19 @@
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <input name="proveedor" type="text" value=''  alt="Proveedor" />
+                        <input class="ultimoElement" name="proveedor" type="text" value=''  alt="Proveedor" />
                     </div>
+                </div>
+                <div class="der">
                     <div class="campania">
-                        <label>Packing List:</label>
+                        <label class="primerElement">Packing List:</label>
                         <input name="packingList" type="text" value=''  alt="Packing List" />
                     </div>
                 </div>
+                <div class="izq clear"><p class="azul bold">ENTREGA</p></div>
                 <div class="izq clear">
                     <div class="campania">
-                        <label >VER QUE SE PONE ACA:</label>
+                        <label >Fecha Envío:</label>
                         <input name="" type="text" value=''  alt="" />
                     </div>
                 </div>
@@ -43,7 +46,7 @@
                 </div>
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
@@ -68,7 +71,7 @@
                         <td> <span>{$$ts[nroCaja]}</span></td>
                         <td> <span>{$$ts[xCaja]}</span></td>
                         <td> <span>{$$ts[peso]}</span></td>
-                        <td> <span>[VER FOTO]</span></td>
+                        <td> <span>[VER]</span></td>
                         <td>
                         <a href="#">
                             <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
@@ -77,7 +80,6 @@
                             <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
                         </a>
                         </td>
-                        <td> <span><a>[VER]</a></span></td>
                     </tr>
                 {/foreach}
             {/if}
@@ -89,15 +91,15 @@
                     <input name="precio" type="text" value=''  alt="Precio" />
                 </div>
                 <div class="archivo">
-                    <label class="block"> Archivo : </label>
+                    <label class="block"> Foto : </label>
                     <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Archivo" />
+                    <input type="submit" class="inline" name="subir_archivo"value="Subir Foto" />
                 </div>
                 <div class="archivos clear">
                     {foreach item=n from=$nombres_archivos}
                         <div class="file marginLat10">
                             <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
+                            <span>Foto: Foto 1</span>
                             </a>
                             <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
                             <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
@@ -107,7 +109,7 @@
                 </div>
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" id="agregar" type="submit" value="Agregar" />
+                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
