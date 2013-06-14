@@ -131,8 +131,8 @@
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             <!-- {if $tabla_sec['error'] == false } -->
-                {foreach item=ts from=$tabla_contactos }
-                    <tr id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contacto]}">
+                {foreach item=ts from=$contactos }
+                    <tr id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}">
                         <td> <span class="nombre" title="{$$ts[mail]} | {$$ts[telefono_contacto]} | {$$ts[celular]}">{$$ts[nombre]}</span></td>
                         <td><span class="apellido">{$$ts[apellido]}</span></td>
                         <td> <span id="{$$ts[id_ven_visitas_de_clientes_sucursales]}" class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
@@ -156,9 +156,9 @@
                 <div class="izq">
                     <div class="campania">
                         <label> Contacto:  </label>
-                        <select name="sucursal" class="sucursal">
-                            {foreach item=suc from=$select_suc}
-                                <option value="{$$suc[id]}"> {$$suc[nombre]} </option>
+                        <select name="contacto" class="sucursal">
+                            {foreach item=cont from=$get_contactos}
+                                <option value="{$$cont[id_ven_cliente_contacto]}"> {$$cont[apellido]}, {$$cont[nombre]}  </option>
                             {/foreach}
                         </select>
                     </div>

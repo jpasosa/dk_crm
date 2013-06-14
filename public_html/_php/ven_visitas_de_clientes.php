@@ -17,7 +17,7 @@ if(isset($_POST['id_suc_edit']) && $_POST['id_suc_edit'] > 0): // EDITAR una SUC
 endif;
 if(isset($_POST['id_contacto_del']) && $_POST['id_contacto_del'] > 0):  // ELIMINAR un CONTACTO
         $id_tabla_sec = $_POST['id_contacto_del'];
-        $del_tabla_sec = Process::DeleteSec('', 'contacto', $id_tabla_sec);
+        $del_tabla_sec = Process::DeleteSec('', 'contactos', $id_tabla_sec);
         FormCommon::queryRespHeader($del_tabla_sec);
 endif;
 if(isset($_POST['id_contacto_edit']) && $_POST['id_contacto_edit'] > 0): // EDITAR una SUCURSAL
@@ -135,18 +135,18 @@ if(isset($_POST['agregar_contacto'])):
                $flash_error = $validations['notice_error'];
                 break; 
             }
-            $tabla_sec = Process::CreateSec('', 'sucursales', $id_tabla_proc, 'n');
+            $tabla_sec = Process::CreateSec('', 'contactos', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
                 $flash_error = $tabla_sec['notice_error'];
                 break;
             }
             $id_tabla_sec = $tabla_sec['id_tabla_sec'];
-            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $contacto), 'n');
-            if(is_null($update_tabla_sec)) {
-                $flash_error = 'No pudo insertar el pedido.';
+            $update_tabla_sec_contactos = BDConsulta::consulta('update_tabla_sec_contactos', array($id_tabla_sec, $contacto), 'n');
+            if(is_null($update_tabla_sec_contactos)) {
+                $flash_error = 'No pudo insertar el contacto.';
                 break;  
             }
-            $flash_notice = 'Nuevo pedido agregado correctamente.';
+            $flash_notice = 'Nuevo contacto agregado correctamente.';
         }while(0);
         $tpl->asignar('first_time', $first_time);
 endif;
@@ -170,7 +170,7 @@ $clientes = Process::getValuesSelectRel('ven_cliente', '', '', '', '', 'n');
 $tpl->asignar('clientes', $clientes);
 
 
-// // PARA EL SELECT de SUCURSALES
+// PARA EL SELECT de SUCURSALES -> en función del cliente que seleccionamos en la tabla principal.
 $get_sucursales = BDConsulta::consulta('get_sucursales', array($get_tabla[0]['id_ven_cliente']), 'n');
 $tpl->asignar('get_sucursales', $get_sucursales);
 
@@ -178,22 +178,13 @@ $tpl->asignar('get_sucursales', $get_sucursales);
 $sucursales = BDConsulta::consulta('sucursales', array($id_tabla_proc), 'n');
 $tpl->asignar('sucursales', $sucursales);
 
+// PARA EL SELECT de CONTACTOS. Hay que hacer varios JOIN, por que se seleccionan solamente según los que elejimos en sucursales, y tabla_proc.
+$get_contactos = BDConsulta::consulta('get_contactos', array($id_tabla_proc), 'n');
+$tpl->asignar('get_contactos', $get_contactos);
 
-//
-// Debagueo un objeto / arreglo / variable
-//
-echo ' <br/> <div style="font-weight: bold; color: green;"> $sucursales: </div> <pre>' ;
-echo '<div style="color: #3741c6;">';
-if(is_array($sucursales)) {
-    print_r($sucursales);
-}else {
-var_dump($sucursales);    
-}
-echo '</div>';
-echo '</pre>';
-// die('--FIN--DEBUGEO----');
-
-
+// TABLA SECUNDARIA (contactos) -> en función de las sucursales que seleccionamos en Sucursales
+$contactos = BDConsulta::consulta('contactos', array($id_tabla_proc), 'n');
+$tpl->asignar('contactos', $contactos);
 
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);
