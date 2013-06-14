@@ -420,6 +420,48 @@ form.box-coment .coment_actual .aceptar .desaprobar {
 
 
 
+
+
+/*PARA LOS COMENTARIOS*/
+
+form .box-entrada .archivo span {
+    margin: 10px 0 10px 10px;
+    width: 100%;
+    float: left; 
+    color: #197EB4;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.datoComent{
+    display: inline-block;
+    min-width: 150px;
+}
+
+.coment{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.box-entrada .paisComent, .box-entrada .direccionComent {
+    display: inline-block;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.box-entrada .paisComent label, .box-entrada .direccionComent label{
+    margin: 10px 0 0 20px; 
+}
+
+.box-entrada .paisComent select, .box-entrada .direccionComent select, .box-entrada .paisComent input, .box-entrada .direccionComent input{
+    width: 270px;
+    margin: 10px 0 0 20px;
+    background-color: #FFFFFF;
+}
+
+
+
+
 /* PROPIO DEL TPL */
 
 
