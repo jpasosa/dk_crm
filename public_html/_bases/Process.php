@@ -603,7 +603,7 @@ class _Process {
             JOIN $valores[2] AS rel
                 ON princ.id_$valores[2]=rel.id_$valores[2]
             WHERE princ.id_$valores[0]_proc = $valores[3]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
@@ -620,7 +620,7 @@ class _Process {
             JOIN $valores[3] AS rel_otra
                 ON rel.id_$valores[3]=rel_otra.id_$valores[3]
             WHERE princ.id_$valores[0]_proc = $valores[4]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
@@ -639,7 +639,7 @@ class _Process {
             JOIN $valores[4] AS rel_otra_n
                 ON rel_otra.id_$valores[4]=rel_otra_n.id_$valores[4]
             WHERE princ.id_$valores[0]_proc = $valores[5]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
@@ -660,7 +660,7 @@ class _Process {
             JOIN $valores[5] AS rel_otra_ult
                 ON rel_otra_n.id_$valores[5]=rel_otra_ult.id_$valores[5]
             WHERE princ.id_$valores[0]_proc = $valores[6]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
@@ -676,7 +676,7 @@ class _Process {
             JOIN $valores[3] AS rel_uno
                 ON princ.id_$valores[3]=rel_uno.id_$valores[3]
             WHERE princ.id_$valores[0]_proc = $valores[4]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
@@ -694,7 +694,7 @@ class _Process {
             JOIN $valores[4] AS rel_dos
                 ON princ.id_$valores[4]=rel_dos.id_$valores[4]
             WHERE princ.id_$valores[0]_proc = $valores[5]
-                AND activo = 1
+                AND princ.activo = 1
             ;
         ";
     }
