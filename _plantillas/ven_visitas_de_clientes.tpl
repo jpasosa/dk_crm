@@ -171,6 +171,56 @@
                 <input type="submit" name="agregar_contacto" class="agregar agregar_contacto" value="Agregar" />
             </div>    
         </form>
+        <!-- LISTADO DE TEMAS -->
+        <p class="azul bold">TEMAS A TOCAR O TOCADOS</p>
+        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
+            <tr>
+                <td width="500" bgcolor="#4685CA"><p class="blanco">Tema </p></td>
+                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Tocado</p></td>
+                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
+            </tr>
+            {if $tabla_sec['error'] == false }
+                {foreach item=t from=$temas }
+                    <tr id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}">
+                        <td><span id="{$$t[id_ven_visitas_de_clientes_temas]}" class="tema">{$$t[tema]}</span></td>
+                        <td>
+                            <span class="tema_tocado">
+                                {if $$t[tema_tocado] == 1 } SI {else} NO {/if}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="#">
+                                <img id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}" class="del_temas" src="/img/iconos/delete.gif" alt="quitar" border="0" />
+                            </a> 
+                            <a href="#">
+                                <img id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}" class="edit_temas" src="/img/iconos/edit.gif" alt="editar" border="0" />
+                            </a>
+                        </td>
+                    </tr>
+                {/foreach}
+            {/if}
+        </table>
+        <!-- INGRESO DE TEMAS -->
+        <form class="box-entrada" name="add_hotel" action="/ven_visitas_de_clientes.html" method="post" enctype="multipart/form-data" >
+            <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
+                <div class="izq">
+                    <div class="campania">
+                        <label> Tema Tocado: </label>
+                        <input name="tema_tocado" type="checkbox" value="true"  />
+                    </div>
+                </div>
+                <div class="observacionesChico clear">
+                    <label> Tema: </label>
+                    <textarea name="tema" class="tema">{$tabla[0]['detalle']}</textarea>
+                </div>
+                <input name="first_time" type="hidden" value="{$first_time}" />
+                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
+                <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
+                <input type="submit" name="agregar_tema" class="agregar agregar_tema" value="Agregar"/>
+            </div>    
+        </form>
+
+
         <form class="box-entrada" name="add_hotel" action="/ven_visitas_de_clientes.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />

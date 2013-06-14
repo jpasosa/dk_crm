@@ -96,6 +96,26 @@
                 {/foreach}
             {/if}
         </table>
+        <!-- LISTADO DE TEMAS -->
+        <p class="azul bold">TEMAS A TOCAR O TOCADOS</p>
+        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
+            <tr>
+                <td width="500" bgcolor="#4685CA"><p class="blanco">Tema </p></td>
+                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Tocado</p></td>
+            </tr>
+            {if $tabla_sec_temas['error'] == false }
+                {foreach item=t from=$tabla_sec_temas }
+                    <tr>
+                        <td><span class="tema">{$$t[tema]}</span></td>
+                        <td>
+                            <span class="tema_tocado">
+                                {if $$t[tema_tocado] == 1 } SI {else} NO {/if}
+                            </span>
+                        </td>
+                    </tr>
+                {/foreach}
+            {/if}
+        </table>
         <form class="box-coment" name="box_coment" action="/ven_visitas_de_clientes_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }

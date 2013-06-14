@@ -10,8 +10,12 @@ if($_GET[1] != '' && $_GET[1] > 0):  // Si NO TIENE EL NÚMERO DE ID DE UN PROCE
         $tpl->asignar('tabla_sec_sucursales', $sucursales);
         // TABLA SECUNDARIA (contactos)
         $contactos = Process::getTablaSec('', 'contactos', $id_tabla_proc, 'n', 'ven_cliente_contacto');
-        $flash_error = Common::setErrorMessage($contactos); // Si tuviera error, lo carga en $flash_error para mostrar.
+        $flash_error = Common::setErrorMessage($contactos);
         $tpl->asignar('tabla_sec_contactos', $contactos);
+        // TABLA SECUNDARIA (tema)
+        $temas = Process::getTablaSec('', 'temas', $id_tabla_proc, 'n');
+        $flash_error = Common::setErrorMessage($temas);
+        $tpl->asignar('tabla_sec_temas', $temas);
         require_once '_php/forms_end_coment.php';
         $tpl->obtenerPlantilla();
         unset($flash_error);

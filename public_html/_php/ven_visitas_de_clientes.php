@@ -4,6 +4,7 @@ $tpl = new PlantillaReemplazos();
 require_once '_php/forms_start.php';
 
 
+
 //////////////////////////////////////////////////////////////////////////////      AJAX      ////////////////////////////////////////
 if(isset($_POST['id_suc_del']) && $_POST['id_suc_del'] > 0):  // ELIMINAR una SUCURSAL
         $id_tabla_sec = $_POST['id_suc_del'];
@@ -25,6 +26,18 @@ if(isset($_POST['id_contacto_edit']) && $_POST['id_contacto_edit'] > 0): // EDIT
         $edit_tabla_sec = Process::ModifySec('', 'contactos', $id_tabla_sec_edit);
         FormCommon::queryRespHeader($edit_tabla_sec);
 endif;
+if(isset($_POST['id_tema_del']) && $_POST['id_tema_del'] > 0):  // ELIMINAR un TEMA
+        $id_tabla_sec = $_POST['id_tema_del'];
+        $del_tabla_sec = Process::DeleteSec('', 'temas', $id_tabla_sec);
+        FormCommon::queryRespHeader($del_tabla_sec);
+endif;
+if(isset($_POST['id_tema_edit']) && $_POST['id_tema_edit'] > 0): // EDITAR una SUCURSAL
+        $id_tabla_sec_edit = $_POST['id_tema_edit'];
+        $edit_tabla_sec = Process::ModifySec('', 'temas', $id_tabla_sec_edit);
+        FormCommon::queryRespHeader($edit_tabla_sec);
+endif;
+
+
 
 ///////////////////////////////// AGREGAR TABLA PRINCIPAL  |  POST
 if(isset($_POST['agregar'])):
@@ -150,6 +163,45 @@ if(isset($_POST['agregar_contacto'])):
         $tpl->asignar('first_time', $first_time);
 endif;
 
+///////////////////////////////// AGREGAR TEMAS |  POST 
+if(isset($_POST['agregar_tema'])):
+        $tema = $_POST['tema'];
+        $tema_tocado = $_POST['tema_tocado'];
+        if($tema_tocado == 'true') {
+            $tema_tocado = 1;
+        }else{
+            $tema_tocado = 0;
+        }
+        echo 'tema: ' , $tema , ' tema_tocado' , $tema_tocado;
+        $first_time = $_POST['first_time'];
+        $id_tabla_proc = $_POST['id_tabla_proc'];
+        $id_tabla = $_POST['id_tabla'];
+        do {
+            if($first_time == 'true') { // TODAVIA no llenó la tabla principal
+                $flash_error = 'Debe ingresar antes los datos del cliente.';
+                break;  
+            }
+            $validations = Validations::General(array(
+                                                        array('field' => $tema, 'null' => false, 'notice_error' => 'Debe ingresar el tema.')));
+            if($validations['error'] == true) {
+               $flash_error = $validations['notice_error'];
+                break; 
+            }
+            $tabla_sec = Process::CreateSec('', 'temas', $id_tabla_proc, 'n');
+            if($tabla_sec['error'] == true) {
+                $flash_error = $tabla_sec['notice_error'];
+                break;
+            }
+            $id_tabla_sec = $tabla_sec['id_tabla_sec'];
+            $update_tabla_sec_temas = BDConsulta::consulta('update_tabla_sec_temas', array($id_tabla_sec, $tema, $tema_tocado), 'n');
+            if(is_null($update_tabla_sec_temas)) {
+                $flash_error = 'No pudo insertar el tema.';
+                break;  
+            }
+            $flash_notice = 'Nuevo tema agregado correctamente.';
+        }while(0);
+        $tpl->asignar('first_time', $first_time);
+endif;
 
 
 
@@ -184,6 +236,10 @@ $tpl->asignar('get_contactos', $get_contactos);
 // TABLA SECUNDARIA (contactos) -> en función de las sucursales que seleccionamos en Sucursales
 $contactos = BDConsulta::consulta('contactos', array($id_tabla_proc), 'n');
 $tpl->asignar('contactos', $contactos);
+
+// TABLA SECUNDARIA (temas)
+$temas = Process::getTablaSec('', 'temas', $id_tabla_proc, 'n');
+$tpl->asignar('temas', $temas);
 
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);

@@ -52,6 +52,30 @@ $(document).ready(function() {
         // $("input.hotel").focus();
     });
 
+    //##### ELIMINAR TEMAS  #########
+    $("body").on("click", ".del_temas", function(delRef) {
+        delRef.returnValue = false;
+        var clickedID = this.id.split('-');
+        var id_tema_del = clickedID[1];
+        if (confirm('Seguro de eliminarlo?')) {
+                jQuery.ajax({ 
+                        type: "POST", 
+                        url: "/ven_visitas_de_clientes.html",
+                        dataType: "text",
+                        data: {
+                            id_tema_del: id_tema_del
+                        },
+                        success:function(response, status, xhr){
+                            $('tr#id_tema-'+id_tema_del).fadeOut("slow");
+                            FlashMessFull(xhr.getResponseHeader("success_query"), 'El tema fue eliminado con éxito', 'El tema no pudo ser eliminado.', false, false)
+                        },
+                        error:function (xhr, ajaxOptions, thrownError){
+                            alert(thrownError);
+                        }
+                });
+        }
+    });
+
     
     //##### EDITAR EN SUCURSALES  #########
     $("body").on("click", ".edit_suc", function(e) {
@@ -103,7 +127,29 @@ $(document).ready(function() {
         });
     });
 
-
-
+    //##### EDITAR EN TEMAS  #########
+    $("body").on("click", ".edit_temas", function(e) {
+        e.returnValue = false;
+        var clickedID = this.id.split('-');
+        var id_tema = id_tema_edit = clickedID[1];
+        var selector = "tr#id_tema-" + id_tema + " td span.tema";
+        var tema = $(selector).text();
+        jQuery.ajax({
+                type: "POST", 
+                url: "/ven_visitas_de_clientes.html",
+                dataType: "text",
+                data: {
+                    id_tema_edit: id_tema_edit
+                },
+                success:function(response){
+                    $("textarea.tema").val(tema);
+                    $('tr#id_tema-'+id_tema_edit).fadeOut("slow");
+                    $(input.agregar_tema).focus();
+                },
+                error:function (xhr, ajaxOptions, thrownError){
+                    alert(thrownError);
+                }
+        });
+    });
 
 });

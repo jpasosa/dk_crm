@@ -102,5 +102,18 @@ class ven_visitas_de_clientes extends FormCommon {
         ";
     }
 
+     //  Hace el update correspondiente sobre la tabla principal ven_visitas_de_clientes
+    //  IN:     (0->$id_tabla_sec |  1->$tema  |  2->$tema_tocado)
+    public  function update_tabla_sec_temas ($valores=NULL){
+        return "
+            UPDATE ven_visitas_de_clientes_temas
+            SET tema = '$valores[1]',
+                    tema_tocado = $valores[2],
+                    activo = 1
+            WHERE id_ven_visitas_de_clientes_temas = $valores[0]
+            ; 
+        ";
+    }
+
 
 }
