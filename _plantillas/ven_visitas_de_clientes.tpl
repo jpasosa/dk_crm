@@ -31,7 +31,6 @@
                             </select>
                         </div>
                         <!-- <p class="azul bold clear">LUGAR DE LA REUNION</p> -->
-                        
                         <div class="campania">
                             <label> Dirección: </label>
                             <input name="direccion" type="text" value="{$tabla[0]['direccion']}"  />
@@ -46,7 +45,7 @@
                         <div class="campania">
                             <label> País / Ciudad: </label> 
                             <select name="provincia">
-                                <option> en nuestras oficinas </option>
+                                <option value=0> en nuestras oficinas </option>
                                 {foreach item=pais from=$paises}
                                     <option value="{$$pais[id_sis_provincia]}" {if $$pais['id_sis_provincia'] == $tabla[0]['id_sis_provincia'] } selected {/if}> {$$pais[pais]} | {$$pais[provincia]}  </option>
                                 {/foreach}    
@@ -82,7 +81,7 @@
             {if $sucursales['error'] == false }
                 {foreach item=ts from=$sucursales }
                     <tr id="id_suc-{$$ts[id_ven_visitas_de_clientes_sucursales]}">
-                        <td><span class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
+                        <td><span id="{$$ts[id_ven_cliente_sucursales]}" class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
                         <td><span class="direccion">{$$ts[direccion]}</span></td>
                         <td> <span class="telefono">{$$ts[telefono]}</span></td>
                         <td>
@@ -114,7 +113,7 @@
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                <input type="submit" name="agregar_suc" class="agregar" value="Agregar"/>
+                <input type="submit" name="agregar_suc" class="agregar agregar_suc" value="Agregar"/>
             </div>    
         </form>
 
@@ -133,17 +132,19 @@
             <!-- {if $tabla_sec['error'] == false } -->
                 {foreach item=ts from=$contactos }
                     <tr id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}">
-                        <td> <span class="nombre" title="{$$ts[mail]} | {$$ts[telefono_contacto]} | {$$ts[celular]}">{$$ts[nombre]}</span></td>
+                        <td>
+                            <span id="{$$ts[id_ven_cliente_contacto]}" class="nombre" title="{$$ts[mail]} | {$$ts[telefono_contacto]} | {$$ts[celular]}">{$$ts[nombre]}</span>
+                        </td>
                         <td><span class="apellido">{$$ts[apellido]}</span></td>
                         <td> <span id="{$$ts[id_ven_visitas_de_clientes_sucursales]}" class="nombre_sucursal">{$$ts[nombre_sucursal]}</span></td>
                         <td> <span class="sector">{$$ts[sector]}</span></td>
                         <td> <span class="puesto">{$$ts[puesto]}</span></td>
                         <td>
                         <a href="#">
-                            <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contacto]}" class="del_contacto" src="img/iconos/delete.gif" alt="quitar" border="0" />
+                            <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}" class="del_contacto" src="img/iconos/delete.gif" alt="quitar" border="0" />
                         </a> 
                         <a href="#">
-                            <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contacto]}" class="edit_contacto" src="img/iconos/edit.gif" alt="editar" border="0" />
+                            <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}" class="edit_contacto" src="img/iconos/edit.gif" alt="editar" border="0" />
                         </a>
                     </td>
                     </tr>
@@ -156,7 +157,7 @@
                 <div class="izq">
                     <div class="campania">
                         <label> Contacto:  </label>
-                        <select name="contacto" class="sucursal">
+                        <select name="contacto" class="contacto">
                             {foreach item=cont from=$get_contactos}
                                 <option value="{$$cont[id_ven_cliente_contacto]}"> {$$cont[apellido]}, {$$cont[nombre]}  </option>
                             {/foreach}
@@ -167,7 +168,7 @@
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                <input type="submit" name="agregar_contacto" class="agregar" value="Agregar" />
+                <input type="submit" name="agregar_contacto" class="agregar agregar_contacto" value="Agregar" />
             </div>    
         </form>
         <form class="box-entrada" name="add_hotel" action="/ven_visitas_de_clientes.html" method="post" enctype="multipart/form-data" >

@@ -22,7 +22,7 @@ if(isset($_POST['id_contacto_del']) && $_POST['id_contacto_del'] > 0):  // ELIMI
 endif;
 if(isset($_POST['id_contacto_edit']) && $_POST['id_contacto_edit'] > 0): // EDITAR una SUCURSAL
         $id_tabla_sec_edit = $_POST['id_contacto_edit'];
-        $edit_tabla_sec = Process::ModifySec('', 'contacto', $id_tabla_sec_edit);
+        $edit_tabla_sec = Process::ModifySec('', 'contactos', $id_tabla_sec_edit);
         FormCommon::queryRespHeader($edit_tabla_sec);
 endif;
 
@@ -39,7 +39,6 @@ if(isset($_POST['agregar'])):
         $id_tabla_proc = $_POST['id_tabla_proc'];
         do {
             $validations = Validations::General(array(
-                                    array('field' => $id_sis_provincia, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar País / Ciudad', 'table' => 'sis_provincia.id_sis_provincia'),
                                     array('field' => $cliente, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar Cliente', 'table' => 'ven_cliente.id_ven_cliente'),
                                     array('field' => $hora, 'null' => false, 'notice_error' => 'Debe ingresar la hora.'),
                                     array('field' => $direccion, 'null' => false, 'notice_error' => 'Debe ingresar la dirección.'),

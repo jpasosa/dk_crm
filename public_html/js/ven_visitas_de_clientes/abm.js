@@ -53,45 +53,49 @@ $(document).ready(function() {
     });
 
     
-    //##### EDITAR EN GASTOS  #########
-    $("body").on("click", ".edit_gasto", function(e) {
+    //##### EDITAR EN SUCURSALES  #########
+    $("body").on("click", ".edit_suc", function(e) {
         e.returnValue = false;
         var clickedID = this.id.split('-');
-        var id_gasto = id_gasto_edit = clickedID[1];
-        var selector = "tr#id_gastos-" + id_gasto + " td span.cuenta";
-        var cuenta = $(selector).text();
-        var selector = "tr#id_gastos-" + id_gasto + " td span.descripcion";
-        var descripcion = $(selector).text();
-        var selector = "tr#id_gastos-" + id_gasto + " td span.detalle";
-        var detalle = $(selector).text();
-        var proveedor = $("tr#id_gastos-" + id_gasto + " td span.proveedor").attr('id');
-        var selector = "tr#id_gastos-" + id_gasto + " td span.factura";
-        var factura = $(selector).text();
-        var area = $("tr#id_gastos-" + id_gasto + " td span.area").attr('id');
-        var selector = "tr#id_gastos-" + id_gasto + " td span.monto";
-        var monto = $(selector).text();
-        var selector_area = "select.area option[value=" + area + "]";
-        var selector_proveedor = "select.proveedor option[value=" + proveedor + "]";
+        var id_suc = id_suc_edit = clickedID[1];
+        var nombre_sucursal = $("tr#id_suc-" + id_suc + " td span.nombre_sucursal").attr('id');
+        var selector_nombre_sucursal = "select.sucursal option[value=" + nombre_sucursal + "]";
         jQuery.ajax({
                 type: "POST", 
                 url: "/ven_visitas_de_clientes.html",
                 dataType: "text",
                 data: {
-                    id_gasto_edit: id_gasto_edit,
-                    area: area,
-                    proveedor: proveedor
+                    id_suc_edit: id_suc_edit
                 },
                 success:function(response){
-                    $("input.cuenta").val(cuenta);
-                    $("input.descripcion").val(descripcion);
-                    $("input.detalle").val(detalle);
-                    $("input.factura").val(factura);
-                    $("input.monto").val(monto);
-                    $(selector_area).attr('selected','selected');
-                    $(selector_proveedor).attr('selected','selected');
-                    $("input.cuenta").focus();
-                    $('tr#id_gastos-'+id_gasto_edit).fadeOut("slow");
-                    // $(".registros").append(response);
+                    $(selector_nombre_sucursal).attr('selected','selected');
+                    $('tr#id_suc-'+id_suc_edit).fadeOut("slow");
+                    $(input.agregar_suc).focus();
+                },
+                error:function (xhr, ajaxOptions, thrownError){
+                    alert(thrownError);
+                }
+        });
+    });
+
+    //##### EDITAR EN CONTACTOS  #########
+    $("body").on("click", ".edit_contacto", function(e) {
+        e.returnValue = false;
+        var clickedID = this.id.split('-');
+        var id_contacto = id_contacto_edit = clickedID[1];
+        var nombre = $("tr#id_contacto-" + id_contacto + " td span.nombre").attr('id');
+        var selector_nombre = "select.contacto option[value=" + nombre + "]";
+        jQuery.ajax({
+                type: "POST", 
+                url: "/ven_visitas_de_clientes.html",
+                dataType: "text",
+                data: {
+                    id_contacto_edit: id_contacto_edit
+                },
+                success:function(response){
+                    $(selector_nombre).attr('selected','selected');
+                    $('tr#id_contacto-'+id_contacto_edit).fadeOut("slow");
+                    $(input.agregar_contacto).focus();
                 },
                 error:function (xhr, ajaxOptions, thrownError){
                     alert(thrownError);
