@@ -1,6 +1,12 @@
 <link href="/css/ave_campania.css" rel="stylesheet" type="text/css" />
+<link href="/css/jquery-ui.css" rel="stylesheet" type="text/css" /><!-- para del datepicker -->
+<script type="text/javascript" src="/js/ave_campania/abm.js"></script>
+<script> $(function() {$( "#fecha_inicio" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
+<script> $(function() {$( "#mlg_fecha_inicio" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
 
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+
+
+<div style="width:994px; height:23px; background:url(/img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
     <div class="flash_error"></div>
     <div class="flash_notice"></div>
@@ -13,67 +19,79 @@
         <h1 class="azul bold"><span class="txt22 normal">Armado de Campaña</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p>Sector: <span class="azul">{$area}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_empleado}</span></p>
+        <form class="box-entrada" name="add_hotel" action="/ave_campania.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Campaña:</label>
-                        <input readonly="yes" name="campania" type="text" value=''  alt="Campaña" />
+                        <input readonly="readonly" name="campania" type="text" value='poner fecha y nombre logueado'  alt="Campaña" />
                     </div>
                     <div class="campania">
                         <label>Motivo:</label>
-                        <input class="ultimoElement" name="motivo" type="text" value=''  alt="Motivo" />
+                        <input class="ultimoElement" name="motivo" type="text" value="{$tabla[0]['motivo']}"  alt="Motivo" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement">Fecha Inicio:</label>
-                        <input name="fechaInicio" type="text" value=''  alt="Fecha inicio" />
+                        {if $tabla[0]['fecha_inicio'] == '' }
+                            <input id="fecha_inicio" name="fecha_inicio" class="fecha_inicio" type="text" value=''  alt="Fecha Inicio" />
+                        {else}
+                            <input id="fecha_inicio" name="fecha_inicio" class="fecha_inicio" type="text" value='{$tabla[0]["fecha_inicio"]|date_format:"d/m/Y"}'  alt="Fecha" />
+                        {/if}
                     </div>
                     <div class="campania">
                         <label>Hora:</label>
-                        <input class="ultimoElement" name="hora" type="text" value=''  alt="Hora" />
+                        <input class="ultimoElement" name="hora" type="text" value="{$tabla[0]['hora']}"  alt="Hora" />
                     </div>                  
                 </div>
                 <div class="izq clear"><p class="azul bold">MAILING</p></div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Asunto:</label>
-                        <input name="asunto" type="text" value=''  alt="Asunto" />
+                        <input name="mlg_asunto" type="text" value="{$tabla[0]['mlg_asunto']}"  alt="Asunto" />
                     </div>    
                 </div>
                 <div class="der">
                      <div class="campania">
                         <label>Fecha de Inicio:</label>
-                        <input name="fechaInicioMailing" type="text" value=''  alt="Fecha de Inicio" />
+                        {if $tabla[0]['mlg_fecha_inicio'] == '' }
+                            <input id="mlg_fecha_inicio" name="mlg_fecha_inicio" class="mlg_fecha_inicio" type="text" value=''  alt="Fecha Inicio" />
+                        {else}
+                            <input id="mlg_fecha_inicio" name="mlg_fecha_inicio" class="mlg_fecha_inicio" type="text" value='{$tabla[0]["mlg_fecha_inicio"]|date_format:"d/m/Y"}'  alt="Mailing Fecha Inicio" />
+                        {/if}
                     </div>               
                 </div>
                 <div class="observacionesChico clear">
                     <label> Texto: </label>
-                    <textarea name="texto">{$tabla[0]['observaciones']}</textarea>
+                    <textarea name="mlg_texto">{$tabla[0]['mlg_texto']}</textarea>
                 </div>
                 <div class="archivo">
                     <label class="block"> Plantilla Mail : </label>
-                    <input type="file" class="inline"name="mail" value="quepasavieja" />
+                    <input type="file" class="inline" name="archivo" value="" />
                     <input type="submit" class="inline" name="subir_mail"value="Subir Mail" />
                 </div>
                 <div class="archivos clear">
-                    {foreach item=n from=$nombres_mail}
+                    {if $tabla[0]['mlg_plantilla'] != '' }
                         <div class="file marginLat10">
                             <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Mail: Mail 1</span>
+                            <span>{$tabla[0]["mlg_plantilla"]}</span>
                             </a>
                             <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
                             <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
                             </a>
                         </div>
-                    {/foreach}
+                    {/if}
                 </div>        
+                <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
+                <input name="agregar" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
+
         <p class="azul bold">LLAMADAS A CLIENTES</p>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
@@ -103,7 +121,8 @@
                 </td>
             </tr>    
         </table>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        
+        <form class="box-entrada" name="add_hotel" action="/ave_campania.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
@@ -115,7 +134,7 @@
                     </div>   
                     <div class="campania">
                         <label>Contacto:</label>
-                        <select class="ultimoElement" name="contacto" value=''  alt="Contacto" />
+                        <select class="ultimoElement" name="contacto" value=''  alt="Contacto">
                             <option>OPTION1</option>
                             <option>OPTION2</option>
                         </select>
