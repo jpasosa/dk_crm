@@ -5,28 +5,15 @@ require_once '_php/forms_start.php';
 
 
 //////////////////////////////////////////////////////////////////////////////      AJAX      ////////////////////////////////////////
-if(isset($_POST['referencia'])): // Busca el producto
-    $precio = BDConsulta::consulta('search_precio', array($_POST['referencia']), 'n');
-    $precio = utf8_decode($precio[0]['precio']);
-    header("precio: " . $precio);
-endif;
-if(isset($_POST['producto'])): // Busca la referencia
-    $precio = BDConsulta::consulta('search_precio', array($_POST['producto']), 'n');
-    $precio = utf8_decode($precio[0]['precio']);
-    $max = $precio * 1.05;
-    $min = $precio * 0.95;
-    $_POST['max'] = $max;
-    $_POST['min'] = $min;
-    header("precio: " . $precio);
-endif;
-if(isset($_POST['id_tabla_sec']) && $_POST['id_tabla_sec'] > 0):  // ELIMINAR item tabla secundaria
-        $id_tabla_sec = $_POST['id_tabla_sec'];
-        $del_tabla_sec = Process::DeleteSec('', 'prod', $id_tabla_sec);
+if(isset($_POST['id_cliente_del']) && $_POST['id_cliente_del'] > 0):  // ELIMINAR un cliente
+        $id_cliente_del = $_POST['id_cliente_del'];
+        $del_tabla_sec = Process::DeleteSec('', 'clientes', $id_cliente_del);
         FormCommon::queryRespHeader($del_tabla_sec);
 endif;
-if(isset($_POST['id_tabla_sec_edit']) && $_POST['id_tabla_sec_edit'] > 0): // EDITAR  item tabla secundaria
-        $id_tabla_sec_edit = $_POST['id_tabla_sec_edit'];
-        $edit_tabla_sec = Process::ModifySec('', 'prod', $id_tabla_sec_edit);
+
+if(isset($_POST['id_cliente_edit']) && $_POST['id_cliente_edit'] > 0): // EDITAR  item tabla secundaria
+        $id_cliente_edit = $_POST['id_cliente_edit'];
+        $edit_tabla_sec = Process::ModifySec('', 'clientes', $id_cliente_edit);
         FormCommon::queryRespHeader($edit_tabla_sec);
 endif;
 
@@ -92,7 +79,7 @@ if(isset($_POST['agregar'])):
         $tpl->asignar('first_time', $first_time);
 endif;
 
-///////////  Por POST, del FORM. SUBIDA DE ARCHIVOS.//////////////////////////////////
+///////////  Por POST, del FORM. SUBIDA DE ARCHIVOS, el mail.//////////////////////////////////
 if(isset($_POST['subir_mail'])):
     $first_time = $_POST['first_time'];
     do {
@@ -115,17 +102,11 @@ endif;
 
 
 
-///////////////////////////////// AGREGAR PRODUCTOS |  POST 
-if(isset($_POST['agregar_prod'])):
-        $date = date('d/m/Y');
-        $date_unix = Dates::ConvertToUnix($date);
-        $referencia = $_POST['referencia'];                       
-        $producto = $_POST['producto'];                       
-        $precio = $_POST['precio'];
-        $cantidad = $_POST['cantidad'];
-        $max = $_POST['max'];
-        $min = $_POST['min'];
-        // $p = Common::PutDot($_POST['monto']);
+///////////////////////////////// AGREGAR LLAMADA DE CLIENTES |  POST 
+if(isset($_POST['agregar_cliente'])):
+        $ven_cliente_contacto = $_POST['ven_cliente_contacto'];                       
+        $horario = $_POST['horario'];
+        $ven_cliente_sucursales = $_POST['ven_cliente_sucursales'];
         $first_time = $_POST['first_time'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
@@ -135,33 +116,26 @@ if(isset($_POST['agregar_prod'])):
                 break;  
             }
             $validations = Validations::General(array(
-                                       array('field' => $referencia, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar la referencia.', 'table' => 'pro_productos.id_pro_productos'),
-                                       array('field' => $producto, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar el producto.', 'table' => 'pro_productos.id_pro_productos'),
-                                       array('field' => $precio, 'null' => false, 'validation' => 'max', 'valor_max' => $max,
-                                                    'notice_error' => 'No puede superar el 5% del precio.' . 'MAX: ' . $max . ' / min: ' . $min ),
-                                       array('field' => $precio, 'null' => false, 'validation' => 'min', 'valor_min' => $min, 'notice_error' => 'No puede ser inferior el 5% del precio'),
-                                       array('field' => $cantidad, 'null' => false, 'validation' => 'numeric', 'notice_error' => 'Debe completar cantidad y/o debe ser numerica.')
+                                       array('field' => $ven_cliente_sucursales, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar cliente.', 'table' => 'ven_cliente_sucursales.id_ven_cliente_sucursales'),
+                                       array('field' => $ven_cliente_contacto, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar cliente.', 'table' => 'ven_cliente_contacto.id_ven_cliente_contacto'),
+                                       array('field' => $horario, 'null' => false, 'notice_error' => 'Debe completar el horario.')
                                        ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
                 break; 
             }
-            if($referencia != $producto) {
-                $flash_error = 'No coinciden los productos';
-                break;  
-            }
-            $tabla_sec = Process::CreateSec('', 'prod', $id_tabla_proc, 'n');
+            $tabla_sec = Process::CreateSec('', 'clientes', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
                 $flash_error = $tabla_sec['notice_error'];
                 break;
             }
             $id_tabla_sec = $tabla_sec['id_tabla_sec'];
-            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $producto, $cantidad, $precio, $date_unix), 'n');
+            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $ven_cliente_contacto, $horario), 's');
             if(is_null($update_tabla_sec)) {
                 $flash_error = 'No pudo insertar el gasto.';
                 break;
             }
-            $flash_notice = 'Nuevo producto agregado correctamente.';
+            $flash_notice = 'Nuevo cliente agregado correctamente.';
         }while(0);
         $tpl->asignar('first_time', $first_time);
 endif;
@@ -179,6 +153,10 @@ require_once '_php/forms_reset.php';
 // Tabla PRINCIPAL
 $get_tabla = Process::getTabla('', $id_tabla_proc, 'n');
 $tpl->asignar('tabla', $get_tabla);
+if($first_time == 'true') {
+    $campania = date('d/m/Y - G:i') . ' - ' . $nombres; // Lo que va en Campania, luego se inserta en tabla.
+    $tpl->asignar('campania', $campania);
+}
 
 
 // PARA EL SELECT de VEN_CLIENTE_SUCURSALES
@@ -189,17 +167,14 @@ $tpl->asignar('ven_cliente_sucursales', $ven_cliente_sucursales);
 $paises = Process::getValuesSelectRel('sis_provincia', 'sis_pais', '', '', '', 'n');
 $tpl->asignar('paises', $paises);
 
-// PARA EL SELECT de las direcciones de VEN_CLIENTE_SUCURSALES seleccionado (x ahora no está hecho con AJAX lo seleccionado, trae todas)
-$clientes_direcciones = BDConsulta::consulta('clientes_direcciones', array(), 'n');
-$tpl->asignar('clientes_direcciones', $clientes_direcciones);
+// PARA EL SELECT de VEN_CLIENTE_CONTACTOS
+$ven_cliente_contacto = Process::getValuesSelectRel('ven_cliente_contacto', '', '', '', '', 'n');
+$tpl->asignar('ven_cliente_contacto', $ven_cliente_contacto);
 
-// TABLA SECUNDARIA (los pedidos)
-$get_tabla_sec_prod = Process::getTablaSec('', 'prod', $id_tabla_proc, 'n', 'pro_productos');
-$tpl->asignar('tabla_sec', $get_tabla_sec_prod);
+// TABLA SECUNDARIA (los clientes)
+$get_tabla_sec_clientes = Process::getTablaSec('', 'clientes', $id_tabla_proc, 'n', 'ven_cliente_contacto', '', '', 'ven_cliente_sucursales', 'ven_cliente');
+$tpl->asignar('tabla_sec', $get_tabla_sec_clientes);
 
-// // PARA EL SELECT de PRO_PRODUCTOS
-$pro_productos_select = Process::getValuesSelectRel('pro_productos', '', '', '', '', 'n');
-$tpl->asignar('pro_productos_select', $pro_productos_select);
 
 
 $tpl->asignar('flash_error', $flash_error);

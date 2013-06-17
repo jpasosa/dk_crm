@@ -22,18 +22,15 @@ class ave_campania extends FormCommon {
 
     // $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $producto, $cantidad, $precio, $fecha_alta), 'n');
     //  Hace el update correspondiente sobre la tabla principal ave_campania
-    //  IN:     (0->$id_tabla_sec  |  1->$producto  |  2->cantidad  |  3->precio  |  4->fecha_alta)
+    //  IN:     (0->$id_tabla_sec  |  1->$id_ven_cliente_contacto  |  2->hora)
     //  OUT:    null o 1
     public  function update_tabla_sec ($valores=NULL){
         return "
-            UPDATE ave_campania_prod
-            SET id_pro_productos = $valores[1],
-                    cantidad = $valores[2],
-                    precio = $valores[3],
-                    fecha_alta = $valores[4],
-                    habilitado = 1,
+            UPDATE ave_campania_clientes
+            SET id_ven_cliente_contacto = $valores[1],
+                    hora = '$valores[2]',
                     activo = 1
-            WHERE id_ave_campania_prod = $valores[0]
+            WHERE id_ave_campania_clientes = $valores[0]
             ; 
         ";
     }
@@ -41,12 +38,11 @@ class ave_campania extends FormCommon {
     //  Selecciona los valores para hacer un select combinado, con 
     //  IN:     (0->xxxxxxx  |  1->xxxxxxx)
     //  OUT:    Devuelve los valores para poder hacer el select en la plantilla
-    public  function clientes_direcciones ($valores=NULL){
+    public  function ven_cliente_contacto ($valores=NULL){
         return "
-            SELECT *, vcs.direccion AS direccion_vc
-            FROM ven_cliente_sucursales AS vcs
-            JOIN ven_cliente AS vc
-                ON vcs.id_ven_cliente=vc.id_ven_cliente
+            SELECT *
+            FROM ven_cliente_contacto
+            WHERE id_ven_cliente_sucursales = $valores[0]
             ;
         ";
     }
