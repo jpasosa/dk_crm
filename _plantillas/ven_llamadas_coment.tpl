@@ -18,25 +18,25 @@
                 <div class="izq">
                     <div class="campania">
                         <label> Campaña: </label>
-                        <input name="campania" type="text" value="{$campaña}"  />
+                        <input readonly="yes" name="campania" type="text" value="{$campaña}"  />
                     </div>
                     <div class="vendedor">
                         <label> Vendedor: </label>
-                        <input name="vendedor" type="text" value="{$vendedor}"  />
+                        <input readonly="yes" name="vendedor" type="text" value="{$vendedor}"  />
                     </div>
                     <div class="cliente">
                         <label> Cliente: </label>
-                        <input name="cliente" type="text" value="{$cliente}"  />
+                        <input readonly="yes" name="cliente" type="text" value="{$cliente}"  />
                     </div>
                 </div>
                 <div class="der">
                     <div class="sucursal">
                         <label> Sucursal: </label>
-                        <input name="sucursal" type="text" value="{$sucursal}"  />
+                        <input readonly="yes" name="sucursal" type="text" value="{$sucursal}"  />
                     </div>
                     <div class="contacto">
                         <label> Contacto: </label>
-                        <input name="contacto" type="text" value="{$contacto}"  />
+                        <input readonly="yes" name="contacto" type="text" value="{$contacto}"  />
                     </div>
                     <div class="tipoLlamada">
                         <label> Tipo de Llamada: </label>
@@ -59,50 +59,70 @@
                 <div class="temas marginTop20">
                     <div class="telefono">
                         <label> Telefono: </label>
-                        <input name="telefono" type="text" value="{$telefono}"  />
+                        <input readonly="yes" name="telefono" type="text" value="{$telefono}"  />
                     </div>
                     <div class="observaciones">
                         <label class="block"> Temas a Tocar: </label>
-                        <textarea id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                        <textarea readonly="yes" id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                     </div>
                 </div>  
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
-                <input type="submit" id="agregar" value="Agregar"/>
             </div>    
         </form>
         <form class="box-entrada" name="add_hotel" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="temas observaciones">
                     <label> Temas a Tocados: </label>
-                    <textarea></textarea>
+                    <textarea readonly="yes" ></textarea>
                 </div>
                 <div class="clear">
                     <div class="prioridad">
                         <label> Fecha: </label>
-                        <input name="fecha" type="text" value="{$fecha}"  />
+                        <input readonly="yes" name="fecha" type="text" value="{$fecha}"  />
                     </div>
                     <div class="prioridad">
                         <label> Hora: </label>
-                        <input name="hora" type="text" value="{$hora}"  />
+                        <input readonly="yes" name="hora" type="text" value="{$hora}"  />
                     </div>
                 </div>
                 <div class="observaciones">
                     <label class="block"> Observaciones: </label>
-                    <textarea id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
-                </div>
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" /> 
-                <input type="submit" id="agregar" value="Agregar"/>                  
+                    <textarea readonly="yes" id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                </div>                 
             </div>    
         </form>
 
-
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
-            <div class="enviar_proceso">
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="enviar" class="enviar" type="submit" value="Enviar al siguiente Paso" />
+        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+            <div class="title"> Comentarios: </div>
+            {if $all_comments['error'] != true }
+                {foreach item=com from=$all_comments }
+                    <div class="coment_ant">
+                        <div class="fecha"> {$$com[fecha_alta]} </div>
+                        <div class="area"> {$$com[area]} </div>
+                        <div class="estado"> {$$com[estado]} </div>
+                        <div class="comentario"> {$$com[comentario]} </div>
+                    </div>
+                {/foreach}
+            {else}
+                No existen comentarios
+            {/if}
+            <div class="coment_actual">
+                <div class="comentario">
+                    <div class="fecha"> {$date} </div>
+                    <div class="area"> {$area[0]['area']} </div>
+                    <label> Comentario: </label>
+                    <textarea name="comentario" rows="2" redonly="true"></textarea>
+                </div>
+                <div class="aceptar">
+                    <input name="aprobar" class="aprobar" type="submit" value="Aprobar" />
+                    {if $first_process != true}
+                        {if $repeat_process != true}
+                            <input name="solicitar_correccion" class="solicitar_correccion" type="submit" value="Solicitar Corrección" />
+                        {/if}
+                    {/if}
+                    {if $first_process != true }
+                        <input name="desaprobar" class="desaprobar" type="submit" value="Desaprobar" />
+                    {/if}
+                </div>
             </div>
         </form>
     </div>
