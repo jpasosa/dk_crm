@@ -105,18 +105,19 @@
                 <td width="92" align="center" bgcolor="#4685CA"><p class="blanco">Horario</p></td>
                 <td width="52" align="center" bgcolor="#4685CA"><p class="blanco">Accion</p></td>
             </tr>
-            {foreach item=clientes from=$tabla_sec }
-            <tr id="id_cliente-{$$clientes[id_ave_campania_clientes]}">
-                <td><span id="{$$clientes[id_ven_cliente_sucursales]}" class="cliente">{$$clientes[empresa]} , {$$clientes[nombre_sucursal]}</span></td>
-                <td><span id="{$$clientes[id_ven_cliente_contacto]}" class="contacto">{$$clientes[apellido]}, {$$clientes[nombre]}</span></td>
-                <td align="center"><span class="hora">{$$clientes[hora]}</span></td>
-                <td align="center">
-                    <a href="#"><img id="id_cliente-{$$clientes[id_ave_campania_clientes]}" class="del_cliente" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
-                    <a href="#"><img id="id_cliente-{$$clientes[id_ave_campania_clientes]}" class="edit_cliente" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
-                </td>
-            </tr>
-            {/foreach}
-             
+            {if $tabla_sec['error'] == false }
+                {foreach item=clientes from=$tabla_sec }
+                <tr id="id_cliente-{$$clientes[id_ave_campania_clientes]}">
+                    <td><span id="{$$clientes[id_ven_cliente_sucursales]}" class="cliente">{$$clientes[empresa]} , {$$clientes[nombre_sucursal]}</span></td>
+                    <td><span id="{$$clientes[id_ven_cliente_contacto]}" class="contacto">{$$clientes[apellido]}, {$$clientes[nombre]}</span></td>
+                    <td align="center"><span class="hora">{$$clientes[hora]}</span></td>
+                    <td align="center">
+                        <a href="#"><img id="id_cliente-{$$clientes[id_ave_campania_clientes]}" class="del_cliente" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
+                        <a href="#"><img id="id_cliente-{$$clientes[id_ave_campania_clientes]}" class="edit_cliente" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
+                    </td>
+                </tr>
+                {/foreach}
+            {/if}             
         </table>
         
         <!-- BOX DE ENTRADA DE CLIENTES -->

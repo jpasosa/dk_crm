@@ -1,68 +1,72 @@
 <link href="/css/ave_campania.css" rel="stylesheet" type="text/css" />
 
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+<div style="width:994px; height:23px; background:url(/img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
     <div class="flash_error"></div>
     <div class="flash_notice"></div>
     {if $flash_error != '' }<div class="disp_error"> {$flash_error} </div>{/if}
     {if $flash_notice != '' }<div class="disp_notice"> {$flash_notice} </div>{/if}
     {template tpl="menu_izq"}
-    <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
+    <div id="derecha" class="catalogo" style="background:url(/img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Armado de Campaña</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Campaña:</label>
-                        <input readonly="yes" name="campania" type="text" value=''  alt="Campaña" />
+                        <input readonly="readonly" name="campania" type="text" value="{$tabla[0][campania]}" alt="Campaña" />
                     </div>
                     <div class="campania">
                         <label>Motivo:</label>
-                        <input readonly="yes"  class="ultimoElement" name="motivo" type="text" value=''  alt="Motivo" />
+                        <input readonly="readonly"  class="ultimoElement" name="motivo" type="text" value="{$tabla[0][motivo]}"  alt="Motivo" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement">Fecha Inicio:</label>
-                        <input readonly="yes"  name="fechaInicio" type="text" value=''  alt="Fecha inicio" />
+                        {if $tabla[0][fecha_inicio] == '' }
+                            <input readonly="readonly" class="fecha_inicio" value="" />
+                        {else}
+                            <input readonly="readonly"  class="fecha_inicio" value='{$tabla[0][fecha_inicio]|date_format:"d/m/Y"}' />
+                        {/if}
                     </div>
                     <div class="campania">
                         <label>Hora:</label>
-                        <input readonly="yes"  class="ultimoElement" name="hora" type="text" value=''  alt="Hora" />
+                        <input readonly="readonly"  class="ultimoElement" name="hora" type="text" value="{$tabla[0][hora]}"  alt="Hora" />
                     </div>                  
                 </div>
                 <div class="izq clear"><p class="azul bold">MAILING</p></div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Fecha de Inicio:</label>
-                        <input readonly="yes"  name="fechaInicioMailing" type="text" value=''  alt="Fecha de Inicio" />
+                        {if $tabla[0][mlg_fecha_inicio] == '' }
+                            <input readonly="readonly" class="fecha_inicio" value="" />
+                        {else}
+                            <input readonly="readonly"  class="fecha_inicio" value='{$tabla[0][mlg_fecha_inicio]|date_format:"d/m/Y"}' />
+                        {/if}
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label>Asunto:</label>
-                        <input readonly="yes"  name="asunto" type="text" value=''  alt="Asunto" />
+                        <input readonly="readonly"  name="asunto" type="text" value="{$tabla[0][mlg_asunto]}"  alt="Asunto" />
                     </div>                    
                 </div>
                 <div class="observacionesChico clear">
                     <label> Texto: </label>
-                    <textarea readonly="yes"  name="texto">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly"  name="texto">{$tabla[0][mlg_texto]}</textarea>
                 </div>
                 <div class="archivos clear">
-                    {foreach item=n from=$nombres_mail}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Mail: Mail 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ave_campania/{$tabla[0][mlg_plantilla]}" target="_blank">
+                            <span>Mail: {$tabla[0][mlg_plantilla]}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </form>
@@ -72,59 +76,19 @@
                 <td bgcolor="#4685CA"><p class="blanco">Cliente </p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Contacto</p></td>
                 <td width="92" align="center" bgcolor="#4685CA"><p class="blanco">Horario</p></td>
-                <td width="52" align="center" bgcolor="#4685CA"><p class="blanco">Accion</p></td>
             </tr>
-            {foreach item=gast from=$clientes_gastos }
-            <tr id="id_gast-{$$gast[id]}">
-                <td><span id="ref-{$$gast[id_ref]}">{$$gast[cliente]}</span></td>
-                <td><span >{$$gast[contacto]}</span></td>
-                <td align="center"><span>{$$gast[Horario]|number_format:2:",":""}</span></td>
-                <td align="center">
-                    <a href="#"><img id="id_gast-{$$gast[id]}" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
-                    <a href="#"><img id="id_gast-{$$gast[id]}" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
-                </td>
-            </tr>
-            {/foreach}
-            <tr id="id_gast-{$$gast[id]}">
-                <td><span id="ref-{$$gast[id_ref]}">Distribuidora</span></td>
-                <td><span >Pablo Torres</span></td>
-                <td align="center"><span>15:30hs</span></td>
-                <td align="center">
-                    <a href="#"><img id="id_gast-{$$gast[id]}" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
-                    <a href="#"><img id="id_gast-{$$gast[id]}" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
-                </td>
-            </tr>    
+            {if $tabla_sec['error'] == false }
+                {foreach item=clientes from=$tabla_sec }
+                    <tr>
+                        <td><span>{$$clientes[empresa]}, {$$clientes[nombre_sucursal]}</span></td>
+                        <td><span>{$$clientes[apellido]}, {$$clientes[nombre]}</span></td>
+                        <td align="center"><span>{$$clientes[hora]}</span></td>
+                    </tr>
+                {/foreach}
+            {/if}
         </table>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
-            <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
-                <div class="izq">
-                    <div class="campania">
-                        <label class="primerElement">Cliente:</label>
-                        <select name="cliente" value=''  alt="Cliente" />
-                            <option>OPTION1</option>
-                            <option>OPTION2</option>
-                        </select>
-                    </div>   
-                    <div class="campania">
-                        <label>Contacto:</label>
-                        <select class="ultimoElement" name="contacto" value=''  alt="Contacto" />
-                            <option>OPTION1</option>
-                            <option>OPTION2</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="der">
-                    <div class="campania">
-                        <label class="primerElement">Horario:</label>
-                        <input name="horario" type="text" value=''  alt="Horario" />
-                    </div>                                   
-                </div>       
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
-            </div>
-        </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-coment" name="box_coment" action="/ave_campania_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
