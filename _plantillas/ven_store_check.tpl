@@ -41,12 +41,8 @@
                         </div>
                     {/foreach}
                 </div>   
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
             </div>
-        </form>
-        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
+            <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
             <tr>
                 <td width="275" bgcolor="#4685CA"><p class="blanco">Informe </p></td>
                 <td align="center" bgcolor="#4685CA"><p class="blanco">Excelente</p></td>
@@ -57,53 +53,59 @@
             </tr>
             <tr>
                 <td align="left"><p>Se esta exhibiendo la mercadería</p></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
+                <td align="center"><input name="input1" type="radio" value="" /></td>
+                <td align="center"><input name="input1" type="radio" value="" /></td>
+                <td align="center"><input name="input1" type="radio" value="" /></td>
+                <td align="center"><input name="input1" type="radio" value="" /></td>
+                <td align="center"><input name="input1" type="radio" value="" /></td>
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>La mercadería esta en un lugar importante en el negocio</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input2" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input2" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input2" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input2" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input2" type="radio" value="" /></td>
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>Hay una buena cantidad de productos</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input3" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input3" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input3" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input3" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input3" type="radio" value="" /></td>
             </tr>
             <tr>
                 <td bgcolor="#4685CA"></td>
-                <td align="center" bgcolor="#4685CA"><p class="blanco">SI</p></td>
-                <td align="center" bgcolor="#4685CA"><p class="blanco">NO</p></td>
+                <td align="center" bgcolor="#4685CA"><p name="input4" class="blanco">SI</p></td>
+                <td align="center" bgcolor="#4685CA"><p name="input4" class="blanco">NO</p></td>
                 <td align="center" bgcolor="#4685CA"></td>
                 <td align="center" bgcolor="#4685CA"></td>
                 <td align="center" bgcolor="#4685CA"></td>
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>Se puede poner un punto de venta</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input5" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input5" type="radio" value="" /></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
             </tr>
             <tr >
                 <td align="left" bgcolor="#D2E1F2"><p>Se puede poner un banner</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input6" type="radio" value="" /></td>
+                <td align="center" bgcolor="#D2E1F2"><input name="input6" type="radio" value="" /></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
                 <td align="center" bgcolor="#D2E1F2"></td>
             </tr>
         </table>
+        <div class="box-entrada">
+            <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
+            <input name="id_tabla" type="hidden" value="{$id_tabla}" />
+            <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
+        </div>
+        </form>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario marginTop20">
             <tr>
                 <td width="145" bgcolor="#4685CA"><p class="blanco">Referencia </p></td>
