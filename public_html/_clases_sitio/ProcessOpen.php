@@ -289,10 +289,14 @@ class ProcessOpen {
 
         }
 
-     
-        // $rec = ProcessMaint::CalculateMant('1/5/2013', 5, 3, '30/9/2014');
 
+
+
+        // BUSCO procesos abiertos de VEN_LLAMADAS, que comienzan en ave_campania
+        if($id_area == 2) { // Comienza área 2. TODO: Sacar como formulario nuevo a Asist Ventas el ven_llamadas.
         
+
+        }
 
         
 
