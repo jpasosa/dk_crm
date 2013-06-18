@@ -57,7 +57,7 @@
             </tr>
             <tr>
                 <td align="left"><p>Se esta exhibiendo la mercadería</p></td>
-                <td align="center"><input disabled="disabled" type="radio" value="" /></td>
+                <td align="center"><input type="radio" value="" /></td>
                 <td align="center"><input type="radio" value="" /></td>
                 <td align="center"><input type="radio" value="" /></td>
                 <td align="center"><input type="radio" value="" /></td>
