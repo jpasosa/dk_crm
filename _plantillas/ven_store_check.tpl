@@ -32,11 +32,11 @@
                 <select name="ven_cliente_sucursales" class="cliente">
                     {foreach item=vcs from=$ven_cliente_sucursales}
                         <option value="{$$vcs[id_ven_cliente_sucursales]}" {if $$vcs['id_ven_cliente_sucursales'] == $tabla[0]['id_ven_cliente_sucursales'] } selected {/if}> {$$vcs[empresa]} / {$$vcs[nombre_sucursal]}</option>
-                    {/foreach}    
+                    {/foreach}
                 </select>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea name="observaciones">{$tabla[0]['vstore_observaciones']}</textarea>
                 </div>
                 <div class="archivo">
                     <label class="block"> Archivo: </label>
@@ -55,7 +55,7 @@
                                 </a>
                             </div>
                         {/foreach}
-                    {/if}   
+                    {/if}
                 </div>
             </div>
             <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario" colspan="7">
@@ -219,7 +219,7 @@
                         <select name="referencia" class="referencia">
                                 {foreach item=pr from=$pro_productos_select}
                                     <option value="{$$pr[id_pro_productos]}" {if $$pr['id_pro_productos'] == $referencia } selected {/if}> {$$pr[referencia]} </option>
-                                {/foreach}    
+                                {/foreach}
                             </select>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
                         <select name="producto" class="producto">
                             {foreach item=prod from=$pro_productos_select}
                                 <option value="{$$prod[id_pro_productos]}" {if $$prod['id_pro_productos'] == $producto } selected {/if}> {$$prod[producto]} </option>
-                            {/foreach}    
+                            {/foreach}
                         </select>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                 <div class="inputChico">
                     <label >Cantidad:</label>
                     <input class="cantidad" name="cantidad" type="text" value=''  alt="Cantidad" />
-                </div>   
+                </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />

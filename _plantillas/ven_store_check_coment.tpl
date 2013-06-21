@@ -12,29 +12,30 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Formularios de Store Check</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Empleado:<span class="azul">NOMBRE Y APELLIDO</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p class="txt10 uppercase">Empleado:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="campania">
                     <label class="primerElement">Sucursal:</label>
-                    <input readonly="yes" name="sucursal" type="text" value=''  alt="Sucursal" />
+                    <input readonly="readonly" name="sucursal" type="text" value="{$tabla[0]['empresa']}, {$tabla[0]['nombre_sucursal']}" alt="Sucursal" />
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['vstore_observaciones']}</textarea>
                 </div>
                 <div class="archivos clear">
-                    {foreach item=n from=$nombres_mail}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Mail: Mail 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
+                    {if $files['error'] == false }
+                    <div class="archivos">
+                        {foreach item=n from=$files}
+                            <div class="file">
+                                <a class="file_name" target="_blank" href="/upload_archivos/ven_store_check/{$$n[nombre]}" target="_blank">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
                 </div>
             </div>
         </form>
@@ -49,27 +50,72 @@
             </tr>
             <tr>
                 <td align="left"><p>Se esta exhibiendo la mercadería</p></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
-                <td align="center"><input type="radio" value="" /></td>
+                    <td align="center">
+                        <input name="exhibiendo_mercaderia" disabled="disabled"
+                                    type="radio" {if $tabla[0]['exhibiendo_mercaderia'] == 'EX' } checked="checked" {/if} value="EX" />
+                    </td>
+                    <td align="center">
+                        <input name="exhibiendo_mercaderia" disabled="disabled"
+                                    type="radio" {if $tabla[0]['exhibiendo_mercaderia'] == 'MB' } checked="checked" {/if} value="MB" />
+                    </td>
+                    <td align="center">
+                        <input name="exhibiendo_mercaderia" disabled="disabled"
+                                    type="radio" {if $tabla[0]['exhibiendo_mercaderia'] == 'B' } checked="checked" {/if} value="B" />
+                    </td>
+                    <td align="center">
+                        <input name="exhibiendo_mercaderia" disabled="disabled"
+                                    type="radio" {if $tabla[0]['exhibiendo_mercaderia'] == 'M' } checked="checked" {/if} value="M" />
+                    </td>
+                    <td align="center">
+                        <input name="exhibiendo_mercaderia" disabled="disabled"
+                                    type="radio" {if $tabla[0]['exhibiendo_mercaderia'] == 'MM' } checked="checked" {/if} value="MM" />
+                    </td>
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>La mercadería esta en un lugar importante en el negocio</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="mercaderia_lugar" disabled="disabled"
+                                    type="radio"  {if $tabla[0]['mercaderia_lugar'] == 'EX' } checked="checked" {/if} value="EX" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="mercaderia_lugar" disabled="disabled"
+                                    type="radio"  {if $tabla[0]['mercaderia_lugar'] == 'MB' } checked="checked" {/if} value="MB" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="mercaderia_lugar" disabled="disabled"
+                                    type="radio"  {if $tabla[0]['mercaderia_lugar'] == 'B' } checked="checked" {/if} value="B" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="mercaderia_lugar" disabled="disabled"
+                                    type="radio"  {if $tabla[0]['mercaderia_lugar'] == 'M' } checked="checked" {/if} value="M" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="mercaderia_lugar" disabled="disabled"
+                                    type="radio"  {if $tabla[0]['mercaderia_lugar'] == 'MM' } checked="checked" {/if} value="MM" />
+                    </td>
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>Hay una buena cantidad de productos</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="buena_cantidad_productos" disabled="disabled"
+                                    type="radio" {if $tabla[0]['buena_cantidad_productos'] == 'EX' } checked="checked" {/if} value="EX" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="buena_cantidad_productos" disabled="disabled"
+                                    type="radio" {if $tabla[0]['buena_cantidad_productos'] == 'MB' } checked="checked" {/if} value="MB" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="buena_cantidad_productos" disabled="disabled"
+                                    type="radio" {if $tabla[0]['buena_cantidad_productos'] == 'B' } checked="checked" {/if} value="B" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="buena_cantidad_productos" disabled="disabled"
+                                    type="radio" {if $tabla[0]['buena_cantidad_productos'] == 'M' } checked="checked" {/if} value="M" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="buena_cantidad_productos" disabled="disabled"
+                                    type="radio" {if $tabla[0]['buena_cantidad_productos'] == 'MM' } checked="checked" {/if} value="MM" />
+                    </td>
             </tr>
             <tr>
                 <td bgcolor="#4685CA"></td>
@@ -81,19 +127,31 @@
             </tr>
             <tr>
                 <td align="left" bgcolor="#D2E1F2"><p>Se puede poner un punto de venta</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="poner_punto_venta" disabled="disabled"
+                                    type="radio" {if $tabla[0]['poner_punto_venta'] == 1 } checked="checked" {/if} value="true" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="poner_punto_venta" disabled="disabled"
+                                    type="radio" {if $tabla[0]['poner_punto_venta'] == 0 } checked="checked" {/if} value="false" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
             </tr>
             <tr >
                 <td align="left" bgcolor="#D2E1F2"><p>Se puede poner un banner</p></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"><input type="radio" value="" /></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
-                <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="poner_banner" disabled="disabled"
+                                    type="radio" {if $tabla[0]['poner_banner'] == 1 } checked="checked" {/if} value="true" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2">
+                        <input name="poner_banner" disabled="disabled"
+                                    type="radio" {if $tabla[0]['poner_banner'] == 0 } checked="checked" {/if} value="false" />
+                    </td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
+                    <td align="center" bgcolor="#D2E1F2"></td>
             </tr>
         </table>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario marginTop20">
@@ -101,23 +159,20 @@
                 <td width="145" bgcolor="#4685CA"><p class="blanco">Referencia </p></td>
                 <td width="358" align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
                 <td width="92" align="center" bgcolor="#4685CA"><p class="blanco">Precio</p></td>
-                <td width="52" align="center" bgcolor="#4685CA"><p class="blanco">Accion</p></td>
+                <td width="92" align="center" bgcolor="#4685CA"><p class="blanco">Cantidad</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
-                {foreach item=gast from=$clientes_gastos }
-                    <tr id="id_gast-{$$gast[id]}">
-                        <td><span id="ref-{$$gast[id_ref]}" class="referencia">{$$gast[referencia]}</span></td>
-                        <td><span class="detalle">{$$gast[producto]}</span></td>
-                        <td><span class="monto">{$$gast[precio]|number_format:2:",":""}</span></td>
-                        <td align="center">
-                            <a href="#"><img id="id_gast-{$$gast[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
-                            <a href="#"><img id="id_gast-{$$gast[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
-                        </td>
+                {foreach item=prod from=$tabla_sec }
+                    <tr>
+                        <td><span class="referencia">{$$prod[referencia]}</span></td>
+                        <td><span class="detalle">{$$prod[producto]}</span></td>
+                        <td><span class="monto">{$$prod[vstore_precio]|number_format:2:",":""}</span></td>
+                        <td><span class="cantidad">{$$prod[cantidad]}</span></td>
                     </tr>
                 {/foreach}
             {/if}
         </table>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/ven_store_check_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
