@@ -1,9 +1,9 @@
 <?php
 
 class Process {
-    
+
     public static function NameProcess() { // TODO si llamamos del _coment, tiene que volar ese '_coment'
-        $exception = new Exception; 
+        $exception = new Exception;
         $trace = $exception->getTrace();
         $file = $trace[1]['file'];
         $file = explode('/', $file);
@@ -31,25 +31,25 @@ class Process {
                 break;
             }
             $id_area = reset($id_user_area);
-            $id_area = $id_area['id_sis_areas']; 
-            // $id_cv_datos_personales = $id_user_area['id_cv_datos_personales']; 
+            $id_area = $id_area['id_sis_areas'];
+            // $id_cv_datos_personales = $id_user_area['id_cv_datos_personales'];
             $id_proceso = BDConsulta::consulta('id_proceso', array($pr_proceso), $deb); // obtengo id del proceso
             if(is_null($id_proceso)) { // comprueba el proceso
                 $error = true;
                 $notice_error = 'Nombre del Proceso desconocido.';
-                break;  
+                break;
             }
             $id_proceso = reset($id_proceso);
             $id_proceso = $id_proceso['id_sis_procesos'];
-            
+
             // Busca el id_sis_procesos_flujos_dias que corresponde con el proceso y el area, en orden 1, por que comienza.
             $search_sis_fl_dias = BDConsulta::consulta('search_sis_fl_dias', array($pr_proceso, $id_area, $id_proceso), $deb);
             if(count($search_sis_fl_dias) != 1 || is_null($search_sis_fl_dias) ) {
                 $error = true;
                 $notice_error = 'No puede comenzar el proceso.';
-                break;  
+                break;
             }
-            $id_fl_dias = $search_sis_fl_dias[0]['id_fl_dias'];            
+            $id_fl_dias = $search_sis_fl_dias[0]['id_fl_dias'];
             // Inserto en tabla_proc
             $fecha_actual = date('d/m/Y');
             $fecha_actual_unix = Dates::ConvertToUnix($fecha_actual);
@@ -64,7 +64,7 @@ class Process {
 
             // Hago el insert en id_tabla
             $id_tabla = BDConsulta::consulta('insert_tabla', array($pr_proceso, $id_tabla_proc), $deb);
-            if(is_null($id_tabla)) { 
+            if(is_null($id_tabla)) {
                 $error = true;
                 $notice_error = 'No pudo crear registro de la tabla Principal.';
                 break;
@@ -75,7 +75,7 @@ class Process {
             if(is_null($update_tabla_proc)) {
                 $error = true;
                 $notice_error = 'No se pudo actualizar la tabla proceso.';
-                break;  
+                break;
             }
 
             $error = false;
@@ -94,7 +94,7 @@ class Process {
                  );
         } while (0);
 
-        
+
         if(!isset($resp)) { // salida con errores
             $resp = array(
                  'id_tabla' => '',
@@ -105,7 +105,7 @@ class Process {
                   'notice_success' => '',
                  );
         }
-    
+
         return $resp;
 
     }
@@ -120,7 +120,7 @@ class Process {
             if(is_null($select_last)) {
                 $error = true;
                 $notice_error = 'No Pudo seleccionar ultimo id.';
-                break;  
+                break;
             }
             $select_last = reset($select_last);
             $id_select_last = $select_last['id_' . $pr_proceso];
@@ -129,25 +129,25 @@ class Process {
             if(is_null($update_tmp)) {
                 $error = true;
                 $notice_error = 'No pudo hacer el update correspondiente.';
-                break;  
+                break;
             }
             $duplicate_reg = BDConsulta::consulta('duplicate_reg', array($pr_proceso, $future_insert), 'n');
             if(is_null($duplicate_reg)) {
                 $error = true;
                 $notice_error = 'No pudo duplicar el registro para hacer la modificación.';
-                break;  
+                break;
             }
             $update_tabla = BDConsulta::consulta('update_tabla', array($pr_proceso, $id_tabla_proc, $duplicate_reg), 'n');
             if(is_null($update_tabla)) {
                 $error = true;
                 $notice_error = 'No pudo hacer el update de la tabla para hacer la modifincación correspondiente.';
-                break;  
+                break;
             }
             $update_id_proc = BDConsulta::consulta('update_id_proc_null', array($pr_proceso, $id_tabla), 'n');
             if(is_null($update_id_proc)) {
                 $error = true;
                 $notice_error = 'No pudo hacer el update de la tabla para hacer la modificación correspondiente.';
-                break;  
+                break;
             }
             $error = false;
             $notice_success = 'Registro modificado correctamente';
@@ -182,7 +182,7 @@ class Process {
                 $error = true;
                 $notice_error = 'no pudo hacer el update en tabla principal.';
                 $notice_success = '';
-                break;  
+                break;
             }
             $error = false;
             $notice_success = 'Registro modificado correctamente';
@@ -194,9 +194,9 @@ class Process {
                  'notice_error' => $notice_error,
                   'notice_success' => $notice_success,
                  );
-        
-        
-        
+
+
+
         return $resp;
     }
 
@@ -238,7 +238,7 @@ class Process {
             if(is_null($update_tmp_sec)) {
                 $error = true;
                 $notice_error = 'No pudo hacer un update correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
             $notice_success = 'Modificado';
         } while(0);
@@ -258,14 +258,14 @@ class Process {
         }
         do {
             $create_tmp_sec = BDConsulta::consulta('create_tmp_sec', array($pr_proceso, $name_sec, $id_tabla_sec), $deb);
-            
+
             $select_last_sec = BDConsulta::consulta('select_last_sec', array($pr_proceso, $name_sec), $deb);
             if(is_null($select_last_sec)) {
                 $error = true;
                 $notice_error = 'No pudo seleccionar ultimo registro correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
-            
+
             $select_last_sec = reset($select_last_sec);
             $id_select_last_sec = $select_last_sec['id_' . $pr_proceso . '_' . $name_sec];
             $future_insert_sec = $id_select_last_sec + 1;
@@ -273,28 +273,28 @@ class Process {
             if(is_null($update_tmp_sec)) {
                 $error = true;
                 $notice_error = 'No pudo hacer un update correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
 
             $duplicate_reg_sec = BDConsulta::consulta('duplicate_reg_sec', array($pr_proceso, $name_sec,  $future_insert_sec), $deb);
             if(is_null($duplicate_reg_sec)) {
                 $error = true;
                 $notice_error = 'No pudo duplicar el registro correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
 
             $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($pr_proceso, $name_sec,  $duplicate_reg_sec), $deb);
             if(is_null($update_tabla_sec)) {
                 $error = true;
                 $notice_error = 'No pudo hacer un update correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
 
             $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($pr_proceso, $name_sec,  $id_tabla_sec), $deb);
             if(is_null($update_tmp_sec)) {
                 $error = true;
                 $notice_error = 'No pudo hacer un update correctamente. No se pudo eliminar.';
-                break;  
+                break;
             }
             $resp = array(
                  'error' => false,
@@ -316,26 +316,26 @@ class Process {
     // me devuelve el id_sis_prosesos_flujos_dias anterior al que le ingreso.
     public static function ProcesoAnterior($id_fl_dias, $debug = 'n') {
         $debug == 's' ? $deb = 's' : $deb = 'n';
-        $notice_success = ''; $notice_error = ''; $id_fl_dias_ant = 0; 
+        $notice_success = ''; $notice_error = ''; $id_fl_dias_ant = 0;
         do {
             // selecciono el registro del sis_proceso_flujos_dias
             $select_pr_dias = BDConsulta::consulta('select_pr_dias', array($id_fl_dias), $deb);
             if(is_null($select_pr_dias)) {
                 $error = true;
                 $notice_error = 'No pudo encontrar el orden del proceso correspondiente.';
-                break;  
+                break;
             }
             $select_pr_dias = reset($select_pr_dias);
             $pr_orden = $select_pr_dias['pr_orden'];
             $pr_orden_anterior = $pr_orden - 1;
             $id_proceso = $select_pr_dias['id_proceso'];
-            
+
             // selecciono el registro anterior del sis_proceso_flujos_dias
             $select_pr_dias_anterior = BDConsulta::consulta('select_pr_dias_anterior', array($id_proceso, $pr_orden_anterior), $deb);
             if(is_null($select_pr_dias_anterior)) {
                 $error = true;
                 $notice_error = 'No pudo encontrar el orden del proceso anterior';
-                break;  
+                break;
             }
             $select_pr_dias_anterior = reset($select_pr_dias_anterior);
             $id_fl_dias_ant = $select_pr_dias_anterior['id_sis_procesos_flujos_dias'];
@@ -367,7 +367,7 @@ class Process {
             if(is_null($proceso_anterior)) {
                 $error = true;
                 $notice_error = 'No pudo encontrar el proceso anterior';
-                break;  
+                break;
             }
             $id_fl_dias_ant = $proceso_anterior['id_fl_dias'];
         }while(0);
@@ -423,7 +423,7 @@ class Process {
 
 
 
-        
+
 
         $last_proc = end($all_proc);
         return $last_proc;
@@ -432,11 +432,11 @@ class Process {
     public static function getLastLastProcess($pr_proceso, $id_tabla_proc) {
         $notice_error = ''; $notice_success = ''; $error = false;
         $all_proc = self::getAllTablaProc($pr_proceso, $id_tabla_proc);
-        
+
         $cant_elem = count($all_proc);
 
         if($cant_elem == 1) {
-            $last_last_proc = $all_proc;    
+            $last_last_proc = $all_proc;
         }elseif($cant_elem == 2){
             array_pop($all_proc);
             $last_last_proc = $all_proc;
@@ -452,7 +452,7 @@ class Process {
         $all_proc = self::getAllTablaProc($pr_proceso, $id_tabla_proc);
         $cant_elem = count($all_proc);
         if($cant_elem == 1) {
-            // $proceso_anterior = $all_proc;    
+            // $proceso_anterior = $all_proc;
             $proceso_anterior = null;    // no tiene un proceso anterior
         }elseif($cant_elem > 1){
             $cant_elem = $cant_elem - 2;
@@ -473,7 +473,7 @@ class Process {
         if(is_null($proceso_orden_flujos)) {
             $error = true;
             $notice_error = 'no existe el orden del proceso actual.';
-            break;  
+            break;
         }
         $id_fl_dias = $proceso_orden_flujos[0]['id_fl_dias'];
 
@@ -505,7 +505,7 @@ class Process {
             if(is_null($select_tabla_proc)) {
                 $error = true;
                 $notice_error = 'Error en consulta. Vueva a intentarlo.';
-                break;      
+                break;
             }
             $id_tabla = $select_tabla_proc[0]['id_' . $pr_proceso];
 
@@ -514,7 +514,7 @@ class Process {
             if(is_null($id_proceso)) {
                 $error = true;
                 $notice_error = 'No pudo obtener ir id del nombre del proceso';
-                break;      
+                break;
             }
             $id_proceso = $id_proceso[0]['id_sis_procesos'];
 
@@ -523,19 +523,19 @@ class Process {
             if(is_null($select_all_proc_same_tabla)) {
                 $error = true;
                 $notice_error = 'No pudo seleccionar todas las tablas_proc ordenadas por número de proceso.';
-                break;      
+                break;
             }
             // Debe poner el esatdo en cada proceso. COMENZADO / ACEPTADO / RECHAZADO
             foreach($select_all_proc_same_tabla as $k => &$pr) {
-                
+
                 if($pr['pr_orden'] == 1 && $pr['id_relacionado'] == null || $pr['pr_orden'] != 1 && $pr['id_relacionado'] == null ) {
-                    $pr['estado'] = "ACEPTADO";    
+                    $pr['estado'] = "ACEPTADO";
                 }
                 if($pr['pr_orden'] == 1 && $k == 0) {
-                    $pr['estado'] = "COMENZADO";    
+                    $pr['estado'] = "COMENZADO";
                 }
                 if($pr['pr_orden'] != 1 && $pr['id_relacionado'] != null) {
-                    $pr['estado'] = "SOLICITA CORRECCIÓN";    
+                    $pr['estado'] = "SOLICITA CORRECCIÓN";
                 }
             }
         } while(0);
@@ -570,60 +570,60 @@ class Process {
             if(is_null($select_tabla_proc)) {
                 $error = true;
                 $notice_error = 'No pudo hallar la tabla principal';
-                break;      
+                break;
             }
             $id_tabla = $select_tabla_proc[0]['id_' . $pr_proceso];
-            
+
             // Selecciona los registros de tabla
             if($id_uno == '' && $id_dos == '' && $id_tres == '' && $id_cuatro == '') {
-                $select_tabla = BDConsulta::consulta('select_tabla', array($pr_proceso, $id_tabla), $deb);    
+                $select_tabla = BDConsulta::consulta('select_tabla', array($pr_proceso, $id_tabla), $deb);
                 if(is_null($select_tabla)) {
                     $error = true;
                     $notice_error = 'No pudo hallar la tabla principal';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla, con UNA RELACION
-            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_cuatro == ''){ 
+            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_cuatro == ''){
                 $select_tabla = BDConsulta::consulta('select_tabla_rel_una', array($pr_proceso, $id_uno, $id_tabla), $deb);
                 if(is_null($select_tabla)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla, con DOS RELACIONES
-            }elseif($id_uno != '' && $id_dos != '' && $id_tres == '' && $id_cuatro == ''){ 
+            }elseif($id_uno != '' && $id_dos != '' && $id_tres == '' && $id_cuatro == ''){
                 $select_tabla = BDConsulta::consulta('select_tabla_rel_dos', array($pr_proceso, $id_uno, $id_dos, $id_tabla), $deb);
                 if(is_null($select_tabla)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla, con TRES RELACIONES
-            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_cuatro == ''){ 
+            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_cuatro == ''){
                 $select_tabla = BDConsulta::consulta('select_tabla_rel_tres', array($pr_proceso, $id_uno, $id_dos, $id_tres, $id_tabla), $deb);
                 if(is_null($select_tabla)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla, con CUATRO RELACIONES
-            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_cuatro != ''){ 
+            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_cuatro != ''){
                 $select_tabla = BDConsulta::consulta('select_tabla_rel_cuatro', array($pr_proceso, $id_uno, $id_dos, $id_tres, $id_cuatro, $id_tabla), $deb);
                 if(is_null($select_tabla)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             }else{ // hay algo mal en los parametros de las relaciones.
                 $error = true;
                 $notice_error = 'Mal ingresados los parámetros de las relaciones';
             }
 
-            // $select_tabla = BDConsulta::consulta('select_tabla', array($pr_proceso, $id_tabla), $deb);    
+            // $select_tabla = BDConsulta::consulta('select_tabla', array($pr_proceso, $id_tabla), $deb);
             // if(is_null($select_tabla)) {
             //         $error = true;
             //         $notice_error = 'No pudo hallar la tabla principal';
-            //         break;      
+            //         break;
             //     }
         }while(0);
 
@@ -662,65 +662,65 @@ class Process {
             // detecta el Primer id_tabla_proc para relacionarlo con tabla_sec
             foreach($all_tabla_proc as $k => $p) {
                 if($p['pr_orden'] == 1 && $p['id_relacionado'] == null) {
-                    $id_tabla_proc = $p['id_tabla_proc']; 
+                    $id_tabla_proc = $p['id_tabla_proc'];
                     break;
                 }
             }
 
             // Selecciona los registros de tabla_sec
             if($id_uno == '' && $id_dos == '' && $id_tres == '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == '') {
-                $select_tabla_sec = BDConsulta::consulta('select_tabla_sec', array($pr_proceso, $pr_proceso_sec, $id_tabla_proc), $deb);        
+                $select_tabla_sec = BDConsulta::consulta('select_tabla_sec', array($pr_proceso, $pr_proceso_sec, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla_sec, con UNA RELACION
-            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){ 
+            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_una', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla_sec, con DOS RELACIONES
-            }elseif($id_uno != '' && $id_dos != '' && $id_tres == '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){ 
+            }elseif($id_uno != '' && $id_dos != '' && $id_tres == '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_dos', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_dos, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // Selecciona los registros de tabla_sec, con TRES RELACIONES
-            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){ 
+            }elseif($id_uno != '' && $id_dos != '' && $id_tres != '' && $id_rel_uno == '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_tres', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_dos, $id_tres, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // una relacion, y esta a su vez con otra.
-            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){ 
+            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra == '' && $id_rel_ult == ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_una_otra', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_rel_uno, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             // una relacion, a su vez con otra, y a su vez con otra más.
-            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra != '' && $id_rel_ult == ''){ 
+            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra != '' && $id_rel_ult == ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_una_otra_otra', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_rel_uno, $id_rel_uno_otra, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
-            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra != '' && $id_rel_ult != ''){ 
+            }elseif($id_uno != '' && $id_dos == '' && $id_tres == '' && $id_rel_uno != '' && $id_rel_uno_otra != '' && $id_rel_ult != ''){
                 $select_tabla_sec = BDConsulta::consulta('select_tabla_sec_rel_una_ult', array($pr_proceso, $pr_proceso_sec, $id_uno, $id_rel_uno, $id_rel_uno_otra, $id_rel_ult, $id_tabla_proc), $deb);
                 if(is_null($select_tabla_sec)) {
                     $error = true;
                     $notice_error = 'No pudo hacer la consulta correctamente o no existen registros';
-                    break;      
+                    break;
                 }
             }else{ // hay algo mal en los parametros de las relaciones.
                 $error = true;
@@ -753,7 +753,7 @@ class Process {
 
         do {
             $all_tabla_proc = self::getAllTablaProc($pr_proceso, $id_tabla_proc, $deb);
-           
+
             if(is_null($all_tabla_proc) || isset($all_tabla_proc['error']) && $all_tabla_proc['error']  == true) {
                 $error = true;
                 $notice_error = 'No pudo hallar registros para mostrar Tablas secundarias.';
@@ -762,18 +762,18 @@ class Process {
             // detecta el Primer id_tabla_proc para relacionarlo con tabla_sec
             foreach($all_tabla_proc as $k => $p) {
                 if($p['pr_orden'] == 1 && $p['id_relacionado'] == null) {
-                    $id_tabla_proc = $p['id_tabla_proc']; 
+                    $id_tabla_proc = $p['id_tabla_proc'];
                     break;
                 }
             }
             // Selecciona los registros de tabla_sec
             $tabla_sec_monto_total = BDConsulta::consulta('tabla_sec_monto_total', array($pr_proceso, $pr_proceso_sec, $id_tabla_proc, $sum), $deb);
-            
-            
+
+
             if(is_null($tabla_sec_monto_total)) {
                 $error = true;
                 $notice_error = 'No pudo calcular el monto total';
-                break;      
+                break;
             }
         }while(0);
         if($error == false) {
@@ -792,13 +792,13 @@ class Process {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
         if($tabla_rel == '' && $id_valor_rel == '' && $valor_rel == '') {
-            $values_select = BDConsulta::consulta('values_select', array($tabla, $id_valor, $valor), $deb);    
+            $values_select = BDConsulta::consulta('values_select', array($tabla, $id_valor, $valor), $deb);
         }
         if($tabla_rel != '' && $id_valor_rel != '' && $valor_rel != '') {
-            $values_select = BDConsulta::consulta('values_select_rel', array($tabla, $id_valor, $valor, $tabla_rel, $id_valor_rel, $valor_rel), $deb);    
+            $values_select = BDConsulta::consulta('values_select_rel', array($tabla, $id_valor, $valor, $tabla_rel, $id_valor_rel, $valor_rel), $deb);
         }
-        
-        
+
+
         if(is_null($values_select)) {
             $resp = 0; // no pudo hacer el array con los valores
         }else{
@@ -812,13 +812,13 @@ class Process {
         $debug == 's' ? $deb = 's' : $deb = 'n';
 
         if($tabla_uno != '' && $tabla_dos == '' && $tabla_tres == '' && $tabla_cuatro == '' && $where == '') {
-            $values_select = BDConsulta::consulta('select_uno', array($tabla_uno), $deb);    
+            $values_select = BDConsulta::consulta('select_uno', array($tabla_uno), $deb);
         }elseif($tabla_uno != '' && $tabla_dos != '' && $tabla_tres == '' && $tabla_cuatro == '' && $where == '') {
-            $values_select = BDConsulta::consulta('select_dos', array($tabla_uno, $tabla_dos), $deb);    
+            $values_select = BDConsulta::consulta('select_dos', array($tabla_uno, $tabla_dos), $deb);
         }elseif($tabla_uno != '' && $tabla_dos != '' && $tabla_tres != '' && $tabla_cuatro == '' && $where == '') {
-            $values_select = BDConsulta::consulta('select_tres', array($tabla_uno, $tabla_dos, $tabla_tres), $deb);        
+            $values_select = BDConsulta::consulta('select_tres', array($tabla_uno, $tabla_dos, $tabla_tres), $deb);
         }elseif($tabla_uno != '' && $tabla_dos != '' && $tabla_tres != '' && $tabla_cuatro != '' && $where == '') {
-            $values_select = BDConsulta::consulta('select_cuatro', array($tabla_uno, $tabla_dos, $tabla_tres, $tabla_cuatro), $deb);    
+            $values_select = BDConsulta::consulta('select_cuatro', array($tabla_uno, $tabla_dos, $tabla_tres, $tabla_cuatro), $deb);
         }else{
             $values_select = null; // Es posible que estén mal ingresados los parámetros. Hay un orden para ingresarlos.
         }
@@ -843,21 +843,21 @@ class Process {
             if(is_null($select_tabla_proc)) {
                 $error = true;
                 $notice_error = 'No pudo hallar la tabla principal';
-                break;      
+                break;
             }
             $id_tabla = $select_tabla_proc[0]['id_' . $pr_proceso];
             $first_process = self::getFirstProcess($pr_proceso, $id_tabla);
             if(is_null($first_process)) {
                 $error = true;
                 $notice_error = 'No pudo hallar primer proceso';
-                break;      
+                break;
             }
             $id_tabla_proc = $first_process[0]['id_' . $pr_proceso . '_proc'];
-            $nombres_archivos = BDConsulta::consulta('nombres_archivos', array($pr_proceso, $id_tabla_proc), $deb);  
+            $nombres_archivos = BDConsulta::consulta('nombres_archivos', array($pr_proceso, $id_tabla_proc), $deb);
             if(is_null($nombres_archivos)) {
                 $error = true;
                 $notice_error = 'No pudo hallar los nombres de los archivos';
-                break;      
+                break;
             }
         }while(0);
         if($error == false):
@@ -882,7 +882,7 @@ class Process {
             if(is_null($user)) {
                 $error = true;
                 $notice_error = 'No pudo hallar el usuario';
-                break;      
+                break;
             }
         }while(0);
         if($error == false) {
@@ -917,7 +917,7 @@ class Process {
         if($id_fl_dias_ant['error'] == false) {
             $resp = false;
         }else{
-            
+
             $resp = true;
         }
         return $resp;
@@ -944,7 +944,7 @@ class Process {
     }
 
 
-    
+
 
 
 
