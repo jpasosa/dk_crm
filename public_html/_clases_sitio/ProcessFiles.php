@@ -3,7 +3,7 @@
 
 
 class ProcessFiles {
-    
+
 
     // Hace la subida del archivo, y carga en tabla_arch el nombre
     public static function FileUpload($pr_proceso, $id_tabla_proc, $file, $debug = 'n') {
@@ -40,7 +40,7 @@ class ProcessFiles {
                 $notice_error = 'Ya existen 5 archivos para este proceso. No se pueden subir más.';
                 break;
             }
-            $fileup = new ArchivoSubir; 
+            $fileup = new ArchivoSubir;
             $fileup->nombreCampo( 'archivo' );
             $fileup->directorio( 'upload_archivos/' . $pr_proceso . '/' ); // defino carpeta para $fileup
             // $fileup->directorio( '../upload_files/' . $pr_proceso . '/' ); // defino carpeta para $fileup
@@ -64,7 +64,7 @@ class ProcessFiles {
                 $notice_error = 'No pudo subir el archivo al servidor.';
                 break;
             }
-            $insert_archivo = BDConsulta::consulta('insert_archivo', array($pr_proceso, $insert_bl, $fileup->obtenerNombre()), $deb);            
+            $insert_archivo = BDConsulta::consulta('insert_archivo', array($pr_proceso, $insert_bl, $fileup->obtenerNombre()), $deb);
             if(is_null($insert_archivo)) {
                 $error = true;
                 $notice_error = 'No pudo subir el archivo al servidor.';
@@ -105,7 +105,7 @@ class ProcessFiles {
                 $notice_error = 'El archivo que intentas subir no pudo ser cargado correctamente.';
                 break;
             }
-            $fileup = new ArchivoSubir; 
+            $fileup = new ArchivoSubir;
             $fileup->nombreCampo( 'archivo' );
             $fileup->directorio( 'upload_archivos/' . $pr_proceso . '/' ); // defino carpeta para $fileup
             $fileup->idRegistro($id_tabla_sec);
@@ -121,16 +121,16 @@ class ProcessFiles {
                 $notice_error = 'No pudo subir el archivo al servidor1.';
                 break;
             }
-            $update_archivo = BDConsulta::consulta('update_archivo', array($pr_proceso, $pr_proceso_sec, $campo, $id_tabla_sec, $fileup->obtenerNombre()), $deb);            
+            $update_archivo = BDConsulta::consulta('update_archivo', array($pr_proceso, $pr_proceso_sec, $campo, $id_tabla_sec, $fileup->obtenerNombre()), $deb);
             if(is_null($update_archivo)) {
                 $error = true;
                 $notice_error = 'No pudo subir el archivo al servidor2.';
                 break;
             }
             $notice_success = 'Archivo subido correctamente';
-            
 
-            
+
+
         }while(0);
 
         $resp = array(
@@ -143,7 +143,7 @@ class ProcessFiles {
     }
 
     // Sube solo un archivo, y lo carga en campo "archivo" de la tabla principal
-    public static function FileUploadOnePrinc($pr_proceso, $campo, $id_tabla, $file, $debug = 'n', $replace = false) {
+    public static function FileUploadOnePrinc($pr_proceso, $campo, $id_tabla, $file, $debug = 'n', $replace = false, $archivo = 'archivo') {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
         if($pr_proceso == '') {
@@ -165,8 +165,8 @@ class ProcessFiles {
                 $notice_error = 'El archivo que intentas subir no pudo ser cargado correctamente.';
                 break;
             }
-            $fileup = new ArchivoSubir; 
-            $fileup->nombreCampo( 'archivo' );
+            $fileup = new ArchivoSubir;
+            $fileup->nombreCampo($archivo);
             $fileup->directorio( 'upload_archivos/' . $pr_proceso . '/' ); // defino carpeta para $fileup
             $fileup->idRegistro($id_tabla);
             $ruta = 'upload_archivos/' . $pr_proceso . '/';
@@ -175,7 +175,7 @@ class ProcessFiles {
                     $error = true;
                     $notice_error = 'El archivo que intenta subir ya existe en el servidor.';
                     break;
-                }    
+                }
             }
             $fileup->subir();
             if(!file_exists($ruta . $fileup->obtenerNombre())) {
@@ -183,7 +183,7 @@ class ProcessFiles {
                 $notice_error = 'No pudo subir el archivo al servidor1.';
                 break;
             }
-            $update_archivo = BDConsulta::consulta('update_archivo_princ', array($pr_proceso, $campo, $id_tabla, $fileup->obtenerNombre()), $deb);            
+            $update_archivo = BDConsulta::consulta('update_archivo_princ', array($pr_proceso, $campo, $id_tabla, $fileup->obtenerNombre()), $deb);
             if(is_null($update_archivo)) {
                 $error = true;
                 $notice_error = 'No pudo subir el archivo al servidor2.';
@@ -212,7 +212,7 @@ class ProcessFiles {
                 // no pudo borrar
                 break;
             }
-              
+
         }while(0);
         return true;
     }
