@@ -10,7 +10,7 @@ class ven_analisis_riesgo_crediticio extends FormCommon {
             UPDATE ven_analisis_riesgo_crediticio
             SET id_ven_cliente_contacto = $valores[1],
                     asunto = '$valores[2]',
-                    detalle = '$valores[3]',
+                    detalle = '$valores[3]'
             WHERE id_ven_analisis_riesgo_crediticio = $valores[0]
             ;
         ";

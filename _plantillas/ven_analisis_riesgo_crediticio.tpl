@@ -47,107 +47,93 @@
 
                 <div class="archivo">
                     <label class="block"> Pacto Social </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_pacto" value="" />
                     <input type="submit" class="inline" name="pacto" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_pacto_social']}" target="_blank">
+                            <span>{$tabla[0]["archivo_pacto_social"]}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="archivo">
                     <label class="block"> certificado registro público </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_publico" value="" />
                     <input type="submit" class="inline" name="cert_publico" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
                         <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
+                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_certificado_registro_p']}" target="_blank">
+                                <span>{$tabla[0]['archivo_certificado_registro_p']}</span>
                             </a>
                         </div>
-                    {/if}
                 </div>
 
                 <div class="archivo">
                     <label class="block"> certificado de incumbencia </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_incumb" value="" />
                     <input type="submit" class="inline" name="cert_incumb" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_certificado_incumb']}" target="_blank">
+                            <span>{$tabla[0]['archivo_certificado_incumb']}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="archivo">
                     <label class="block"> referencias bancarias </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_bancarias" value="" />
                     <input type="submit" class="inline" name="bancarias" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_referencias_bancarias']}" target="_blank">
+                            <span>{$tabla[0]['archivo_referencias_bancarias']}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="archivo">
                     <label class="block"> referencias comerciales </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_comerciales" value="" />
                     <input type="submit" class="inline" name="comerciales" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_referencias_com']}" target="_blank">
+                            <span>{$tabla[0]['archivo_referencias_com']}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="archivo">
                     <label class="block"> autorizaciones </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_autorizaciones" value="" />
                     <input type="submit" class="inline" name="autorizaciones" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]['archivo_autorizaciones']}" target="_blank">
+                            <span>{$tabla[0]['archivo_autorizaciones']}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="archivo">
                     <label class="block"> contrato de crédito </label>
-                    <input type="file" class="inline" name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo_credito" value="" />
                     <input type="submit" class="inline" name="credito" value="Subir" />
                 </div>
                 <div class="archivos clear">
-                    {if $tabla[0]['mlg_plantilla'] != '' }
-                        <div class="file marginLat10">
-                            <a class="file_name" href="/upload_archivos/ven_analisis_riesgo_crediticio/{$$n[nombre]}" target="_blank">
-                                <span>{$tabla[0]["mlg_plantilla"]}</span>
-                            </a>
-                        </div>
-                    {/if}
+                    <div class="file marginLat10">
+                        <a class="file_name" href='/upload_archivos/ven_analisis_riesgo_crediticio/{$tabla[0]["archivo_contrato_credito"]}' target="_blank">
+                            <span>{$tabla[0]["archivo_contrato_credito"]}</span>
+                        </a>
+                    </div>
                 </div>
 
 
@@ -158,63 +144,6 @@
             </div>
         </form>
 
-        <!-- LISTADO DE CLIENTES -->
-        <p class="azul bold">LLAMADAS A CLIENTES</p>
-        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
-            <tr>
-                <td bgcolor="#4685CA"><p class="blanco">Cliente </p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Contacto</p></td>
-                <td width="92" align="center" bgcolor="#4685CA"><p class="blanco">Horario</p></td>
-                <td width="52" align="center" bgcolor="#4685CA"><p class="blanco">Accion</p></td>
-            </tr>
-            {if $tabla_sec['error'] == false }
-                {foreach item=clientes from=$tabla_sec }
-                <tr id="id_cliente-{$$clientes[id_ven_analisis_riesgo_crediticio_clientes]}">
-                    <td><span id="{$$clientes[id_ven_cliente_sucursales]}" class="cliente">{$$clientes[empresa]} , {$$clientes[nombre_sucursal]}</span></td>
-                    <td><span id="{$$clientes[id_ven_cliente_contacto]}" class="contacto">{$$clientes[apellido]}, {$$clientes[nombre]}</span></td>
-                    <td align="center"><span class="hora">{$$clientes[hora]}</span></td>
-                    <td align="center">
-                        <a href="#"><img id="id_cliente-{$$clientes[id_ven_analisis_riesgo_crediticio_clientes]}" class="del_cliente" src="img/iconos/delete.gif" alt="quitar" border="0" /></a>
-                        <a href="#"><img id="id_cliente-{$$clientes[id_ven_analisis_riesgo_crediticio_clientes]}" class="edit_cliente" src="img/iconos/edit.gif" alt="editar" border="0" /></a>
-                    </td>
-                </tr>
-                {/foreach}
-            {/if}
-        </table>
-
-        <!-- BOX DE ENTRADA DE CLIENTES -->
-        <form class="box-entrada" name="add_hotel" action="/ven_analisis_riesgo_crediticio.html" method="post" enctype="multipart/form-data" >
-            <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
-                <div class="izq">
-                    <div class="campania">
-                        <label class="primerElement">Cliente:</label>
-                        <select name="ven_cliente_sucursales" class="cliente">
-                            {foreach item=vcs from=$ven_cliente_sucursales}
-                                <option value="{$$vcs[id_ven_cliente_sucursales]}" {if $$vcs['id_ven_cliente'] == $tabla[0]['id_ven_cliente'] } selected {/if}> {$$vcs[empresa]} / {$$vcs[nombre_sucursal]}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                    <div class="campania">
-                        <label>Contacto:</label>
-                        <select name="ven_cliente_contacto" class="ultimoElement contacto" >
-                            {foreach item=vcc from=$ven_cliente_contacto}
-                                <option value="{$$vcc[id_ven_cliente_contacto]}" {if $$vcc['id_ven_cliente_contacto'] == $tabla[0]['id_ven_cliente_contacto'] } selected {/if}> {$$vcc[apellido]},  {$$vcc[nombre]}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
-                <div class="der">
-                    <div class="campania">
-                        <label class="primerElement">Horario:</label>
-                        <input name="horario" class="horario" type="text" value="" alt="Horario" />
-                    </div>
-                </div>
-                <input name="first_time" type="hidden" value="{$first_time}" />
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_cliente" class="agregar" type="submit" value="Agregar" />
-            </div>
-        </form>
         <form class="box-entrada" name="add_hotel" action="/ven_analisis_riesgo_crediticio.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="first_time" type="hidden" value="{$first_time}" />
