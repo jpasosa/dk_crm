@@ -61,7 +61,7 @@
                         <td> <span id="{$$ts[id_crp_proveedores]}" class="proveedor">{$$ts[nombre]}</span></td>
                         <td> <span class="factura">{$$ts[factura]}</span></td>
                         <td> <span id="{$$ts[id_sis_areas]}" class="area">{$$ts[area]}</span></td>
-                        <td> <span class="monto">{$$ts[monto]}</span></td>
+                        <td> <span class="monto">{$$ts[monto]|number_format:2:",":""}</span></td>
                         <td>
                             <a href="#">
                                 <img id="id_detalle-{$$ts[id_adm_ytd_gastos_costos_detalle]}" class="del_detalle" src="/img/iconos/delete.gif" alt="quitar" border="0" />
@@ -133,7 +133,7 @@
                 <input name="agregar_det" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/adm_ytd_gastos_costos.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />

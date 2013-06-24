@@ -12,17 +12,18 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">YTD Gastos / Costos</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Empleado:<span class="azul">NOMBRE Y APELLIDO</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="observacionesChico">
                     <label class="primerElement"> Observaciones: </label>
-                    <textarea class="ultimoElement" readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea class="ultimoElement" readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
             </div>
-        </form>    
-        <p class="azul bold">MONTO TOTAL : <span>$1587</span></p>
+        </form>
+        <p class="azul bold">MONTO TOTAL : <span>${$monto_total}</span></p>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Cuenta</p></td>
@@ -32,49 +33,22 @@
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Factura</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Area</p></td>
                 <td width="45" align="left" bgcolor="#4685CA"><p class="blanco">Monto</p></td>
-                <td width="45" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
+                    <tr>
                         <td><span>{$$ts[cuenta]}</span></td>
                         <td> <span>{$$ts[descripcion]}</span></td>
                         <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[proveedor]}</span></td>
+                        <td> <span>{$$ts[nombre]}</span></td>
                         <td> <span>{$$ts[factura]}</span></td>
                         <td> <span>{$$ts[area]}</span></td>
-                        <td> <span>{$$ts[monto]}</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                        </td>
-                        <td> <span><a>[VER]</a></span></td>
+                        <td> <span>{$$ts[monto]|number_format:2:",":""}</span></td>
                     </tr>
                 {/foreach}
             {/if}
-            <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>25441</span></td>
-                        <td> <span>Campaña</span></td>
-                        <td> <span>Hotel Panama</span></td>
-                        <td> <span>Papeleria H1</span></td>
-                        <td> <span>6584</span></td>
-                        <td> <span>Diseño</span></td>
-                        <td> <span>1234</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                        </td>
-                    </tr>
         </table>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/adm_ytd_gastos_costos_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
