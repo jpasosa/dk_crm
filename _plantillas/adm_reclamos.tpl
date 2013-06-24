@@ -24,7 +24,7 @@
                             <option value="0">Sin Cliente</option>
                             {foreach item=vc from=$ven_cliente}
                                 <option value="{$$vc[id_ven_cliente]}" {if $$vc['id_ven_cliente'] == $id_ven_cliente } selected {/if}> {$$vc[empresa]} </option>
-                            {/foreach}    
+                            {/foreach}
                         </select>
                     </div>
                     <div class="cliente">
@@ -35,7 +35,7 @@
                                 <option value="{$$vcc[id_ven_cliente_contacto]}" {if $$vcc['id_ven_cliente_contacto'] == $tabla[0]['id_ven_cliente_contacto'] } selected {/if}>
                                     {$$vcc[apellido]}, {$$vcc[nombre]}  |  {$$vcc[nombre_sucursal]}
                                 </option>
-                            {/foreach}    
+                            {/foreach}
                         </select>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
                         <select name="proveedor">
                             <option value="0">Sin Proveedor</option>
                             {foreach item=pr from=$proveedores}
-                                <option value="{$$pr[id_crp_proveedores]}" {if $$pr['id_crp_proveedores'] == $tabla[0]['id_crp_proveedores'] } selected {/if}> {$$pr[nombre]} </option>
-                            {/foreach}    
+                                <option value="{$$pr[id_cpr_proveedores]}" {if $$pr['id_cpr_proveedores'] == $tabla[0]['id_cpr_proveedores'] } selected {/if}> {$$pr[nombre]} </option>
+                            {/foreach}
                         </select>
                     </div>
                     <!-- <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" /> -->
@@ -75,7 +75,7 @@
                         {/foreach}
                     </div>
                 {/if}
-                <input name="agregar" type="submit" id="enviar" class="enviar" value="Agregar" />      
+                <input name="agregar" type="submit" id="enviar" class="enviar" value="Agregar" />
             </div>
             <input type="hidden" name="id_ven_cliente" value="{$id_ven_cliente}" />
             <input type="hidden" name="first_time" value="{$first_time}" />

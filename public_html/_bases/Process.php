@@ -12,18 +12,18 @@ class _Process {
         return "
             SELECT id_sis_cuentas AS id_sc
             FROM sis_cuentas
-            WHERE cuenta = '$valores[0]'          
-            ; 
+            WHERE cuenta = '$valores[0]'
+            ;
         ";
     }
 
-    // T: crp_proveedores //// Con el nombre del proveedor, me devuelve el id del proveedor
+    // T: cpr_proveedores //// Con el nombre del proveedor, me devuelve el id del proveedor
     public  function search_proveedores ($valores=NULL){
         return "
-            SELECT id_crp_proveedores AS id_p
-            FROM crp_proveedores
-            WHERE nombre = '$valores[0]'          
-            ; 
+            SELECT id_cpr_proveedores AS id_p
+            FROM cpr_proveedores
+            WHERE nombre = '$valores[0]'
+            ;
         ";
     }
 
@@ -35,9 +35,9 @@ class _Process {
             JOIN sis_areas AS a
                 ON cv.id_sis_areas=a.id_sis_areas
             WHERE id_cv_datos_personales = $valores[0]
-            ; 
+            ;
         ";
-    } 
+    }
 
     // T: sis_feriado //// selecciona las fechas feriadas, según un país.
     public  function select_feriados ($valores=NULL){
@@ -45,11 +45,11 @@ class _Process {
             SELECT FROM_UNIXTIME(fecha, '%d/%m/%Y') AS fecha
             FROM sis_feriados
             WHERE id_sis_pais = $valores[0]
-            ; 
+            ;
         ";
     }
 
-    
+
 
 
 
@@ -66,24 +66,24 @@ class _Process {
     //  nos dá el id del área del user logueado y el id de cv_datos_personales
     //  IN:     (id_user logueado)
     //  OUT:    array { ['id_sis_areas'']=>xx }
-    public  function user_area ($valores=NULL){  // TODO volar a unas clases bases. .. . . 
+    public  function user_area ($valores=NULL){  // TODO volar a unas clases bases. .. . .
         return "
             SELECT id_sis_areas, id_cv_datos_personales
             FROM cv_datos_personales
             WHERE id_cv_datos_personales = $valores[0]
-            ; 
+            ;
         ";
     }
 
     //  nos dá el id del nombre del proceso del formulario que estemos haciendo en ese momento
     //  IN:     (recibe el nombre del proceso, saca directo del nombre del archivo)
     //  OUT:    array { ['id_sis_procesos'']=>xx,  }
-    public  function id_proceso ($valores=NULL){  // TODO volar a unas clases bases. .. . . 
+    public  function id_proceso ($valores=NULL){  // TODO volar a unas clases bases. .. . .
         return "
             SELECT id_sis_procesos
             FROM sis_procesos
             WHERE proceso = '$valores[0]'
-            ; 
+            ;
         ";
     }
 
@@ -98,7 +98,7 @@ class _Process {
             WHERE id_sis_areas = $valores[1]
                     AND id_sis_procesos = $valores[2]
                     AND proceso_orden = 1
-            ; 
+            ;
         ";
     }
 
@@ -113,7 +113,7 @@ class _Process {
         return "
             INSERT INTO $valores[0]_proc
             (fecha_alta, id_cv_datos_personales, id_sis_procesos_flujos_dias) VALUES ($valores[3], $valores[2], $valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -124,7 +124,7 @@ class _Process {
         return "
             INSERT INTO $valores[0]
             (id_$valores[0]_proc) VALUES ($valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -137,7 +137,7 @@ class _Process {
         return "
             UPDATE $valores[0]_proc SET id_$valores[0] = $valores[2]
                 WHERE id_$valores[0]_proc = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -150,7 +150,7 @@ class _Process {
             FROM information_schema.COLUMNS
             WHERE TABLE_SCHEMA  LIKE 'dreamkyds_crm'
                 AND TABLE_NAME = 'ger_planificacion_gastos';
-            ; 
+            ;
         ";
     }
 
@@ -162,7 +162,7 @@ class _Process {
             SELECT *
             FROM $valores[0]
             WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -175,7 +175,7 @@ class _Process {
             CREATE TEMPORARY TABLE tmp
                 SELECT * FROM $valores[0]
                 WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -185,17 +185,17 @@ class _Process {
     public  function select_last ($valores=NULL){
         return "
             SELECT id_$valores[0] FROM $valores[0] ORDER BY id_$valores[0] DESC LIMIT 0,1
-            ; 
+            ;
         ";
     }
 
     //  hago el update de la tabla temporal, para modificarle el id, que corresponda con el insert que va a hacer en tabla principal
-    //  IN:     (0->nombre_proceso  1->id nuevo 2->id_tabla 
+    //  IN:     (0->nombre_proceso  1->id nuevo 2->id_tabla
     //  OUT:    registro entero a duplicar puesto en tabla temporal
     public  function update_tmp ($valores=NULL){
         return "
             UPDATE tmp SET id_$valores[0]=$valores[1] WHERE id_$valores[0] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -205,7 +205,7 @@ class _Process {
     public  function duplicate_reg ($valores=NULL){
         return "
             INSERT INTO $valores[0] SELECT * FROM tmp WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -216,7 +216,7 @@ class _Process {
         return "
             UPDATE $valores[0] SET id_$valores[0]_proc = $valores[1]
                 WHERE id_$valores[0] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -229,7 +229,7 @@ class _Process {
         return "
             UPDATE $valores[0] SET id_$valores[0]_proc = NULL
                 WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -244,7 +244,7 @@ class _Process {
         return "
             UPDATE $valores[0] SET observaciones = '$valores[2]'
                 WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -265,16 +265,16 @@ class _Process {
         return "
             INSERT INTO $valores[0]_$valores[1]
             (activo, id_$valores[0]_proc) VALUES (1, $valores[2])
-            ; 
+            ;
         ";
     }
 
-    
 
-    
+
+
     // Ahora vienen las consultas para el métodos Process::ModifySec
-    
-    
+
+
     //  hago el primer insert en la tabla secundario. Pongo id_process y activo en 1.
     //  IN:     (0->nombre_proceso  1->sigla de tabla secundaria 2->id_tabla_sec
     //  OUT:    registro entero a duplicar puesto en tabla temporal
@@ -283,11 +283,11 @@ class _Process {
             UPDATE $valores[0]_$valores[1]
             SET activo = 0
             WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
-    
+
 
     // Ahora vienen las consultas para el métodos Process::DeleteSec
 
@@ -299,7 +299,7 @@ class _Process {
             CREATE TEMPORARY TABLE tmp
                 SELECT * FROM $valores[0]_$valores[1]
                 WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -309,17 +309,17 @@ class _Process {
     public  function select_last_sec ($valores=NULL){
         return "
             SELECT id_$valores[0]_$valores[1] FROM $valores[0]_$valores[1] ORDER BY id_$valores[0]_$valores[1] DESC LIMIT 0,1
-            ; 
+            ;
         ";
     }
 
     //  hago el update de la tabla temporal, para modificarle el id, que corresponda con el insert que va a hacer en tabla principal
-    //  IN:     (0->nombre_proceso  1->sigla sec 2->id nuevo 3->id_tabla_sec 
+    //  IN:     (0->nombre_proceso  1->sigla sec 2->id nuevo 3->id_tabla_sec
     //  OUT:    registro entero a duplicar puesto en tabla temporal
     public  function update_tmp_sec ($valores=NULL){
         return "
             UPDATE tmp SET id_$valores[0]_$valores[1]=$valores[2] WHERE id_$valores[0]_$valores[1] = $valores[3]
-            ; 
+            ;
         ";
     }
 
@@ -329,7 +329,7 @@ class _Process {
     public  function duplicate_reg_sec ($valores=NULL){
         return "
             INSERT INTO $valores[0]_$valores[1] SELECT * FROM tmp WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -340,7 +340,7 @@ class _Process {
         return "
             UPDATE $valores[0]_$valores[1] SET activo = 0
                 WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -365,7 +365,7 @@ class _Process {
         return "
             INSERT INTO adm_ytd_mantenimiento_recordatorio
             (id_adm_ytd_mantenimientos_proc, fecha) VALUES ($valores[0], $valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -377,7 +377,7 @@ class _Process {
             SELECT FROM_UNIXTIME(fecha, '%d/%m/%Y') AS fecha
             FROM adm_ytd_mantenimiento_recordatorio
             WHERE id_adm_ytd_mantenimientos_proc = $valores[0]
-            ; 
+            ;
         ";
     }
 
@@ -398,19 +398,19 @@ class _Process {
             JOIN sis_procesos_flujos_dias AS d
                 ON d.id_sis_procesos_flujos_dias=p.id_sis_procesos_flujos_dias
             WHERE id_$valores[0]_proc = $valores[1]
-            ; 
+            ;
         ";
     }
 
     // debe comprobar que exista el user id
     //  IN:     (0->id_user)
     //  OUT:    nos devuelve el proceso
-    public  function exist_user ($valores=NULL){ // TODO volar a unas clases bases. .. . . 
+    public  function exist_user ($valores=NULL){ // TODO volar a unas clases bases. .. . .
         return "
             SELECT id_cv_datos_personales
             FROM cv_datos_personales
             WHERE id_cv_datos_personales = $valores[0]
-            ; 
+            ;
         ";
     }
 
@@ -422,7 +422,7 @@ class _Process {
             SELECT id_$valores[0] AS id
             FROM $valores[0]
             WHERE id_$valores[0]_proc = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -441,7 +441,7 @@ class _Process {
             SELECT proceso_orden AS pr_orden, id_sis_procesos AS id_proceso, id_sis_areas AS id_area
             FROM sis_procesos_flujos_dias
             WHERE id_sis_procesos_flujos_dias = $valores[0]
-            ; 
+            ;
         ";
     }
 
@@ -454,7 +454,7 @@ class _Process {
             FROM sis_procesos_flujos_dias
             WHERE id_sis_procesos = $valores[0]
                 AND proceso_orden = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -699,7 +699,7 @@ class _Process {
         ";
     }
 
- 
+
     //  selecciono 1er proceso pr_orden = 1, del tabla_proc dado
     //  IN:     (0->pr_proceso  |  1->id_tabla)
     //  OUT:    devuelve los registros de tabla SEC
@@ -752,7 +752,7 @@ class _Process {
             SELECT id_$valores[0]_arch AS id, archivo AS nombre
             FROM $valores[0]_arch
             WHERE id_$valores[0]_proc = $valores[1] AND activo = 1;
-            ;   
+            ;
         ";
     }
 
@@ -772,7 +772,7 @@ class _Process {
 
 
 
-    //  Selecciona los valores para hacer un select. 
+    //  Selecciona los valores para hacer un select.
     //  IN:     (0->tabla_uno)
     //  OUT:    Devuelve los valores para poder hacer el select en la plantilla
     public  function select_uno ($valores=NULL){

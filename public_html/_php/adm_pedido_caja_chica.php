@@ -10,7 +10,7 @@ require_once '_php/forms_start.php';
 if(isset($_POST['id_file']) && $_POST['id_file'] > 0):          // ELIMINAR ARCHIVO
         $id_tabla = $_POST['id_file'];
         $del_file = ProcessFiles::DeleteFilePrinc('', 'archivo', $id_tabla);
-        FormCommon::queryRespHeader($del_file);        
+        FormCommon::queryRespHeader($del_file);
 endif;
 if(isset($_POST['cuenta'])):        // BUSCA LA DESCRIPCIÓN POR EL NÚMERO DE CUENTA
         $descripcion = BDConsulta::consulta('search_descripcion', array($_POST['cuenta']), 'n');
@@ -42,14 +42,14 @@ if(isset($_POST['agregar'])):
     $observaciones = trim($_POST['observaciones']);
     $first_time = $_POST['first_time'];
     $id_tabla_proc  = $_POST['id_tabla_proc'];
-    $id_tabla   = $_POST['id_tabla'];     
+    $id_tabla   = $_POST['id_tabla'];
     do { // VALIDACIONES
            $validations = Validations::General(array(
                                     array('field' => $observaciones, 'null' => false, 'notice_error' => 'Debe ingresar una observación.')
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // 1era VEZ
                 $new_process = Process::CreateNewProcess('', $id_user, 'n' );
@@ -101,7 +101,7 @@ endif;
 
 
 
-///////////////////////////////// AGREGAR TABLA SECUNDARIA (gastos) |  POST 
+///////////////////////////////// AGREGAR TABLA SECUNDARIA (gastos) |  POST
 if(isset($_POST['agregar_gasto'])):
     $cuenta = trim($_POST['cuenta']);
     $descripcion = trim($_POST['descripcion']);
@@ -126,13 +126,13 @@ if(isset($_POST['agregar_gasto'])):
                                 array('field' => $descripcion, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'No ingresó descripción o no fue encontrada.',
                                             'table' => 'sis_cuentas.descripcion'),
                                 array('field' => $proveedor, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar proveedor válido',
-                                            'table' => 'crp_proveedores.id_crp_proveedores'),
+                                            'table' => 'cpr_proveedores.id_cpr_proveedores'),
                                 array('field' => $area, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar área válida',
                                             'table' => 'sis_areas.id_sis_areas')
                                 ));
         if($validations['error'] == true) {
            $flash_error = $validations['notice_error'];
-            break; 
+            break;
         }
         $tabla_sec = Process::CreateSec('', 'detalle', $id_tabla_proc, 'n');
         if($tabla_sec['error'] == true) {
@@ -145,7 +145,7 @@ if(isset($_POST['agregar_gasto'])):
         $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $id_sis_cuenta, $detalle, $factura, $area, $monto, $proveedor), 'n');
         if(is_null($update_tabla_sec)) {
             $flash_error = 'No pudo insertar el gasto.';
-            break;  
+            break;
         }
         $flash_notice = 'Nuevo gasto agregado correctamente.';
     }while(0);
@@ -164,20 +164,20 @@ $files = BDConsulta::consulta('get_file', array($id_tabla), 'n');
 $file = $files[0]['archivo'];
 $tpl->asignar('file', $file);
 // SELECT DE PROVEEDOR
-$proveedores = Process::getValuesSelect('crp_proveedores', 'id_crp_proveedores', 'nombre', 'n');
+$proveedores = Process::getValuesSelect('cpr_proveedores', 'id_cpr_proveedores', 'nombre', 'n');
 $tpl->asignar('proveedores', $proveedores);
 // SELECT DE AREA
 $areas = Process::getValuesSelect('sis_areas', 'id_sis_areas', 'area', 'n');
 $tpl->asignar('sel_area', $areas);
 // TABLA SECUNDARIA (los gastos)
-$gast_detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'crp_proveedores', 'sis_areas');
+$gast_detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'cpr_proveedores', 'sis_areas');
 $tpl->asignar('tabla_sec', $gast_detalles);
 // MONTO TOTAL
 $monto_total = Process::getTablaSecTotal('', 'detalle', $id_tabla_proc, 'monto');
 if(isset($monto_total['error']) && $monto_total['error'] == true) {
     $monto_total = 0.00;
 }else{
-    $monto_total = $monto_total['monto_total'];    
+    $monto_total = $monto_total['monto_total'];
 }
 $tpl->asignar('monto_total', $monto_total);
 // MENSAJES FLASH

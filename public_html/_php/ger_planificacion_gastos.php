@@ -10,7 +10,7 @@ if(isset($_POST['cuenta'])): // Busca la descripción, por el número de cuenta
     $desc = utf8_decode($descripcion[0]['descripcion']);
     header("descripcion: " . $desc);
 endif;
-if(isset($_POST['descripcion'])): // Busca la cuenta, por la descrpcion
+if(isset($_POST['descripcion'])): // Busca la cuenta, por la descprcion
     $cuenta = BDConsulta::consulta('search_cuenta', array($_POST['descripcion']), 'n');
     header("cuenta: " . $cuenta[0]['cuenta']);
 endif;
@@ -38,7 +38,7 @@ if(isset($_POST['agregar'])):
                                     ));
         if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
         if(isset($_POST['first_time']) && $_POST['first_time'] == 'true' ) { // 1era VEZ
             $new_process = Process::CreateNewProcess('', $id_user, 'n' );
@@ -74,13 +74,13 @@ endif;
 
 
 
-// Agregar gastos en la planificación de gastos. 
+// Agregar gastos en la planificación de gastos.
 if(isset($_POST['agregar_gasto'])):
-    $cuenta = trim($_POST['cuenta']);                                  
-    $descripcion = trim($_POST['descripcion']);     
-    $detalle = trim($_POST['detalle']);                     
-    $proveedor = trim($_POST['proveedor']);        
-    $mes = $_POST['mes'];                                    
+    $cuenta = trim($_POST['cuenta']);
+    $descripcion = trim($_POST['descripcion']);
+    $detalle = trim($_POST['detalle']);
+    $proveedor = trim($_POST['proveedor']);
+    $mes = $_POST['mes'];
     $monto = Common::PutDot($_POST['monto']);
     $first_time = $_POST['first_time'];
     $id_tabla_proc = $_POST['id_tabla_proc'];
@@ -88,7 +88,7 @@ if(isset($_POST['agregar_gasto'])):
     do {
         if($first_time == 'true') { // TODAVIA no llenó la tabla principal
            $flash_error = 'Debe cargar primero las observaciones';
-            break;  
+            break;
         }
         $validations = Validations::General(array(
                                 array('field' => $detalle, 'null' => false, 'validation' => 'text', 'notice_error' => 'Debe ingresar detalle y/o incorrecto detalles.'),
@@ -103,7 +103,7 @@ if(isset($_POST['agregar_gasto'])):
         if($validations['error'] == true) { // ERROR
            $flash_error = $validations['notice_error'];
            $tpl->asignar('first_time', $first_time);
-            break; 
+            break;
         }
         $id_sc = BDConsulta::consulta('search_sis_cuentas', array($cuenta), 'n');
         $id_cuenta = $id_sc[0]['id_sc'];
@@ -130,13 +130,13 @@ require_once '_php/forms_reset.php';
 $observaciones = Process::getTabla('', $id_tabla_proc, 'n');
 $tpl->asignar('observaciones', $observaciones);
 // Tabla Secundaria  |  Gastos
-$gast_detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'crp_proveedores');
+$gast_detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'cpr_proveedores');
 $tpl->asignar('gast_detalles', $gast_detalles);
 // MONTOS
 $montos = Process::getTablaSecTotal('', 'detalle', $id_tabla_proc, 'monto', 'n');
 $tpl->asignar('montos', $montos);
 // Select PROVEEDORES
-$proveedores = Process::getValuesSelect('crp_proveedores', 'id_crp_proveedores', 'nombre', 'n');
+$proveedores = Process::getValuesSelect('cpr_proveedores', 'id_cpr_proveedores', 'nombre', 'n');
 $tpl->asignar('proveedores', $proveedores);
 
 

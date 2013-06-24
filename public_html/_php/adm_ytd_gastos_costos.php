@@ -118,13 +118,13 @@ $tpl->asignar('tabla', $get_tabla);
 $sis_cuentas = Process::getValuesSelectRel('sis_cuentas', '', '', '', '', 'n');
 $tpl->asignar('sis_cuentas', $sis_cuentas);
 // // PARA EL SELECT de CRP_PROVEEDORES
-$crp_proveedores = Process::getValuesSelectRel('crp_proveedores', '', '', '', '', 'n');
+$crp_proveedores = Process::getValuesSelectRel('cpr_proveedores', '', '', '', '', 'n');
 $tpl->asignar('crp_proveedores', $crp_proveedores);
 // // PARA EL SELECT de SIS_AREAS
 $sis_areas = Process::getValuesSelectRel('sis_areas', '', '', '', '', 'n');
 $tpl->asignar('sis_areas', $sis_areas);
 // TABLA SECUNDARIA (los detalles)
-$detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'crp_proveedores', 'sis_areas');
+$detalles = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'cpr_proveedores', 'sis_areas');
 $tpl->asignar('tabla_sec', $detalles);
 // MONTO TOTAL
 $monto_total = Process::getTablaSecTotal('', 'detalle', $id_tabla_proc, 'monto');

@@ -1,7 +1,7 @@
 <?php
 if($_GET[1] != '' && $_GET[1] > 0):  // Si NO TIENE EL NÚMERO DE ID DE UN PROCESO, VUELVE AL MENU.TPL
 
-$id_tabla_proc = $_GET[1];    
+$id_tabla_proc = $_GET[1];
 $tpl = new PlantillaReemplazos();
 $flash_error = '';
 $flash_notice = '';
@@ -26,7 +26,7 @@ $flash_error = Common::setErrorMessage($get_tabla); // Si tuviera error, lo carg
 $tpl->asignar('tabla', $get_tabla);
 
 // REGISTROS DE TABLA SECUNDARIA
-$get_tabla_sec = Process::getTablaSec('ger_planificacion_gastos', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'crp_proveedores');
+$get_tabla_sec = Process::getTablaSec('ger_planificacion_gastos', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'cpr_proveedores');
 $flash_error = Common::setErrorMessage($get_tabla_sec); // Si tuviera error, lo carga en $flash_error para mostrar.
 $tpl->asignar('tabla_sec', $get_tabla_sec);
 
@@ -62,7 +62,7 @@ if(isset($_POST['comentario']) && $_POST['comentario'] != '' &&
     $comentario = ProcessSends::toNextProcess('ger_planificacion_gastos', $id_user, $id_tabla_proc, $comment, $accion, 's');
     if($comentario['error'] == false) {
         header('Location: /enviado.html');
-        exit();    
+        exit();
     }
 }
 

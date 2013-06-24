@@ -10,7 +10,7 @@ require_once '_php/forms_start.php';
 if(isset($_POST['id_file']) && $_POST['id_file'] > 0):          // ELIMINAR ARCHIVO
         $id_tabla_arch = $_POST['id_file'];
         $del_file = ProcessFiles::DeleteFile('', $id_tabla_arch);
-        FormCommon::queryRespHeader($del_file);        
+        FormCommon::queryRespHeader($del_file);
 endif;
 
 ///  Por POST, del FORM  |  Tabla Principal (pedido)///
@@ -22,7 +22,7 @@ if(isset($_POST['agregar'])):
     $id_ven_cliente_contacto = $_POST['ven_cliente_contacto'];
     $first_time = $_POST['first_time'];
     $id_tabla_proc  = $_POST['id_tabla_proc'];
-    $id_tabla   = $_POST['id_tabla'];     
+    $id_tabla   = $_POST['id_tabla'];
     do { // VALIDACIONES
            $validations = Validations::General(array(
                                     array('field' => $asunto, 'null' => false, 'notice_error' => 'Debe ingresar un asunto.'),
@@ -30,7 +30,7 @@ if(isset($_POST['agregar'])):
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // 1era VEZ
                 $new_process = Process::CreateNewProcess('', $id_user, 'n' );
@@ -93,7 +93,7 @@ $tpl->asignar('ven_cliente', $ven_cliente);
 $ven_cliente_contacto = Process::getValuesSelectRel('ven_cliente_contacto', 'ven_cliente_sucursales', '', '', '', 'n');
 $tpl->asignar('ven_cliente_contacto', $ven_cliente_contacto);
 // PARA EL SELECT de PROVEEDORES
-$proveedores = Process::getValuesSelectRel('crp_proveedores', '', '', '', '', 'n');
+$proveedores = Process::getValuesSelectRel('cpr_proveedores', '', '', '', '', 'n');
 $tpl->asignar('proveedores', $proveedores);
 // TABLA PRINCIPAL
 $get_tabla = Process::getTabla('', $id_tabla_proc, 'n');

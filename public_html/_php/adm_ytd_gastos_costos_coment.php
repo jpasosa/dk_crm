@@ -5,7 +5,7 @@ if($_GET[1] != '' && $_GET[1] > 0):  // Si NO TIENE EL NÚMERO DE ID DE UN PROCE
         $get_tabla = Process::getTabla('', $id_tabla_proc, 'n');
         $tpl->asignar('tabla', $get_tabla);
         // TABLA SECUNDARIA (detalle)
-        $tabla_sec = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'sis_areas', 'crp_proveedores');
+        $tabla_sec = Process::getTablaSec('', 'detalle', $id_tabla_proc, 'n', 'sis_cuentas', 'sis_areas', 'cpr_proveedores');
         $flash_error = Common::setErrorMessage($tabla_sec); // Si tuviera error, lo carga en $flash_error para mostrar.
         $tpl->asignar('tabla_sec', $tabla_sec);
         // MONTO TOTAL

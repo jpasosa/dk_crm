@@ -18,10 +18,10 @@
         <div class="flash_error"></div>
         <div class="flash_notice"></div>
         {if $flash_error != '' }
-            <div class="disp_error"> {$flash_error} </div> <!-- estos vienen del controlador -->                    
+            <div class="disp_error"> {$flash_error} </div> <!-- estos vienen del controlador -->
         {/if}
         {if $flash_notice != '' }
-            <div class="disp_notice"> {$flash_notice} </div> <!-- estos vienen del controlador -->                    
+            <div class="disp_notice"> {$flash_notice} </div> <!-- estos vienen del controlador -->
         {/if}
         {template tpl="menu_izq"}
         <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
@@ -31,7 +31,7 @@
             <hr />
             <p class="txt10 uppercase">Fecha de inicio del trámite: <span class="azul">{$date}</span></p>
             <hr />
-            
+
             <form class="box-entrada" name="add_observaciones" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
                 <div class="box-entrada" height="40" bgcolor="#D2E1F2">
                     <div class="observaciones">
@@ -67,13 +67,13 @@
                         <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
                         <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
                         <td> <span class="detalle">{$$gd[detalle]}</span> </td>
-                        <td> <span class="proveedor" id="{$$gd[id_crp_proveedores]}" >{$$gd[nombre]}</span> </td>
+                        <td> <span class="proveedor" id="{$$gd[id_cpr_proveedores]}" >{$$gd[nombre]}</span> </td>
                         <td> <span class="mes">{$$gd[mes]}</span> </td>
                         <td> <span class="monto">{$$gd[monto]|number_format:2:",":""}</span> </td>
                         <td>
                             <a href="#">
                                 <img id="id_gastos-{$$gd[id_ger_planificacion_gastos_detalle]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                            </a> 
+                            </a>
                             <a href="#">
                                 <img id="id_gastos-{$$gd[id_ger_planificacion_gastos_detalle]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
                             </a>
@@ -112,7 +112,7 @@
                             <select name="proveedor" class="proveedor">
                                     {foreach item=pr from=$proveedores}
                                         <option value="{$$pr[id_valor]}" {if $$pr['id_valor'] == $proveedor } selected {/if}> {$$pr[valor]} </option>
-                                    {/foreach}    
+                                    {/foreach}
                             </select>
                         </div>
                         <input name="first_time" type="hidden" value="{$first_time}" />
@@ -129,7 +129,7 @@
                     <input name="enviar" class="enviar" type="submit" value="Enviar al siguiente Paso" />
                 </div>
             </form>
-            
+
         </div>
     <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
     <br style="clear:both;" />

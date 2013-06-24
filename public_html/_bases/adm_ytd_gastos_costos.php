@@ -23,7 +23,7 @@ class adm_ytd_gastos_costos extends FormCommon {
             UPDATE adm_ytd_gastos_costos_detalle
             SET id_sis_cuentas = $valores[1],
                     detalle = '$valores[2]',
-                    id_crp_proveedores = $valores[3],
+                    id_cpr_proveedores = $valores[3],
                     factura = '$valores[4]',
                     id_sis_areas = $valores[5],
                     monto = $valores[6],

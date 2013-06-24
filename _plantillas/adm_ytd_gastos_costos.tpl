@@ -58,7 +58,7 @@
                         <td><span id="{$$ts[id_sis_cuentas]}" class="cuenta">{$$ts[cuenta]}</span></td>
                         <td> <span class="descripcion">{$$ts[descripcion]}</span></td>
                         <td> <span class="detalle">{$$ts[detalle]}</span></td>
-                        <td> <span id="{$$ts[id_crp_proveedores]}" class="proveedor">{$$ts[nombre]}</span></td>
+                        <td> <span id="{$$ts[id_cpr_proveedores]}" class="proveedor">{$$ts[nombre]}</span></td>
                         <td> <span class="factura">{$$ts[factura]}</span></td>
                         <td> <span id="{$$ts[id_sis_areas]}" class="area">{$$ts[area]}</span></td>
                         <td> <span class="monto">{$$ts[monto]|number_format:2:",":""}</span></td>
@@ -104,7 +104,7 @@
                         <label>Proveedor:</label>
                         <select name="proveedor" class="proveedor">
                                 {foreach item=pr from=$crp_proveedores}
-                                    <option value="{$$pr[id_crp_proveedores]}" {if $$pr['id_crp_proveedores'] == $proveedor } selected {/if}> {$$pr[nombre]} </option>
+                                    <option value="{$$pr[id_cpr_proveedores]}" {if $$pr['id_cpr_proveedores'] == $proveedor } selected {/if}> {$$pr[nombre]} </option>
                                 {/foreach}
                             </select>
                     </div>

@@ -1,13 +1,13 @@
 <?php
 
 class FormCommon {
-    
+
 
     public static function queryRespHeader($response){
         if($response == false || null) {
-            $res = header("success_query: false");        
+            $res = header("success_query: false");
         }elseif($response >= 1 || (isset($response['error']) && $response['error'] == false)) {
-            $res = header("success_query: true");        
+            $res = header("success_query: true");
         }
         return $res;
     }
@@ -15,9 +15,9 @@ class FormCommon {
     // es cuando recibo respuesta de un Process.
     public static function queryRespHeaderProcess($response){
         if($response['error'] == true) {
-            $res = header("success_query: false");        
+            $res = header("success_query: false");
         }elseif($response['error'] == false) {
-            $res = header("success_query: true");        
+            $res = header("success_query: true");
         }
         echo 'pepe';
         echo $res;
@@ -31,16 +31,16 @@ class FormCommon {
         if(is_array($obj)) {
             print_r($obj);
         }else {
-        var_dump($obj);    
+        var_dump($obj);
         }
         echo '</div>';
         echo '</pre>';
         if(!$die) {
-            
+
         }else{
-            die('--FIN--DEBUGEO----');    
+            die('--FIN--DEBUGEO----');
         }
-        
+
     }
 
 
@@ -52,18 +52,18 @@ class FormCommon {
         return "
             SELECT id_sis_cuentas AS id_sc
             FROM sis_cuentas
-            WHERE cuenta = '$valores[0]'          
-            ; 
+            WHERE cuenta = '$valores[0]'
+            ;
         ";
     }
 
     // T: crp_proveedores //// Con el nombre del proveedor, me devuelve el id del proveedor
     public  function search_proveedores ($valores=NULL){
         return "
-            SELECT id_crp_proveedores AS id_p
-            FROM crp_proveedores
-            WHERE nombre = '$valores[0]'          
-            ; 
+            SELECT id_cpr_proveedores AS id_p
+            FROM cpr_proveedores
+            WHERE nombre = '$valores[0]'
+            ;
         ";
     }
 
@@ -73,9 +73,9 @@ class FormCommon {
             SELECT nombre, apellido
             FROM cv_datos_personales
             WHERE id_cv_datos_personales = $valores[0]
-            ; 
+            ;
         ";
-    } 
+    }
 
     // T: sis_feriado //// selecciona las fechas feriadas, según un país.
     // public  function select_feriados ($valores=NULL){
@@ -83,11 +83,11 @@ class FormCommon {
     //         SELECT FROM_UNIXTIME(fecha, '%d/%m/%Y') AS fecha
     //         FROM sis_feriados
     //         WHERE id_sis_pais = $valores[0]
-    //         ; 
+    //         ;
     //     ";
     // }
 
-    
+
 
 
 
@@ -107,7 +107,7 @@ class FormCommon {
         return "
             INSERT INTO sis_procesos_flujos_dias
             (id_sis_areas, id_sis_procesos, proceso_orden) VALUES ($valores[1], $valores[0], 1)
-            ; 
+            ;
         ";
     }
 
@@ -121,7 +121,7 @@ class FormCommon {
             JOIN sis_areas AS a
                 ON cv.id_sis_areas=a.id_sis_areas
             WHERE cv.id_cv_datos_personales = $valores[0]
-            ; 
+            ;
         ";
     }
 
@@ -133,7 +133,7 @@ class FormCommon {
             SELECT id_sis_procesos
             FROM sis_procesos
             WHERE proceso = '$valores[0]'
-            ; 
+            ;
         ";
     }
 
@@ -144,7 +144,7 @@ class FormCommon {
         return "
             INSERT INTO $valores[0]_proc
             (fecha_alta, id_cv_datos_personales, id_sis_procesos_flujos_dias) VALUES ($valores[3], $valores[2], $valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -155,7 +155,7 @@ class FormCommon {
         return "
             INSERT INTO $valores[0]
             (id_$valores[0]_proc) VALUES ($valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -168,7 +168,7 @@ class FormCommon {
         return "
             UPDATE $valores[0]_proc SET id_$valores[0] = $valores[2]
                 WHERE id_$valores[0]_proc = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -181,7 +181,7 @@ class FormCommon {
             FROM information_schema.COLUMNS
             WHERE TABLE_SCHEMA  LIKE 'dreamkyds_crm'
                 AND TABLE_NAME = 'ger_planificacion_gastos';
-            ; 
+            ;
         ";
     }
 
@@ -193,7 +193,7 @@ class FormCommon {
             SELECT *
             FROM $valores[0]
             WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -206,7 +206,7 @@ class FormCommon {
             CREATE TEMPORARY TABLE tmp
                 SELECT * FROM $valores[0]
                 WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -216,17 +216,17 @@ class FormCommon {
     public  function select_last ($valores=NULL){
         return "
             SELECT id_$valores[0] FROM $valores[0] ORDER BY id_$valores[0] DESC LIMIT 0,1
-            ; 
+            ;
         ";
     }
 
     //  hago el update de la tabla temporal, para modificarle el id, que corresponda con el insert que va a hacer en tabla principal
-    //  IN:     (0->nombre_proceso  1->id nuevo 2->id_tabla 
+    //  IN:     (0->nombre_proceso  1->id nuevo 2->id_tabla
     //  OUT:    registro entero a duplicar puesto en tabla temporal
     public  function update_tmp ($valores=NULL){
         return "
             UPDATE tmp SET id_$valores[0]=$valores[1] WHERE id_$valores[0] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -236,7 +236,7 @@ class FormCommon {
     public  function duplicate_reg ($valores=NULL){
         return "
             INSERT INTO $valores[0] SELECT * FROM tmp WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -247,7 +247,7 @@ class FormCommon {
         return "
             UPDATE $valores[0] SET id_$valores[0]_proc = $valores[1]
                 WHERE id_$valores[0] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -260,7 +260,7 @@ class FormCommon {
         return "
             UPDATE $valores[0] SET id_$valores[0]_proc = NULL
                 WHERE id_$valores[0] = $valores[1]
-            ; 
+            ;
         ";
     }
 
@@ -279,16 +279,16 @@ class FormCommon {
         return "
             INSERT INTO $valores[0]_$valores[1]
             (activo, id_$valores[0]_proc) VALUES (1, $valores[2])
-            ; 
+            ;
         ";
     }
 
-    
 
-    
+
+
     // Ahora vienen las consultas para el métodos Process::ModifySec
-    
-    
+
+
     //  hago el primer insert en la tabla secundario. Pongo id_process y activo en 1.
     //  IN:     (0->nombre_proceso  1->sigla de tabla secundaria 2->id_tabla_sec
     //  OUT:    registro entero a duplicar puesto en tabla temporal
@@ -297,11 +297,11 @@ class FormCommon {
             UPDATE $valores[0]_$valores[1]
             SET activo = 0
             WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
-    
+
 
     // Ahora vienen las consultas para el métodos Process::DeleteSec
 
@@ -313,7 +313,7 @@ class FormCommon {
             CREATE TEMPORARY TABLE tmp
                 SELECT * FROM $valores[0]_$valores[1]
                 WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -323,17 +323,17 @@ class FormCommon {
     public  function select_last_sec ($valores=NULL){
         return "
             SELECT id_$valores[0]_$valores[1] FROM $valores[0]_$valores[1] ORDER BY id_$valores[0]_$valores[1] DESC LIMIT 0,1
-            ; 
+            ;
         ";
     }
 
     //  hago el update de la tabla temporal, para modificarle el id, que corresponda con el insert que va a hacer en tabla principal
-    //  IN:     (0->nombre_proceso  1->sigla sec 2->id nuevo 3->id_tabla_sec 
+    //  IN:     (0->nombre_proceso  1->sigla sec 2->id nuevo 3->id_tabla_sec
     //  OUT:    registro entero a duplicar puesto en tabla temporal
     public  function update_tmp_sec ($valores=NULL){
         return "
             UPDATE tmp SET id_$valores[0]_$valores[1]=$valores[2] WHERE id_$valores[0]_$valores[1] = $valores[3]
-            ; 
+            ;
         ";
     }
 
@@ -343,7 +343,7 @@ class FormCommon {
     public  function duplicate_reg_sec ($valores=NULL){
         return "
             INSERT INTO $valores[0]_$valores[1] SELECT * FROM tmp WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -354,7 +354,7 @@ class FormCommon {
         return "
             UPDATE $valores[0]_$valores[1] SET activo = 0
                 WHERE id_$valores[0]_$valores[1] = $valores[2]
-            ; 
+            ;
         ";
     }
 
@@ -379,7 +379,7 @@ class FormCommon {
         return "
             INSERT INTO adm_ytd_mantenimiento_recordatorio
             (id_adm_ytd_mantenimientos_proc, fecha) VALUES ($valores[0], $valores[1])
-            ; 
+            ;
         ";
     }
 
@@ -391,7 +391,7 @@ class FormCommon {
             SELECT FROM_UNIXTIME(fecha, '%d/%m/%Y') AS fecha
             FROM adm_ytd_mantenimiento_recordatorio
             WHERE id_adm_ytd_mantenimientos_proc = $valores[0]
-            ; 
+            ;
         ";
     }
 

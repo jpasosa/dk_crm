@@ -57,14 +57,14 @@
                         <td> <span class="cuenta">{$$gd[cuenta]}</span> </td>
                         <td> <span class="descripcion">{$$gd[descripcion]}</span> </td>
                         <td> <span class="detalle">{$$gd[detalle]}</span> </td>
-                        <td> <span id="{$$gd[id_crp_proveedores]}" class="proveedor" >{$$gd[nombre]}</span> </td>
+                        <td> <span id="{$$gd[id_cpr_proveedores]}" class="proveedor" >{$$gd[nombre]}</span> </td>
                         <td> <span class="factura">{$$gd[factura]}</span> </td>
                         <td> <span id="{$$gd[id_sis_areas]}" class="area">{$$gd[area]}</span> </td>
                         <td> <span class="monto">{$$gd[monto]|number_format:2:",":""}</span> </td>
                         <td>
                             <a href="#">
                                 <img id="id_gastos-{$$gd[id_adm_pedido_caja_chica_detalle]}" class="del_gasto" src="/img/iconos/delete.gif" alt="quitar" border="0" />
-                            </a> 
+                            </a>
                             <a href="#">
                                 <img id="id_gastos-{$$gd[id_adm_pedido_caja_chica_detalle]}" class="edit_gasto" src="/img/iconos/edit.gif" alt="editar" border="0" />
                             </a>
@@ -103,7 +103,7 @@
                         <select name="proveedor" class="proveedor">
                             {foreach item=pr from=$proveedores}
                                 <option value="{$$pr[id_valor]}" {if $$pr['id_valor'] == $proveedor } selected {/if}> {$$pr[valor]} </option>
-                            {/foreach}    
+                            {/foreach}
                         </select>
                     </div>
                     <div class="area">
@@ -111,10 +111,10 @@
                         <select name="area" class="area">
                             {foreach item=ar from=$sel_area}
                                 <option value="{$$ar[id_valor]}" {if $$ar['id_valor'] == $area } selected {/if}> {$$ar[valor]} </option>
-                            {/foreach}    
+                            {/foreach}
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="archivo">
                     <label class="block"> Archivo : </label>
