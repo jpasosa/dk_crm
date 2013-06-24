@@ -19,7 +19,7 @@ endif;
 
 ///////////////////////////////// AGREGAR TABLA PRINCIPAL  |  POST
 if(isset($_POST['agregar'])):
-        $ven_cliente_sucursales = trim($_POST['ven_cliente_sucursales']);                                  
+        $ven_cliente_sucursales = trim($_POST['ven_cliente_sucursales']);
         $observaciones = $_POST['observaciones'];
         if(isset($_POST['exhibiendo_mercaderia'])) {
             $exhibiendo_mercaderia = $_POST['exhibiendo_mercaderia'];
@@ -52,13 +52,13 @@ if(isset($_POST['agregar'])):
                                         ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // Primera VEZ
                 $new_process = Process::CreateNewProcess('', $id_user);
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = $new_process['notice_success'];
                 $id_tabla = $new_process['id_tabla'];
@@ -68,7 +68,7 @@ if(isset($_POST['agregar'])):
                 $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $ven_cliente_sucursales, $observaciones, $exhibiendo_mercaderia, $mercaderia_lugar, $buena_cantidad_productos, $poner_punto_venta, $poner_banner), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = 'Registro modificado correctamente.';
                 $first_time = 'false';
@@ -108,9 +108,9 @@ endif;
 
 
 
-///////////////////////////////// AGREGAR LLAMADA DE CLIENTES |  POST 
+///////////////////////////////// AGREGAR LLAMADA DE CLIENTES |  POST
 if(isset($_POST['agregar_prod'])):
-        $referencia = $_POST['referencia'];                       
+        $referencia = $_POST['referencia'];
         $precio = Common::PutDot($_POST['precio']);
         $cantidad = $_POST['cantidad'];
         $first_time = $_POST['first_time'];
@@ -119,7 +119,7 @@ if(isset($_POST['agregar_prod'])):
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes, observaciones y cliente.';
-                break;  
+                break;
             }
             $validations = Validations::General(array(
                                         array('field' => $precio, 'null' => false, 'validation' => 'numeric', 'notice_error' => 'El precio no es correcto y/o no fue ingresado.'),
