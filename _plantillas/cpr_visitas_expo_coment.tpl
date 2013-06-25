@@ -12,7 +12,7 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Visitas a Expo</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
         <p>Sector:<span class="azul">{$area_inicio}</span></p>
         <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
@@ -40,7 +40,7 @@
                     </div>
                     <div class="campania">
                         <label>Fecha Fin:</label>
-                        <input readonly="readonly" type="text" value='{$tabla[0]["fecha_inicio"]|date_format:"d/m/Y"}'  alt="Fecha Fin" />
+                        <input readonly="readonly" type="text" value='{$tabla[0]["fecha_fin"]|date_format:"d/m/Y"}'  alt="Fecha Fin" />
                     </div>
 
                 </div>

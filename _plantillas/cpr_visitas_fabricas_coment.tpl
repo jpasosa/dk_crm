@@ -12,52 +12,46 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Organizar visitas fabricas y exposiciones</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Empleado:<span class="azul">NOMBRE Y APELLIDO</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
+        <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Fábrica:</label>
-                        <input readonly="yes" name="fabrica" type="text" value=''  alt="Fábrica" />
+                        <input readonly="readonly" name="fabrica" type="text" value='{$tabla[0]["fabrica"]}'  alt="Fábrica" />
                     </div>
                     <div class="campania">
-                        <label>País:</label>
-                        <select name="pais" alt="País" />
-                            <option>OPTION 1</option>
-                            <option>OPTION 2</option>
+                        <label>País / Ciudad:</label>
+                        <select name="provincia" disabled="disabled">
+                            <option> {$tabla[0]["pais"]} | {$tabla[0]["provincia"]} </option>
                         </select>
                     </div>
                     <div class="campania">
-                        <label>Ciudad:</label>
-                        <select name="Ciudad" alt="Ciudad" />
-                            <option>OPTION 1</option>
-                            <option>OPTION 2</option>
-                        </select>
+                        <label>Costo:</label>
+                        <input readonly="readonly" name="costo" type="text" value='{$tabla[0]["costo"]|number_format:2:",":""}'  alt="Costo" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement">Fecha Inicio:</label>
-                        <input readonly="yes"  name="fechaInicio" type="text" value=''  alt="Fecha Inicio" />
+                        <input readonly="readonly"  type="text" value='{$tabla[0]["fecha_inicio"]|date_format:"d/m/Y"}'  alt="Fecha Inicio" />
                     </div>
                     <div class="campania">
                         <label>Fecha Fin:</label>
-                        <input readonly="yes" name="fechaFin" type="text" value=''  alt="Fecha Fin" />
+                        <input readonly="readonly" type="text" value='{$tabla[0]["fecha_fin"]|date_format:"d/m/Y"}'  alt="Fecha Fin" />
                     </div>
-                    <div class="campania">
-                        <label>Costo:</label>
-                        <input readonly="yes" name="costo" type="text" value=''  alt="Costo" />
-                    </div>                    
+
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" class="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" class="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
             </div>
         </form>
-        
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-coment" name="box_coment" action="/cpr_visitas_fabricas_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }

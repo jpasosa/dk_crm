@@ -6,7 +6,7 @@ require_once '_php/forms_start.php';
 
 ///////////////////////////////// AGREGAR TABLA PRINCIPAL  |  POST
 if(isset($_POST['agregar'])):
-        $expo = trim($_POST['expo']);
+        $fabrica = trim($_POST['fabrica']);
         $provincia = $_POST['provincia'];
         $fecha_inicio = $_POST['fecha_inicio'];
         $fecha_inicio_unix = Dates::ConvertToUnix($fecha_inicio);
@@ -19,7 +19,7 @@ if(isset($_POST['agregar'])):
         $id_tabla_proc = $_POST['id_tabla_proc'];
         do {
             $validations = Validations::General(array(
-                                        array('field' => $expo, 'null' => false, 'notice_error' => 'Debe completar la exposición.'),
+                                        array('field' => $fabrica, 'null' => false, 'notice_error' => 'Debe completar la fábrica.'),
                                         array('field' => $fecha_inicio, 'null' => false, 'validation' => 'date', 'notice_error' => 'La fecha de inicio no es correcta y/o no fue ingresada.'),
                                         array('field' => $fecha_fin, 'null' => false, 'validation' => 'date', 'notice_error' => 'La fecha de finalización no es correcta y/o no fue ingresada.'),
                                         array('field' => $costo, 'null' => false, 'validation' => 'numeric', 'notice_error' => 'El costo no fue ingresado y/o no es correcto.'),
@@ -40,7 +40,7 @@ if(isset($_POST['agregar'])):
                 $id_tabla_proc = $new_process['id_tabla_proc'];
                 $tpl->asignar('id_tabla', $id_tabla);
                 $tpl->asignar('id_tabla_proc', $id_tabla_proc);
-                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $expo, $provincia, $fecha_inicio_unix, $fecha_fin_unix, $costo, $observaciones), 'n');
+                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $fabrica, $provincia, $fecha_inicio_unix, $fecha_fin_unix, $costo, $observaciones), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo agregar el registro principal';
                     break;
@@ -49,7 +49,7 @@ if(isset($_POST['agregar'])):
                 $first_time = 'false';
             }else { // Modificar tabla principal
                 $update_tabla_princ =
-                    BDConsulta::consulta('update_tabla_princ', array($id_tabla, $expo, $provincia, $fecha_inicio_unix, $fecha_fin_unix, $costo, $observaciones), 'n');
+                    BDConsulta::consulta('update_tabla_princ', array($id_tabla, $fabrica, $provincia, $fecha_inicio_unix, $fecha_fin_unix, $costo, $observaciones), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No se pudo modificar el registro';
                     break;

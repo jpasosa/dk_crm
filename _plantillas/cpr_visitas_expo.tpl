@@ -26,6 +26,7 @@
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <p class="txt10 uppercase">Empleado:<span class="azul">{$nombre_empleado}</span></p>
+        <p class="txt10 uppercase">Area:<span class="azul">{$area}</span></p>
         <form class="box-entrada" action="/cpr_visitas_expo.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
