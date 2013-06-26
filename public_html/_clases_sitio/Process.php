@@ -943,6 +943,32 @@ class Process {
         return $is_repeat;
     }
 
+    public static function isEmptyColumn($pr_proceso, $name_sec, $name_column, $id_tabla, $debug = 'n') {
+        $is_empty = true;
+        if($pr_proceso == '') {
+            $pr_proceso = self::NameProcess();
+        }
+        $debug == 's' ? $deb = 's' : $deb = 'n';
+
+        try {
+            $get_campo = BDConsulta::consulta('get_campo', array($pr_proceso, $name_sec, $name_column, $id_tabla), $deb);
+            if(is_null($get_campo)):
+                throw new Exception ('Error: class Process() method isEmptyColumn() no se puede procesar');
+            else:
+                if(!is_null($get_campo) && isset($get_campo[0]) && $get_campo[0][$name_column] != '') {
+                    $is_empty = false;
+                }
+            endif;
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+
+
+        return $is_empty;
+    }
+
 
 
 
