@@ -1,6 +1,6 @@
 <?php
 
-class ProcessOpen {    
+class ProcessOpen {
 
 // Arma el array con todos los Procesos ABIERTOS | También pueden ser cerrados que levantan a otros formularios una vez cerrados.
     public static function getAll($id_user, $debug = 'n') {
@@ -17,10 +17,10 @@ class ProcessOpen {
             if(is_null($exist_user)) {
                 $error = true;
                 $notice_error = 'El usuario ingresado no existe.';
-                break;  
+                break;
             }
             // Obtengo id del area
-            $id_user_area = BDConsulta::consulta('user_area', array($id_user), $deb); 
+            $id_user_area = BDConsulta::consulta('user_area', array($id_user), $deb);
             if(is_null($id_user_area)) { // comprueba el área del user
                 $error = true;
                 $notice_error = 'Área desconocida.';
@@ -34,7 +34,7 @@ class ProcessOpen {
             if(is_null($fl_dias_accesibles)) {
                 $error = true;
                 $notice_error = 'El área no tiene asignado ningún proceso al cual acceder.';
-                break;  
+                break;
             }
             // Creo los Arrays para ir guardando todos los procesos abiertos.
             $all_process['rojo']['propia'] = Array();
@@ -50,15 +50,15 @@ class ProcessOpen {
             $dia = 60 * 60 * 24;
             // Procesos accesibles, según su área.
             $sis_procesos_accesibles = BDConsulta::consulta('sis_procesos_accesibles', array($id_area), $deb);
-            
+
             foreach($sis_procesos_accesibles as $k => $pa) { // Cada Proceso que tenga acceso.
-                
-                $procesos_activos = BDConsulta::consulta('procesos_activos', array($pa['proceso'], $id_area), $deb);     
+
+                $procesos_activos = BDConsulta::consulta('procesos_activos', array($pa['proceso'], $id_area), $deb);
                 if(!is_null($procesos_activos)) {
-                    
+
                     foreach($procesos_activos as $k => $pr_act) { // Todos los procesos que están activos
                        $last_process = Process::isLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
-                        
+
                         if($last_process) {
                             // Obtengo Ultimo Proceso
                             $last_process = Process::getLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
@@ -70,18 +70,18 @@ class ProcessOpen {
 
                             $fecha_alta = $last_process['fecha_alta'];
                             $dias_activo = $last_process['dias_activo'];
-                            
+
                             $days = Dates::CalculateDaysExpire($fecha_alta, $dias_activo, '1');
-                            
-                           
-                            
+
+
+
 
                             $fecha_alta_unix = Dates::ConvertToUnix($fecha_alta);
                             // $pasaron_dias = ($fecha_alta_unix - $date_unix) / $dia;
                             // $pasaron_dias = Dates::RealDays($fecha_alta, $date, 1);
 
-              
-                            
+
+
                             // $pasaron_dias = $pasaron_dias['pasaron_dias'];
                             // $restan_dias = $last_process['dias_activo'] - (($date_unix - $fecha_alta_unix) / $dia);
                             // $fecha_vence_unix = $fecha_alta_unix + ( $last_process['dias_activo'] * $dia);
@@ -202,7 +202,7 @@ class ProcessOpen {
                                                                                                                 ));
                                 endif;
                             endif;
-                        
+
                         }else{
                             // no me sirve por que no es el último proceso.
                         }
@@ -210,9 +210,9 @@ class ProcessOpen {
                     } //Cierra el foreach de los procesos que están activos.
                 } // Cierra el if, que pregunta si de los procesos accesibles, encontró algun proceso abierto.
             } // cierra el foreach de los procesos accesibles.
-            
-        
-        
+
+
+
             // Busco si hay ven_rendicion_viaticos. . . . solamente puede comenzar área 1 (ventas)
             if($id_area == 1) {
                 // busca procesos cerrados con fecha_fin < date
@@ -231,12 +231,12 @@ class ProcessOpen {
                                                                                         ));
                     }
                 }
-                
+
                 // $all_process['azul'][0]=  array('proceso_nombre' => 'Rendición de Viaticos para Viajes',
                 //                                             'fecha_inicio' => '14/03/2013',
                 //                                             'fecha_fin' => '34/65/6565',
                 //                                             'aprobada' => 'SI');
-                
+
                 // buscar todos los ven_solicitud_viaticos_viajes  = 0 y fecha
             }
 
@@ -257,7 +257,7 @@ class ProcessOpen {
                     $mantenimientos[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
                     $mantenimientos[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
                     $mantenimientos[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
-                    
+
                 }
             }
             if(isset($mantenimientos)) {
@@ -269,23 +269,23 @@ class ProcessOpen {
                                 $last_fecha_mant = $last_recordatorio['fecha'];
                                 $last_fecha_mant = Dates::ConvertToPhpdate($last_fecha_mant);
                                 $rec = ProcessMaint::CalculateMant($last_fecha_mant, $mant['period'], $mant['x_tiempo'], $mant['id_mant_tabla_proc']);
-                        }else{      // Aún no se hizo el primer Mantenimiento. 
+                        }else{      // Aún no se hizo el primer Mantenimiento.
                             $fecha_inicio = Dates::ConvertToPhpdate($mant['fecha_inicio']);
-                            $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);             
+                            $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);
                         }
 
                         foreach($rec['rojo'] as $rec_rojo) { // cargo ROJO en all_process
-                            array_push($all_process['rojo']['propia'], $rec_rojo);    
+                            array_push($all_process['rojo']['propia'], $rec_rojo);
                         }
                         foreach($rec['amarillo'] as $rec_amarillo) { // cargo AMARILLO en all_process
-                            array_push($all_process['amarillo']['propia'], $rec_amarillo);    
+                            array_push($all_process['amarillo']['propia'], $rec_amarillo);
                         }
                         foreach($rec['verde'] as $rec_verde) { // cargo VERDE en all_process
-                            array_push($all_process['verde']['propia'], $rec_verde);    
-                        } 
-                    }    
+                            array_push($all_process['verde']['propia'], $rec_verde);
+                        }
+                    }
             } // si estaba seteado mantenimientos
-            
+
 
         }
 
@@ -294,15 +294,34 @@ class ProcessOpen {
 
         // BUSCO procesos abiertos de VEN_LLAMADAS, que comienzan en ave_campania
         if($id_area == 2) { // Comienza área 2. TODO: Sacar como formulario nuevo a Asist Ventas el ven_llamadas.
-        
+
 
         }
 
-        
+        // busco CPR_PEDIDOS_MUESTRAS cerrados -> Van a levantar datos para los CPR_PEDIDOS_EJ_BUSQUEDA
+        if($id_area == 9) { // son los compradores
+            $search_pedidos_muestras_cerrados = BDConsulta::consulta('search_pedidos_muestras_cerrados', array(), 'n');
 
-       
-        
-        
+            foreach($search_pedidos_muestras_cerrados AS $pdc) {
+                $fp = Process::getOnlyFirstProcess('cpr_pedidos_muestras', $pdc['id_cpr_pedidos_muestras'], 'n');
+                $last_process = Process::getLastProcess('cpr_pedidos_muestras', $fp['id_cpr_pedidos_muestras_proc']);
+                $fecha_alta = $last_process['fecha_alta'];
+
+                $data_sec = Process::getTablaSec('cpr_pedidos_muestras', 'prod', $fp['id_cpr_pedidos_muestras_proc'], 'n');
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
 
         // $area = BDConsulta::consulta('user_area', array($user), 'n');
         return $all_process;
