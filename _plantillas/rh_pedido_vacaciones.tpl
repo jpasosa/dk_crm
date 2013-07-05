@@ -58,18 +58,20 @@
                     <input type="file" class="inline" name="archivo" value="" />
                     <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
-                <div class="archivos">
-                    {foreach item=n from=$files}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/rh_pedido_vacaciones/{$$n[nombre]}">
-                            <span>Archivo: {$$n[nombre]}</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
+                {if $files['error'] == false }
+                    <div class="archivos">
+                        {foreach item=n from=$files}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/rh_pedido_vacaciones/{$$n[nombre]}">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                                <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
+                                    <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-" />
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
