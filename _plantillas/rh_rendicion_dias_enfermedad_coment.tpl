@@ -7,7 +7,7 @@
     {if $flash_error != '' }<div class="disp_error"> {$flash_error} </div>{/if}
     {if $flash_notice != '' }<div class="disp_notice"> {$flash_notice} </div>{/if}
     {template tpl="menu_izq"}
-    <div id="derecha" class="catalogo" style="background:url(img/fondos/bg_cuenta.jpg) right top repeat-y;" >
+    <div id="derecha" class="catalogo" style="background:url(/img/fondos/bg_cuenta.jpg) right top repeat-y;" >
         <div id="hilo"> Bienvenido: {$nombre_empleado}</div>
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Rendición de Días por Enfermedad</span></h1>
@@ -16,46 +16,44 @@
         <p class="txt10 uppercase">Sector: <span class="azul">DISEÑO</span>
         </p>
         <p class="txt10 uppercase">Empleado: <span class="azul">JUAN CARLOS</span>
-        </p>        
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+        </p>
+        <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label>Fecha Inicio:</label>
-                        <input readonly="yes" name="fecha_inicio" type="text" value=''  alt="Fecha Inicio" />
+                        <input readonly="readonly" name="fecha_inicio" type="text" value='{$tabla[0][fecha_inicio]|date_format:"d/m/Y"}'  alt="Fecha Inicio" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label>Cantidad de Días:</label>
-                        <input readonly="yes" name="cantidad_dias" type="text" value=''  alt="Cantidad Días" />
+                        <input readonly="readonly" name="cantidad_dias" type="text" value='{$tabla[0][cantidad_dias]}'  alt="Cantidad Días" />
                     </div>
                 </div>
                 <div class="izq">
                     <div class="campania">
                         <label>Fecha Fin:</label>
-                        <input readonly="yes" name="fecha_fin" type="text" value=''  alt="Fecha Fin" />
+                        <input readonly="readonly" name="fecha_fin" type="text" value='{$tabla[0][fecha_fin]|date_format:"d/m/Y"}'  alt="Fecha Fin" />
                     </div>
                 </div>
                 <div class="observacionesChico">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
                 <div class="archivos">
                     {foreach item=n from=$nombres_archivos}
                         <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
+                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/rh_rendicion_dias_enfermedad/{$$n[nombre]}" target="_blank">
+                                <span>Archivo: {$$n[nombre]}</span>
                             </a>
                         </div>
                     {/foreach}
                 </div>
             </div>
         </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-coment" name="box_coment" action="/rh_rendicion_dias_enfermedad_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
