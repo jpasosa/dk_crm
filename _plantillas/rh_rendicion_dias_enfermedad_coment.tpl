@@ -12,11 +12,9 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Rendición de Días por Enfermedad</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <p class="txt10 uppercase">Sector: <span class="azul">DISEÑO</span>
-        </p>
-        <p class="txt10 uppercase">Empleado: <span class="azul">JUAN CARLOS</span>
-        </p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Nombre:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
