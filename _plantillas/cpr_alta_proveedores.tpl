@@ -48,7 +48,7 @@
                 </div>
                 <div class="archivo">
                     <label class="block"> Adjuntar Archivos : </label>
-                    <input type="file" class="inline" name="archivo" value="quepasavieja" />
+                    <input type="file" class="inline" name="archivo" value="" />
                     <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
                 {if $files['error'] == false }
@@ -58,7 +58,7 @@
                                 <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/cpr_alta_proveedores/{$$n[nombre]}" target="_blank">
                                     <span>Archivo: {$$n[nombre]}</span>
                                 </a>
-                                <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
+                                <a class="del_file" id="file-{$$n[id]}" href="#">
                                     <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
                                 </a>
                             </div>

@@ -12,34 +12,54 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Alta de proveedores</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Nombre:<span class="azul">{$nombre_inicio}</span></p>
         <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Nombre:</label>
-                        <input readonly="yes" name="nombre" type="text" value=''  alt="Nombre" />
+                        <input readonly="readonly" type="text" value='{$tabla[0]["nombre"]}'  alt="Nombre" />
+                    </div>
+                    <div class="campania">
+                        <label>Dirección:</label>
+                        <input readonly="readonly" type="text" value='{$tabla[0]["direccion"]}'  alt="Dirección" />
+                    </div>
+                </div>
+                <div class="der">
+                    <div class="campania">
+                        <label class="primerElement">Clave de Indentificación:</label>
+                        <input readonly="readonly" type="text" value='{$tabla[0]["clave_identificacion_tributaria"]}'  alt="Clave de Identificación" />
+                    </div>
+                    <div class="campania">
+                        <label>Tipo:</label>
+                        <select name="tipo" disabled="disabled">
+                            <option value="Resposable Inscripto" {if $tabla[0]["tipo"] == "Responsable Inscripto" } selected {/if}>Resposable Inscripto</option>
+                            <option value="Tipo UNO" {if $tabla[0]["tipo"] == "Tipo UNO" } selected {/if}>Tipo UNO</option>
+                            <option value="Tipo DOS" {if $tabla[0]["tipo"] == "Tipo DOS" } selected {/if} >Tipo DOS</option>
+                        </select>
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
-                <div class="archivos clear">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Archivo: Archivo 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
+                {if $files['error'] == false }
+                    <div class="archivos clear">
+                        {foreach item=n from=$files}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/cpr_alta_proveedores/{$$n[nombre]}" target="_blank">
+                                    <span>Archivo: {$$n[nombre]}</span>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
             </div>
         </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-coment" name="box_coment" action="/cpr_alta_proveedores_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
