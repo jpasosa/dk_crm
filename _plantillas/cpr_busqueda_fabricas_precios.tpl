@@ -1,4 +1,15 @@
 <link href="/css/cpr_busqueda_fabricas_precios.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/cpr_busqueda_fabricas_precios/abm.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/meio.mask.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    // call setMask function on the document.ready event
+    jQuery(function($) {
+        $('input[name="precio"]').setMask();
+        $.mask.masks.decimal = {mask : '99,999999', type : 'reverse', defaultValue: '000'}
+        $('input[name="precio"]').setMask();
+        $.mask.masks = $.extend($.mask.masks, {decimal: { mask: '999' }});
+    });
+</script>
 
 <div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
@@ -13,45 +24,50 @@
         <h1 class="azul bold"><span class="txt22 normal">Búsqueda de Fábricas / Precios</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p>Sector: <span class="azul">{$area}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_empleado}</span></p>
+        <form class="box-entrada" name="add_hotel" action="/cpr_busqueda_fabricas_precios.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <input name="proveedor" type="text" value=''  alt="Proveedor" />
+                        <input name="proveedor" type="text" value='{$tabla[0]["proveedor"]}'  alt="Proveedor" />
                     </div>
                     <div class="campania">
                         <label>País / Ciudad:</label>
-                        <select name="paisCiudad">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
+                        <select name="pais_ciudad" class="pais_ciudad">
+                            {foreach item=pc from=$paises}
+                                <option value="{$$pc[id_sis_provincia]}" {if $$pc['id_sis_provincia'] == $tabla[0]['id_sis_provincia'] } selected {/if}> {$$pc[pais]} | {$$pc[provincia]}  </option>
+                            {/foreach}
                         </select>
                     </div>
                     <div class="campania">
                         <label>Dirección:</label>
-                        <input name="direccion" type="text" value=''  alt="Dirección" />
-                    </div>    
+                        <input name="direccion" type="text" value='{$tabla[0]["direccion"]}'  alt="Dirección" />
+                    </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement" >Contacto:</label>
-                        <input name="contacto" type="text" value=''  alt="Contacto" />
+                        <input name="contacto" type="text" value='{$tabla[0]["contacto"]}'  alt="Contacto" />
                     </div>
                     <div class="campania">
                         <label >Teléfono:</label>
-                        <input name="telefono" type="text" value=''  alt="Teléfono" />
+                        <input name="telefono" type="text" value='{$tabla[0]["telefono"]}'  alt="Teléfono" />
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
                     <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
+                <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
+                <input name="agregar" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
+
+        <!-- LISTADO DE LOS PRODUCTOS -->
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
                 <td width="100" align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
@@ -62,70 +78,55 @@
             </tr>
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>{$$ts[producto]}</span></td>
-                        <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[precio]}</span></td>
-                        <td> <span>{$$ts[cantMin]}</span></td>
+                    <tr id="id_prod-{$$ts[id_cpr_busqueda_fabricas_precios_prod]}">
+                        <td><span class="producto">{$$ts[producto]}</span></td>
+                        <td><span class="detalle">{$$ts[detalle]}</span></td>
+                        <td><span class="precio">{$$ts[precio]}</span></td>
+                        <td><span class="cantidad_min">{$$ts[cantidad_min]}</span></td>
                         <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
+                            <a href="#">
+                                <img id="id_prod-{$$ts[id_cpr_busqueda_fabricas_precios_prod]}" class="del_prod" src="/img/iconos/delete.gif" alt="quitar" border="0" />
+                            </a>
+                            <a href="#">
+                                <img id="id_prod-{$$ts[id_cpr_busqueda_fabricas_precios_prod]}" class="edit_prod" src="/img/iconos/edit.gif" alt="editar" border="0" />
+                            </a>
+                        </td>
                     </tr>
                 {/foreach}
             {/if}
-            <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>15498524</span></td>
-                        <td> <span>Chupetines</span></td>
-                        <td> <span>$1.5</span></td>
-                        <td> <span>100</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
-                    </tr>
         </table>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+
+        <!-- BOX DE ENTRADA DE LOS PRODUCTOS -->
+        <form class="box-entrada" name="add_hotel" action="/cpr_busqueda_fabricas_precios.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Producto:</label>
-                        <select>
-                            <option>OPTION1</option>
-                            <option>OPTION1</option>
-                            <option>OPTION1</option>
-                            <option>OPTION1</option>
-                        </select>
+                        <input name="producto" class="producto" type="text" value=''  alt="Detalle" />
                     </div>
                     <div class="campania">
                         <label>Detalle:</label>
-                        <input class="ultimoElement" name="detalle" type="text" value=''  alt="Detalle" />
-                    </div>    
+                        <input class="detalle ultimoElement "  name="detalle" type="text" value=''  alt="Detalle" />
+                    </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement" >Precio:</label>
-                        <input name="precio" type="text" value=''  alt="Precio" />
+                        <input name="precio" class="precio" type="text" value=''  alt="decimal" />
                     </div>
                     <div class="campania">
                         <label >Cantidad Mínima:</label>
-                        <input class="ultimoElement" name="cantMin" type="text" value=''  alt="Cantidad Mínima" />
+                        <input class="cantidad_min ultimoElement" name="cantidad_min"  type="text" value=''  alt="Cantidad Mínima" />
                     </div>
-                </div>                
+                </div>
+                <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
+                <input name="agregar_prod" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-entrada" name="add_hotel" action="/cpr_busqueda_fabricas_precios.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
