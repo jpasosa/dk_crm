@@ -11,85 +11,65 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Búsqueda de Fábricas / Precios</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Nombre:<span class="azul">{$nombre_inicio}</span></p>
+
+        <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <input readonly="yes" name="proveedor" type="text" value=''  alt="Proveedor" />
+                        <input readonly="readonly" name="proveedor" type="text" value='{$tabla[0]["proveedor"]}'  alt="Proveedor" />
                     </div>
                     <div class="campania">
                         <label>País / Ciudad:</label>
-                        <select name="paisCiudad">
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
-                            <option>OPTION 1</option>
+                        <select name="pais_ciudad" class="pais_ciudad" disabled=disabled>
+                            <option> {$tabla[0]["pais"]} | {$tabla[0]["provincia"]}  </option>
                         </select>
                     </div>
                     <div class="campania">
                         <label>Dirección:</label>
-                        <input readonly="yes" name="direccion" type="text" value=''  alt="Dirección" />
-                    </div>    
+                        <input readonly="readonly" name="direccion" type="text" value='{$tabla[0]["direccion"]}'  alt="Dirección" />
+                    </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement" >Contacto:</label>
-                        <input readonly="yes" name="contacto" type="text" value=''  alt="Contacto" />
+                        <input readonly="readonly" name="contacto" type="text" value='{$tabla[0]["contacto"]}'  alt="Contacto" />
                     </div>
                     <div class="campania">
                         <label >Teléfono:</label>
-                        <input readonly="yes" name="telefono" type="text" value=''  alt="Teléfono" />
+                        <input readonly="readonly" name="telefono" type="text" value='{$tabla[0]["telefono"]}'  alt="Teléfono" />
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
             </div>
         </form>
+
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
                 <td width="100" align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
                 <td width="80"align="left" bgcolor="#4685CA"><p class="blanco">Precio Unit.</p></td>
                 <td width="70" align="left" bgcolor="#4685CA"><p class="blanco">Cant. Min.</p></td>
-                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
+                    <tr>
                         <td><span>{$$ts[producto]}</span></td>
                         <td> <span>{$$ts[detalle]}</span></td>
                         <td> <span>{$$ts[precio]}</span></td>
-                        <td> <span>{$$ts[cantMin]}</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
+                        <td> <span>{$$ts[cantidad_min]}</span></td>
                     </tr>
                 {/foreach}
             {/if}
-            <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>15498524</span></td>
-                        <td> <span>Chupetines</span></td>
-                        <td> <span>$1.5</span></td>
-                        <td> <span>100</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                    </td>
-                    </tr>
         </table>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <form class="box-coment" name="box_coment" action="/cpr_busqueda_fabricas_precios_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
