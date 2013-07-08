@@ -12,49 +12,59 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Aprobación de consolidaciones</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Sector:<span class="azul">{$area_inicio}</span></p>
+        <p>Nombre:<span class="azul">{$nombre_inicio}</span></p>
+        <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
-                <div class="izq clear"><p class="azul bold">PACKING LIST</p></div>            
+                <div class="izq clear"><p class="azul bold">PACKING LIST</p></div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Cliente:</label>
-                        <input readonly="yes" name="cliente" type="text" value=''  alt="Cliente" />
+                        <select title='{$tabla[0]["apellido"]}, {$tabla[0]["nombre"]}  |  {$tabla[0]["nombre_sucursal"]}' class="ultimoElement" disabled="disabled">
+                            <option >
+                                {$tabla[0]["apellido"]}, {$tabla[0]["nombre"]}  |  {$tabla[0]["nombre_sucursal"]}
+                            </option>
+                        </select>
                     </div>
                     <div class="campania">
                         <label>Contacto (persona):</label>
-                        <input readonly="yes" name="contacto" type="text" value=''  alt="Contacto" />
+                        <input readonly="readonly" name="contacto" type="text" value='{$tabla[0]["contacto"]}'  alt="Contacto" />
                     </div>
                     <div class="campania">
                         <label>Teléfono:</label>
-                        <input readonly="yes" name="telefono" type="text" value=''  alt="Teléfono" />
+                        <input readonly="readonly" name="telefono" type="text" value='{$tabla[0]["telefono_cons"]}'  alt="Teléfono" />
                     </div>
                     <div class="campania">
                         <label>Mail:</label>
-                        <input class="ultimoElement" readonly="yes" name="mail" type="text" value=''  alt="Mail" />
+                        <input class="ultimoElement" readonly="readonly" name="mail" type="text" value='{$tabla[0]["mail_cons"]}'  alt="Mail" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label>Dirección:</label>
-                        <input readonly="yes" name="direccion" type="text" value=''  alt="Dirección" />
+                        <input readonly="readonly" name="direccion" type="text" value='{$tabla[0]["direccion"]}'  alt="Dirección" />
                     </div>
                     <div class="campania">
                         <label>Fecha:</label>
-                        <input readonly="yes" name="fecha" type="text" value=''  alt="Fecha" />
+                        {if $tabla[0]['fecha'] == '' }
+                            <input readonly="readonly" type="text" value=''  alt="Fecha" />
+                        {else}
+                            <input readonly="readonly" type="text" value='{$tabla[0]["fecha"]|date_format:"d/m/Y"}'  alt="Fecha" />
+                        {/if}
                     </div>
                     <div class="campania">
                         <label>Hora:</label>
-                        <input readonly="yes" class="ultimoElement" name="hora" type="text" value=''  alt="Hora" />
-                    </div>                    
+                        <input readonly="readonly" class="ultimoElement" name="hora" type="text" value='{$tabla[0]["hora"]}'  alt="Hora" />
+                    </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label class="primerElement"> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea readonly="readonly" name="observaciones">{$tabla[0]['observaciones_cons']}</textarea>
                 </div>
             </div>
         </form>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+        <form class="box-coment" name="box_coment" action="/tra_aprob_consolidaciones_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
