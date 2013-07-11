@@ -298,22 +298,7 @@ class ProcessOpen {
 
         }
 
-        // busco CPR_PEDIDOS_MUESTRAS cerrados -> Van a levantar datos para los CPR_PEDIDOS_EJ_BUSQUEDA
-        if($id_area == 9) { // son los compradores
-            $search_pedidos_muestras_cerrados = BDConsulta::consulta('search_pedidos_muestras_cerrados', array(), 'n');
 
-            foreach($search_pedidos_muestras_cerrados AS $pdc) {
-                $fp = Process::getOnlyFirstProcess('cpr_pedidos_muestras', $pdc['id_cpr_pedidos_muestras'], 'n');
-                $last_process = Process::getLastProcess('cpr_pedidos_muestras', $fp['id_cpr_pedidos_muestras_proc']);
-                $fecha_alta = $last_process['fecha_alta'];
-
-                $data_sec = Process::getTablaSec('cpr_pedidos_muestras', 'prod', $fp['id_cpr_pedidos_muestras_proc'], 'n');
-
-            }
-
-
-
-        }
 
 
 
