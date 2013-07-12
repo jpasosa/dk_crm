@@ -83,7 +83,7 @@ class ProcessFiles {
     }
 
     // Sube solo un archivo, y lo carga en campo "archivo" de la tabla que le pase
-    public static function FileUploadOne($pr_proceso, $pr_proceso_sec, $campo, $id_tabla_sec, $file, $debug = 'n') {
+    public static function FileUploadOne($pr_proceso, $pr_proceso_sec, $campo, $id_tabla_sec, $file, $campo_input = 'archivo', $debug = 'n') {
         $notice_error = ''; $notice_success = ''; $error = false;
         $debug == 's' ? $deb = 's' : $deb = 'n';
         if($pr_proceso == '') {
@@ -106,10 +106,11 @@ class ProcessFiles {
                 break;
             }
             $fileup = new ArchivoSubir;
-            $fileup->nombreCampo( 'archivo' );
+            $fileup->nombreCampo( $campo_input ); // es el nobre del input file!!
             $fileup->directorio( 'upload_archivos/' . $pr_proceso . '/' ); // defino carpeta para $fileup
             $fileup->idRegistro($id_tabla_sec);
             $ruta = 'upload_archivos/' . $pr_proceso . '/';
+            echo 'nombre del archivo a subir: ' , $fileup->obtenerNombre();
             if(file_exists($ruta . $fileup->obtenerNombre())) {
                 $error = true;
                 $notice_error = 'El archivo que intenta subir ya existe en el servidor.';
