@@ -13,7 +13,7 @@ $tpl->asignar('id_tabla_solicitud', $id_tabla_solicitud);
 
 $flash_error = '';$flash_notice = '';$detalle = '';$reload = false;$fecha_inicio='';$fecha_fin=''; $break = false;
 // if(!isset($new_observacion)) {
-//     $new_observacion = 'true';    
+//     $new_observacion = 'true';
 // }
 $id_user = Common::isLogin();
 
@@ -21,7 +21,7 @@ if(isset($_POST['enviar'])):    // ENVIAR FORMULARIO
         $send = ProcessSends::toNextProcess('', $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
         if($send['error'] == false) {
             header('Location: /enviado.html');
-            exit();    
+            exit();
         }
         $id_tabla = $_POST['id_tabla'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
@@ -55,14 +55,14 @@ if($_SESSION['primer_proceso_creado'] == false):
             $new_process = Process::CreateNewProcess('', $id_user);
             if($new_process['error'] == true) {
                 $flash_error = 'No pudo agregar el registro principal';
-                break;    
+                break;
             }
             $id_tabla = $new_process['id_tabla'];
             $id_tabla_proc = $new_process['id_tabla_proc'];
             $get_tabla_solicitud = Process::getTabla('ven_solicitud_viaticos_viajes', $id_tabla_proc_solicitud, 'n');
             if(isset($get_tabla_solicitud['error']) && $get_tabla_solicitud['error'] == true) {
                 $flash_error = 'error';
-                break;    
+                break;
             }
             $fecha_inicio = $get_tabla_solicitud[0]['fecha_inicio'];
             $fecha_fin = $get_tabla_solicitud[0]['fecha_fin'];
@@ -106,7 +106,7 @@ if($_SESSION['primer_proceso_creado'] == false):
                 }
             }
             if($break)  break;
-            
+
         }while(0);
 endif;
 
@@ -114,8 +114,8 @@ endif;
 
 ///////////////////////////////// AGREGAR GASTOS |  POST /////////////////////////////////////////////////////
 if(isset($_POST['agregar_ref'])):
-    $referencia = trim($_POST['referencia']);                           
-    $detalle = trim($_POST['detalle']);     
+    $referencia = trim($_POST['referencia']);
+    $detalle = trim($_POST['detalle']);
     $monto_real = Common::PutDot($_POST['monto']);
     $id_tabla_proc = $_POST['id_tabla_proc'];
     $id_tabla = $_POST['id_tabla'];
@@ -128,7 +128,7 @@ if(isset($_POST['agregar_ref'])):
                                         ));
         if($validations['error'] == true) {
            $flash_error = $validations['notice_error'];
-            break; 
+            break;
         }
         $tabla_sec = Process::CreateSec('', 'gast', $id_tabla_proc, 'n');
         if($tabla_sec['error'] == true) {
@@ -153,7 +153,7 @@ if(isset($_POST['subir_archivo'])):
         $file = $_FILES['archivo'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
-        $file_upload = ProcessFiles::FileUploadOne('', 'gast', 'archivo', $id_tabla_gastos, $file, 'n');
+        $file_upload = ProcessFiles::FileUploadOne('', 'gast', 'archivo', $id_tabla_gastos, $file);
         if($file_upload['error'] == true) {
             $flash_error = $file_upload['notice_error'];
         }else{
@@ -216,7 +216,7 @@ $tpl->asignar('tabla_sec_gastos', $get_tabla_sec_gastos);
 
 // select de referencias
 $referencias = Process::getValuesSelect('sis_gastos_viajes', 'id_sis_gastos_viajes', 'referencia', 'n');
-$tpl->asignar('referencias', $referencias); 
+$tpl->asignar('referencias', $referencias);
 
 
 

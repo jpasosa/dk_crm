@@ -16,7 +16,7 @@ if(isset($_POST['id_file']) && $_POST['id_file'] > 0):          // ELIMINAR ARCH
     $id_tabla = $_POST['id_file'];
     echo 'id_tabla: ' , $id_tabla;
     $del_file = ProcessFiles::DeleteFilePrinc('ave_comparacion_hoteles_opc', 'archivo', $id_tabla, 'n');
-    FormCommon::queryRespHeader($del_file);        
+    FormCommon::queryRespHeader($del_file);
 endif;
 
 
@@ -24,7 +24,7 @@ endif;
 
 ///  Por POST, del FORM  |  Tabla Principal (pais ciudad, fecha_inicio, fecha_fin, observaciones)///
 if(isset($_POST['agregar'])):
-    $pais_ciudad = $_POST['pais_ciudad'];                                  
+    $pais_ciudad = $_POST['pais_ciudad'];
     $fecha_inicio = trim($_POST['fecha_inicio']);
     $fecha_inicio_unix = Dates::ConvertToUnix($fecha_inicio);
     $fecha_fin = trim($_POST['fecha_fin']);
@@ -32,7 +32,7 @@ if(isset($_POST['agregar'])):
     $observaciones = trim($_POST['observaciones']);
     $first_time = $_POST['first_time'];
     $id_tabla_proc  = $_POST['id_tabla_proc'];
-    $id_tabla   = $_POST['id_tabla'];     
+    $id_tabla   = $_POST['id_tabla'];
     do { // VALIDACIONES
            $validations = Validations::General(array(
                                     array('field' => $pais_ciudad, 'null' => false, 'notice_error' => 'Debe seleccionar una ciudad.'),
@@ -42,7 +42,7 @@ if(isset($_POST['agregar'])):
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // 1era VEZ
                 $new_process = Process::CreateNewProcess('', $id_user, 'n' );
@@ -73,10 +73,10 @@ if(isset($_POST['agregar'])):
 endif;
 
 
-///////////////////////////////// AGREGAR TABLA SECUNDARIA (Hoteles) |  POST 
+///////////////////////////////// AGREGAR TABLA SECUNDARIA (Hoteles) |  POST
 if(isset($_POST['agregar_hotel'])):
-    $hotel = trim($_POST['hotel']);                           
-    $comentario = trim($_POST['comentario']);     
+    $hotel = trim($_POST['hotel']);
+    $comentario = trim($_POST['comentario']);
     $costo = Common::PutDot($_POST['costo']);
     $first_time = $_POST['first_time'];
     $id_tabla_proc = $_POST['id_tabla_proc'];
@@ -94,7 +94,7 @@ if(isset($_POST['agregar_hotel'])):
                                 ));
         if($validations['error'] == true) {
            $flash_error = $validations['notice_error'];
-            break; 
+            break;
         }
         $tabla_sec = Process::CreateSec('', 'opc', $id_tabla_proc, 'n');
         if($tabla_sec['error'] == true) {
@@ -102,18 +102,18 @@ if(isset($_POST['agregar_hotel'])):
             break;
         }
         $id_tabla_sec = $tabla_sec['id_tabla_sec'];
-        if($nombre_archivo == 'no existe archivo.' || $nombre_archivo == '' ) { 
-            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $hotel, $comentario, $costo), 'n');    
+        if($nombre_archivo == 'no existe archivo.' || $nombre_archivo == '' ) {
+            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $hotel, $comentario, $costo), 'n');
         }else { // Viene del EDIT con un archivo ya cargado.
-            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec_archivo', array($id_tabla_sec, $hotel, $comentario, $costo, $nombre_archivo), 'n');    
+            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec_archivo', array($id_tabla_sec, $hotel, $comentario, $costo, $nombre_archivo), 'n');
         }
         if(is_null($update_tabla_sec)) {
             $flash_error = 'No pudo insertar el gasto.';
-            break;  
+            break;
         }
         if(isset($_FILES['archivo']) && $_FILES['archivo']['name'] != '' ) {
             $file = $_FILES['archivo'];
-            $file_upload = ProcessFiles::FileUploadOne('', 'opc', 'archivo', $id_tabla_sec, $file, 'n');
+            $file_upload = ProcessFiles::FileUploadOne('', 'opc', 'archivo', $id_tabla_sec, $file);
             if($file_upload['error'] == true) {
                 $flash_error = $file_upload['notice_error'];
                 break;

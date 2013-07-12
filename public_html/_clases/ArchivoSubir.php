@@ -45,7 +45,7 @@ class ArchivoSubir {
 		if( $_FILES[$this->_nombreCampo]['name'] != '' ){
         	return $this->_componenteId.'_'.$this->_idRegistro.'_'.$_FILES[$this->_nombreCampo]['name'];
 		}else{
-			return false;	
+			return false;
 		}
     }
 
