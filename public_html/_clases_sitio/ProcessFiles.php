@@ -110,7 +110,6 @@ class ProcessFiles {
             $fileup->directorio( 'upload_archivos/' . $pr_proceso . '/' ); // defino carpeta para $fileup
             $fileup->idRegistro($id_tabla_sec);
             $ruta = 'upload_archivos/' . $pr_proceso . '/';
-            echo 'nombre del archivo a subir: ' , $fileup->obtenerNombre();
             if(file_exists($ruta . $fileup->obtenerNombre())) {
                 $error = true;
                 $notice_error = 'El archivo que intenta subir ya existe en el servidor.';

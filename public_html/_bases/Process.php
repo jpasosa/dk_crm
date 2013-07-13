@@ -828,9 +828,9 @@ class _Process {
         ";
     }
 
-    //  Selecciona los valores para hacer un select combinado, con cuatro tablas
+
     //  IN:     (0->$pr_proceso  |  1->$name_sec  |  2->$name_column  |  3->$id_tabla)
-    //  OUT:    Devuelve los valores para poder hacer el select en la plantilla
+
     public  function get_campo ($valores=NULL){
         return "
             SELECT $valores[2]
