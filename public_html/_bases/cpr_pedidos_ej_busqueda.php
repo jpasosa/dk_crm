@@ -14,21 +14,27 @@ class cpr_pedidos_ej_busqueda extends FormCommon {
         ";
     }
 
-    // $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $producto, $cantidad, $precio, $fecha_alta), 'n');
-    //  Hace el update correspondiente sobre la tabla principal cpr_pedidos_ej_busqueda
-    //  IN:     (0->$id_tabla_sec  |  1->$cuenta  |  2->$detalle  |  3->$proveedor  |  4->$factura  |  5->$area  |  6->$monto)
-    //  OUT:    null o 1
+    //  IN:     (0->$id_tabla_sec  |  1->$nombre  |  2->$detalle  |  3->$cantidad  |  4->$precio_deseado  |  5->$observaciones)
     public  function update_tabla_sec ($valores=NULL){
         return "
-            UPDATE cpr_pedidos_ej_busqueda_detalle
-            SET id_sis_cuentas = $valores[1],
+            UPDATE cpr_pedidos_ej_busqueda_prod
+            SET activo = 1,
+                    nombre = '$valores[1]',
                     detalle = '$valores[2]',
-                    id_cpr_proveedores = $valores[3],
-                    factura = '$valores[4]',
-                    id_sis_areas = $valores[5],
-                    monto = $valores[6],
-                    activo = 1
-            WHERE id_cpr_pedidos_ej_busqueda_detalle = $valores[0]
+                    cantidad = '$valores[3]',
+                    precio_deseado = $valores[4],
+                    observaciones = '$valores[5]'
+            WHERE id_cpr_pedidos_ej_busqueda_prod = $valores[0]
+            ;
+        ";
+    }
+
+
+    public  function tabla_princ_fecha_actual ($valores=NULL){
+        return "
+            SELECT nombre_pedido
+            FROM cpr_pedidos_ej_busqueda
+            WHERE nombre_pedido  LIKE '%$valores[0]%'
             ;
         ";
     }

@@ -9,7 +9,7 @@
     });
 </script>
 
-<div style="width:994px; height:23px; background:url(img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
+<div style="width:994px; height:23px; background:url(/img/fondos/bg_cuenta_top.jpg) center top no-repeat; margin:0 auto;"></div>
 <div id="fondoCatalogo" style="background:url(/img/fondos/bg_cuenta.jpg) center top repeat-y;">
     <div class="flash_error"></div>
     <div class="flash_notice"></div>
@@ -25,17 +25,18 @@
         <p class="txt10 uppercase">Empleado:<span class="azul">{$nombre_empleado}</span></p>
         <p class="txt10 uppercase">Area:<span class="azul">{$area}</span></p>
 
+
         <!-- BOX DE ENTRADA. TABLA PRINCIPAL -->
-        <form class="box-entrada" action="/cpr_pedidos_ej_busqueda.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="campania">
                         <label class="primerElement">Pedido:</label>
-                        <input name="nombre_pedido" type="text" value='{$tabla[0]["nombre_pedido"]}' alt="Pedido" />
+                        {if $tabla[0]['nombre_pedido'] == '' }
+                            <input name="nombre_pedido" type="text" value='{$nombre_pedido}' alt="Pedido" />
+                        {else}
+                            <input name="nombre_pedido" type="text" value='{$tabla[0]["nombre_pedido"]}' alt="Pedido" />
+                        {/if}
                     </div>
-                <input name="first_time" type="hidden" value="{$first_time}" />
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar" class="agregarInline" type="submit" value="Modificar Nombre Pedido" />
             </div>
         </form>
 
@@ -50,9 +51,9 @@
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>{$$ts[nombre]}</span></td>
-                        <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[cantidad]}</span></td>
+                        <td> <span>{if $$ts['nombre'] != ''} {$$ts[nombre]} {else} Subiendo archivos y fotos actualmente. Recuerde agregar el registro al final.{/if} </span> </td>
+                        <td> <span>{if $$ts['detalle'] != ''} {$$ts[detalle]} {else} sin detalle {/if}</span></td>
+                        <td> <span>{if $$ts['cantidad'] != ''} {$$ts[cantidad]} {else} sin cantidad {/if}</span></td>
                         <td>
                         <a href="#">
                             <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
@@ -70,6 +71,12 @@
         <!-- PRODUCTOS, BOX DE ENTRADA -->
         <form class="box-entrada" action="/cpr_pedidos_ej_busqueda.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
+                <!-- tengo que tener el nombre_pedido -->
+                {if $tabla[0]['nombre_pedido'] == '' }
+                    <input name="nombre_pedido" type="hidden" value='{$nombre_pedido}' alt="Pedido" />
+                {else}
+                    <input name="nombre_pedido" type="hidden" value='{$tabla[0]["nombre_pedido"]}' alt="Pedido" />
+                {/if}
                 <div class="izq clear"><p class="primerElement azul bold">DETALLES:</p></div>
                 <div class="izq clear">
                     <div class="campania">
@@ -88,60 +95,61 @@
                     </div>
                     <div class="campania">
                         <label>Precio Deseado:</label>
-                        <input name="precio_deseado" type="text" value=''  alt="Precio " />
+                        <input name="precio_deseado" type="text" value=''  alt="decimal" />
                     </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
                     <textarea name="observaciones"></textarea>
                 </div>
+
+                <!-- FOTO -->
                 <div class="archivo">
                     <label class="block"> Foto : </label>
-                    <input type="file" class="inline"name="archivo" value="" />
+                    <input type="file" class="inline" name="foto" value="" />
                     <input type="submit" class="inline" name="subir_foto" value="Subir Foto" />
                 </div>
                 <div class="archivos clear">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/cpr_pedidos_ej_busqueda/{$$n[nombre]}">
-                            <span>Foto: {$$n[nombre]}</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                                <img border="0" id="id_gastos-" class="del_foto"  alt="quitar" src="/img/iconos/delete.gif" >
-                            </a>
-                        </div>
+                    {foreach item=fot from=$fotos}
+                        {if $$fot != ''}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$fot[id]}" href="/upload_archivos/cpr_pedidos_ej_busqueda/{$$fot[nombre]}">
+                                    <span>Foto: {$$fot}</span>
+                                </a>
+                                <a class="del_file" id="file-{$$fot[id]}" href="#" style="float:left;">
+                                    <img border="0" id="id_gastos-" class="del_foto"  alt="quitar" src="/img/iconos/delete.gif" >
+                                </a>
+                            </div>
+                        {/if}
                     {/foreach}
                 </div>
+
+                <!-- ARCHIVO -->
                 <div class="archivo">
                     <label class="block"> Archivo : </label>
-                    <input type="file" class="inline"name="archivo" value="" />
+                    <input type="file" class="inline" name="archivo" value="" />
                     <input type="submit" class="inline" name="subir_archivo" value="Subir Archivo" />
                 </div>
                 <div class="archivos clear">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/cpr_pedidos_ej_busqueda/{$$n[nombre]}">
-                            <span>Archivo: {$$n[nombre]}</span>
-                            </a>
-                            <a class="del_archivo" id="file-{$$n[id]}" href="#" style="floet:left;">
-                                <img border="0"  id="id_gastos-" class="del_archivo"  alt="quitar" src="/img/iconos/delete.gif">
-                            </a>
-                        </div>
+                    {foreach item=arch from=$archivos}
+                        {if $$arch != ''}
+                            <div class="file marginLat10">
+                                <a class="file_name" id="file_name-{$$arch[id]}" href="/upload_archivos/cpr_pedidos_ej_busqueda/{$$arch[nombre]}">
+                                    <span>Archivo: {$$arch}</span>
+                                </a>
+                                <a class="del_archivo" id="file-{$$arch[id]}" href="#" style="floet:left;">
+                                    <img border="0"  id="id_gastos-" class="del_archivo"  alt="quitar" src="/img/iconos/delete.gif">
+                                </a>
+                            </div>
+                        {/if}
                     {/foreach}
                 </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
+                <input name="reg_sec_nuevo" type="hidden" value="{$reg_sec_nuevo}" />
+                <input name="actual_key" type="hidden" value="{$actual_key}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="archivo_1" type="hidden" value="{$archivo_1}" />
-                <input name="archivo_2" type="hidden" value="{$archivo_2}" />
-                <input name="archivo_3" type="hidden" value="{$archivo_3}" />
-                <input name="archivo_4" type="hidden" value="{$archivo_4}" />
-                <input name="archivo_5" type="hidden" value="{$archivo_5}" />
-                <input name="foto_1" type="hidden" value="{$foto_1}" />
-                <input name="foto_2" type="hidden" value="{$foto_2}" />
-                <input name="foto_3" type="hidden" value="{$foto_3}" />
-                <input name="foto_4" type="hidden" value="{$foto_4}" />
-                <input name="foto_5" type="hidden" value="{$foto_5}" />
+                <input name="id_tabla_sec" type="hidden" value="{$id_tabla_sec}" />
                 <input name="agregar_prod" class="agregar" type="submit" value="Agregar" />
             </div>
         </form>
