@@ -256,22 +256,6 @@ $tpl->asignar('tabla', $get_tabla);
 $prod = Process::getTablaSec('', 'prod', $id_tabla_proc, 'n');
 $tpl->asignar('tabla_sec', $prod);
 
-
-//
-// Debagueo un objeto / arreglo / variable
-//
-echo ' <br/> <div style="font-weight: bold; color: green;"> $prod: </div> <pre>' ;
-echo '<div style="color: #3741c6;">';
-if(is_array($prod)) {
-    print_r($prod);
-}else {
-var_dump($prod);
-}
-echo '</div>';
-echo '</pre>';
-// die('--FIN--DEBUGEO----');
-
-
 // Carga los nombre de los archivos y fotos para poder mostrarlos en la vista.
 if(isset($prod['error']) && $prod['error'] || $reg_sec_nuevo) { // TODAVIA NO EXISTE LA TABLA SECUNDARIA o comenzó una nueva
     $archivos = array('', '','','','');
