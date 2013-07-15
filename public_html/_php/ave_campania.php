@@ -19,7 +19,7 @@ endif;
 
 ///////////////////////////////// AGREGAR TABLA PRINCIPAL  |  POST
 if(isset($_POST['agregar'])):
-        $campania = trim($_POST['campania']);                                  
+        $campania = trim($_POST['campania']);
         $motivo = $_POST['motivo'];
         $fecha_inicio = $_POST['fecha_inicio'];
         $fecha_inicio_unix = Dates::ConvertToUnix($fecha_inicio);
@@ -46,13 +46,13 @@ if(isset($_POST['agregar'])):
                                         ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // Primera VEZ
                 $new_process = Process::CreateNewProcess('', $id_user);
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = $new_process['notice_success'];
                 $id_tabla = $new_process['id_tabla'];
@@ -62,7 +62,7 @@ if(isset($_POST['agregar'])):
                 $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $campania, $motivo, $fecha_inicio_unix, $hora, $mlg_fecha_inicio_unix, $mlg_asunto, $mlg_texto), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = 'Registro modificado correctamente.';
                 $first_time = 'false';
@@ -102,27 +102,25 @@ endif;
 
 
 
-///////////////////////////////// AGREGAR LLAMADA DE CLIENTES |  POST 
+///////////////////////////////// AGREGAR LLAMADA DE CLIENTES |  POST
 if(isset($_POST['agregar_cliente'])):
-        $ven_cliente_contacto = $_POST['ven_cliente_contacto'];                       
+        $ven_cliente_contacto = $_POST['ven_cliente_contacto'];
         $horario = $_POST['horario'];
-        $ven_cliente_sucursales = $_POST['ven_cliente_sucursales'];
         $first_time = $_POST['first_time'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes, observaciones y cliente.';
-                break;  
+                break;
             }
             $validations = Validations::General(array(
-                                       array('field' => $ven_cliente_sucursales, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar cliente.', 'table' => 'ven_cliente_sucursales.id_ven_cliente_sucursales'),
                                        array('field' => $ven_cliente_contacto, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar cliente.', 'table' => 'ven_cliente_contacto.id_ven_cliente_contacto'),
                                        array('field' => $horario, 'null' => false, 'notice_error' => 'Debe completar el horario.')
                                        ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             $tabla_sec = Process::CreateSec('', 'clientes', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
@@ -140,15 +138,8 @@ if(isset($_POST['agregar_cliente'])):
         $tpl->asignar('first_time', $first_time);
 endif;
 
-
-
-
-
-
 // RESET PRINCIPALES
 require_once '_php/forms_reset.php';
-
-
 
 // Tabla PRINCIPAL
 $get_tabla = Process::getTabla('', $id_tabla_proc, 'n');
@@ -158,24 +149,12 @@ if($first_time == 'true') {
     $tpl->asignar('campania', $campania);
 }
 
-
 // PARA EL SELECT de VEN_CLIENTE_SUCURSALES
-$ven_cliente_sucursales = Process::getValuesSelectRel('ven_cliente_sucursales', 'ven_cliente', '', '', '', 'n');
-$tpl->asignar('ven_cliente_sucursales', $ven_cliente_sucursales);
-
-// PARA EL SELECT de PAISES
-$paises = Process::getValuesSelectRel('sis_provincia', 'sis_pais', '', '', '', 'n');
-$tpl->asignar('paises', $paises);
-
-// PARA EL SELECT de VEN_CLIENTE_CONTACTOS
-$ven_cliente_contacto = Process::getValuesSelectRel('ven_cliente_contacto', '', '', '', '', 'n');
-$tpl->asignar('ven_cliente_contacto', $ven_cliente_contacto);
-
-// TABLA SECUNDARIA (los clientes)
+$ven_clientes = Process::getValuesSelectRel('ven_cliente_contacto', 'ven_cliente_sucursales', 'ven_cliente', '', '', 'n');
+$tpl->asignar('ven_clientes', $ven_clientes);
+// TABLA SECUNDARIA (Llamadas a Clientes)
 $get_tabla_sec_clientes = Process::getTablaSec('', 'clientes', $id_tabla_proc, 'n', 'ven_cliente_contacto', '', '', 'ven_cliente_sucursales', 'ven_cliente');
 $tpl->asignar('tabla_sec', $get_tabla_sec_clientes);
-
-
 
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);

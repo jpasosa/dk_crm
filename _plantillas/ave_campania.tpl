@@ -49,14 +49,14 @@
                     <div class="campania">
                         <label>Hora:</label>
                         <input class="ultimoElement" name="hora" type="text" value="{$tabla[0]['hora']}"  alt="Hora" />
-                    </div>                  
+                    </div>
                 </div>
                 <div class="izq clear"><p class="azul bold">MAILING</p></div>
                 <div class="izq clear">
                     <div class="campania">
                         <label>Asunto:</label>
                         <input name="mlg_asunto" type="text" value="{$tabla[0]['mlg_asunto']}"  alt="Asunto" />
-                    </div>    
+                    </div>
                 </div>
                 <div class="der">
                      <div class="campania">
@@ -66,7 +66,7 @@
                         {else}
                             <input id="mlg_fecha_inicio" name="mlg_fecha_inicio" class="mlg_fecha_inicio" type="text" value='{$tabla[0]["mlg_fecha_inicio"]|date_format:"d/m/Y"}'  alt="Mailing Fecha Inicio" />
                         {/if}
-                    </div>               
+                    </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Texto: </label>
@@ -88,7 +88,7 @@
                             </a>
                         </div>
                     {/if}
-                </div>        
+                </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
@@ -117,27 +117,21 @@
                     </td>
                 </tr>
                 {/foreach}
-            {/if}             
+            {/if}
         </table>
-        
+
         <!-- BOX DE ENTRADA DE CLIENTES -->
         <form class="box-entrada" name="add_hotel" action="/ave_campania.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Cliente:</label>
-                        <select name="ven_cliente_sucursales" class="cliente">
-                            {foreach item=vcs from=$ven_cliente_sucursales}
-                                <option value="{$$vcs[id_ven_cliente_sucursales]}" {if $$vcs['id_ven_cliente'] == $tabla[0]['id_ven_cliente'] } selected {/if}> {$$vcs[empresa]} / {$$vcs[nombre_sucursal]}</option>
-                            {/foreach}    
-                        </select>
-                    </div>   
-                    <div class="campania">
-                        <label>Contacto:</label>
-                        <select name="ven_cliente_contacto" class="ultimoElement contacto" >
-                            {foreach item=vcc from=$ven_cliente_contacto}
-                                <option value="{$$vcc[id_ven_cliente_contacto]}" {if $$vcc['id_ven_cliente_contacto'] == $tabla[0]['id_ven_cliente_contacto'] } selected {/if}> {$$vcc[apellido]},  {$$vcc[nombre]}</option>
-                            {/foreach}    
+                        <select name="ven_cliente_contacto" class="cliente">
+                            {foreach item=vcs from=$ven_clientes}
+                                <option value="{$$vcs[id_ven_cliente_contacto]}" >
+                                    {$$vcs[empresa]} / {$$vcs[nombre_sucursal]} / {$$vcs[apellido]}, {$$vcs[nombre]}
+                                </option>
+                            {/foreach}
                         </select>
                     </div>
                 </div>
@@ -145,8 +139,8 @@
                     <div class="campania">
                         <label class="primerElement">Horario:</label>
                         <input name="horario" class="horario" type="text" value="" alt="Horario" />
-                    </div>                                   
-                </div>       
+                    </div>
+                </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
