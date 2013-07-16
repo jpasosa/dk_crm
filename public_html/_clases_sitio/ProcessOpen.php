@@ -48,7 +48,15 @@ class ProcessOpen {
             $date = date('d/m/Y');
             $date_unix = Dates::ConvertToUnix($date);
             $dia = 60 * 60 * 24;
-            // Procesos accesibles, según su área.
+
+
+
+
+            //
+            //
+            // TODOS LOS Procesos accesibles, según su área. SON LOS MAS COMUNES, LOS QUE NO SE RELACIONAN CON OTROS PROCESOS PARA SER ABIERTOS
+            //
+            //
             $sis_procesos_accesibles = BDConsulta::consulta('sis_procesos_accesibles', array($id_area), $deb);
 
             foreach($sis_procesos_accesibles as $k => $pa) { // Cada Proceso que tenga acceso.
@@ -92,6 +100,7 @@ class ProcessOpen {
                             $first_process = Process::getFirstProcess($pr_act['proceso_proceso'], $pr_act['id_tabla']);
                             $first_process = $first_process[0];
                             $fecha_inicio = Dates::ConvertToPhpdate($first_process['fecha_alta']);
+
                             // procesos PROPIOS
                             if($first_process['id_sis_areas'] == $id_area):
                                 if($days['alarma'] == 'verde'): // procesos de TAREAS PENDIENTES (verde)
@@ -213,31 +222,35 @@ class ProcessOpen {
 
 
 
+
+
+
+            //
+            //
             // Busco si hay ven_rendicion_viaticos. . . . solamente puede comenzar área 1 (ventas)
-            if($id_area == 1) {
-                // busca procesos cerrados con fecha_fin < date
-                $search_viaticos_rendir = BDConsulta::consulta('search_viaticos_rendir', array($date_unix), 'n');
-                if(!is_null($search_viaticos_rendir)) {
-                    foreach($search_viaticos_rendir as $rendir) {
-                            $procesos_ver = Process::getFirstProcess('ven_solicitud_viaticos_viajes', $rendir['id_ven_solicitud_viaticos_viajes'], 'n');
-                            $id_tabla_proc_rendir = $procesos_ver[0]['id_ven_solicitud_viaticos_viajes_proc'];
-                            array_push($all_process['azul'], array('id_tabla_proc' => $id_tabla_proc_rendir,
-                                                                                        'id_tabla' => $rendir['id_ven_solicitud_viaticos_viajes'],
-                                                                                        'proceso_proceso' => 'ven_rendicion_viaticos_viajes',
-                                                                                        'proceso_nombre' => 'Rendición de Viaticos para Viajes',
-                                                                                        'fecha_inicio' => Dates::ConvertToPhpdate($rendir['fecha_inicio']),
-                                                                                        'fecha_fin' => Dates::ConvertToPhpdate($rendir['fecha_fin']),
-                                                                                        'aprobada' => 'NO'
-                                                                                        ));
+            //
+            //
+            if($id_area == 1)
+            {
+                    // busca procesos cerrados con fecha_fin < date
+                    $search_viaticos_rendir = BDConsulta::consulta('search_viaticos_rendir', array($date_unix), 'n');
+                    if(!is_null($search_viaticos_rendir))
+                    {
+                            foreach($search_viaticos_rendir as $rendir)
+                            {
+                                    $procesos_ver = Process::getFirstProcess('ven_solicitud_viaticos_viajes', $rendir['id_ven_solicitud_viaticos_viajes'], 'n');
+                                    $id_tabla_proc_rendir = $procesos_ver[0]['id_ven_solicitud_viaticos_viajes_proc'];
+
+                                    array_push($all_process['azul'], array('id_tabla_proc' => $id_tabla_proc_rendir,
+                                                                                                'id_tabla' => $rendir['id_ven_solicitud_viaticos_viajes'],
+                                                                                                'proceso_proceso' => 'ven_rendicion_viaticos_viajes',
+                                                                                                'proceso_nombre' => 'Rendición de Viaticos para Viajes',
+                                                                                                'fecha_inicio' => Dates::ConvertToPhpdate($rendir['fecha_inicio']),
+                                                                                                'fecha_fin' => Dates::ConvertToPhpdate($rendir['fecha_fin']),
+                                                                                                'aprobada' => 'NO'
+                                                                                                ));
+                            }
                     }
-                }
-
-                // $all_process['azul'][0]=  array('proceso_nombre' => 'Rendición de Viaticos para Viajes',
-                //                                             'fecha_inicio' => '14/03/2013',
-                //                                             'fecha_fin' => '34/65/6565',
-                //                                             'aprobada' => 'SI');
-
-                // buscar todos los ven_solicitud_viaticos_viajes  = 0 y fecha
             }
 
         }while(0);
@@ -246,57 +259,145 @@ class ProcessOpen {
 
 
 
+
+        //
+        //
         // BUSCO MANTENIMIENTOS que pasaron por todos los procesos. Es decir, ya va estar abierto el RECORDATORIO.
+        //
+        //
         $search_mant_cerrados = BDConsulta::consulta('search_mant_cerrados', array(), 'n');
-        if(!is_null($search_mant_cerrados)) {
-            foreach($search_mant_cerrados as $k => $mant) {
-                $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], $id_area, 'n');
-                if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
-                    $mantenimientos[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
-                    $mantenimientos[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
-                    $mantenimientos[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
-                    $mantenimientos[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
-                    $mantenimientos[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
+        if(!is_null($search_mant_cerrados))
+        {
+                foreach($search_mant_cerrados as $k => $mant)
+                {
+                        $id_tabla_proc = ProcessMaint::getRecordatorys($mant['id_adm_ytd_mantenimientos'], $id_area, 'n');
+                        if(!isset($id_tabla_proc['error'])) { // voy cargando datos que necesito para calcular el recordatorio.
+                            $mantenimientos[$k]['id_mant_tabla'] = $mant['id_adm_ytd_mantenimientos'];   // id de adm_ytd_mantenimientos
+                            $mantenimientos[$k]['id_mant_tabla_proc'] = $id_tabla_proc['id_adm_ytd_mantenimientos_proc']; // id de adm_ytd_mantenimientos_proc (el primero)
+                            $mantenimientos[$k]['fecha_inicio'] = $mant['fecha_inicio']; // fecha_inicio de adm_ytd_mantenimientos
+                            $mantenimientos[$k]['period'] = $mant['id_sis_periodicidad']; // periodicidad de adm_ytd_mantenimientos
+                            $mantenimientos[$k]['x_tiempo'] = $mant['cada_x_tiempo']; // cada_x_tiempo de adm_ytd_mantenimientos
 
+                        }
                 }
-            }
-            if(isset($mantenimientos)) {
-                    foreach($mantenimientos as $mant) {
-                        // Va a buscar los recordatorios que ya fueron realizados de cada mantenimiento
-                        $search_recordatorios = BDConsulta::consulta('search_recordatorios', array($mant['id_mant_tabla_proc']), 'n');
-                        if(!is_null($search_recordatorios)) { // HAY ya cargado algun mantenimiento hecho
-                                $last_recordatorio = end($search_recordatorios); // agarro ultimo mantenimiento
-                                $last_fecha_mant = $last_recordatorio['fecha'];
-                                $last_fecha_mant = Dates::ConvertToPhpdate($last_fecha_mant);
-                                $rec = ProcessMaint::CalculateMant($last_fecha_mant, $mant['period'], $mant['x_tiempo'], $mant['id_mant_tabla_proc']);
-                        }else{      // Aún no se hizo el primer Mantenimiento.
-                            $fecha_inicio = Dates::ConvertToPhpdate($mant['fecha_inicio']);
-                            $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);
-                        }
+                if(isset($mantenimientos))
+                {
+                        foreach($mantenimientos as $mant)
+                        {
+                                // Va a buscar los recordatorios que ya fueron realizados de cada mantenimiento
+                                $search_recordatorios = BDConsulta::consulta('search_recordatorios', array($mant['id_mant_tabla_proc']), 'n');
+                                if(!is_null($search_recordatorios)) { // HAY ya cargado algun mantenimiento hecho
+                                        $last_recordatorio = end($search_recordatorios); // agarro ultimo mantenimiento
+                                        $last_fecha_mant = $last_recordatorio['fecha'];
+                                        $last_fecha_mant = Dates::ConvertToPhpdate($last_fecha_mant);
+                                        $rec = ProcessMaint::CalculateMant($last_fecha_mant, $mant['period'], $mant['x_tiempo'], $mant['id_mant_tabla_proc']);
+                                }else{      // Aún no se hizo el primer Mantenimiento.
+                                    $fecha_inicio = Dates::ConvertToPhpdate($mant['fecha_inicio']);
+                                    $rec = ProcessMaint::CalculateFirstMant($fecha_inicio, $mant['id_mant_tabla_proc']);
+                                }
 
-                        foreach($rec['rojo'] as $rec_rojo) { // cargo ROJO en all_process
-                            array_push($all_process['rojo']['propia'], $rec_rojo);
+                                foreach($rec['rojo'] as $rec_rojo) { // cargo ROJO en all_process
+                                    array_push($all_process['rojo']['propia'], $rec_rojo);
+                                }
+                                foreach($rec['amarillo'] as $rec_amarillo) { // cargo AMARILLO en all_process
+                                    array_push($all_process['amarillo']['propia'], $rec_amarillo);
+                                }
+                                foreach($rec['verde'] as $rec_verde) { // cargo VERDE en all_process
+                                    array_push($all_process['verde']['propia'], $rec_verde);
+                                }
                         }
-                        foreach($rec['amarillo'] as $rec_amarillo) { // cargo AMARILLO en all_process
-                            array_push($all_process['amarillo']['propia'], $rec_amarillo);
-                        }
-                        foreach($rec['verde'] as $rec_verde) { // cargo VERDE en all_process
-                            array_push($all_process['verde']['propia'], $rec_verde);
-                        }
+                } // si estaba seteado mantenimientos
+
+
+        }
+
+
+
+
+
+        //
+        //
+        // BUSCO procesos cerrados de AVE_CAMPANIA, que pueden ser los items nuevos de VEN_LLAMADAS
+        //
+        //
+        if($id_area == 2)
+        { // Comienza área 2. TODO: Sacar como formulario nuevo a Asist Ventas el ven_llamadas.
+            $ave_campania_cerrados = BDConsulta::consulta('ave_campania_cerrados', array(), 'n');
+
+            if(!is_null($ave_campania_cerrados))
+            {
+                foreach($ave_campania_cerrados AS $acc)
+                {
+                    $nombre_campania = $acc['campania'];
+
+                    $first_process_ave_campania = Process::getFirstProcess('ave_campania', $acc['id_ave_campania']); // agaroo el primer proceso.
+
+                    if(isset($first_process_ave_campania) && !is_null($first_process_ave_campania[0])) {
+                        $last_process_ave_campania = Process::getLastProcess('ave_campania', $first_process_ave_campania[0]['id_ave_campania_proc']); // agaroo el ultimo proceso.
+                        $dias_activo = $last_process_ave_campania['dias_activo']; // guardo dias_activo
+                        $fecha_inicio = $last_process_ave_campania['fecha_alta']; // y guardo fecha_alta
                     }
-            } // si estaba seteado mantenimientos
 
+                    if(!is_null($first_process_ave_campania)) {
 
-        }
+                        $days = Dates::CalculateDaysExpire($fecha_inicio, $dias_activo, '1');
+                        // Calculo [fecha_vence] => 19/06/2013
+                        //              [pasaron_dias] => 18
+                        //              [restan_dias] => 0
+                        //              [prioridad] => ALTA
+                        //              [alarma] => rojo
 
+                        // agarro todas las llamadas relacionadas. Por cada llamada debe abrir un item de ven_llamadas
+                        $campania_llamadas = BDConsulta::consulta('campania_llamadas', array($first_process_ave_campania[0]['id_ave_campania_proc']), 'n');
 
+                        foreach($campania_llamadas AS $llamadas)
+                        {
+                            if($days['alarma'] == 'verde')
+                            {   // procesos de TAREAS PENDIENTES (verde)
+                                array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                                                                                        'proceso_proceso' => 'ven_llamadas',
+                                                                                                        'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                        'fecha_inicio' => $fecha_inicio,
+                                                                                                        'fecha_vence' => $days['fecha_vence'],
+                                                                                                        'pasaron_dias' => $days['pasaron_dias'],
+                                                                                                        'restan_dias' => $days['restan_dias'],
+                                                                                                        'prioridad' => $days['prioridad']
+                                                                                                        ));
+                            }
+                            if($days['alarma'] == 'amarillo' )
+                            { // procesos de TAREAS ULTIMO DÍA (amarillo)
+                                array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                                                                                            'proceso_proceso' => 'ven_llamadas',
+                                                                                                            'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                            'fecha_inicio' => $fecha_inicio,
+                                                                                                            'fecha_vence' => $days['fecha_vence'],
+                                                                                                            'pasaron_dias' => $days['pasaron_dias'],
+                                                                                                            'restan_dias' => $days['restan_dias'],
+                                                                                                            'prioridad' => $days['prioridad']
+                                                                                                            ));
+                            }
+                            if($days['alarma'] == 'rojo' )
+                            { // procesos de ALARMAS (rojo)
+                                array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                                                                                        'proceso_proceso' => 'ven_llamadas',
+                                                                                                        'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                        'fecha_inicio' => $fecha_inicio,
+                                                                                                        'fecha_vence' => $days['fecha_vence'],
+                                                                                                        'pasaron_dias' => $days['pasaron_dias'],
+                                                                                                        'restan_dias' => $days['restan_dias'],
+                                                                                                        'prioridad' => $days['prioridad']
+                                                                                                        ));
+                            }
 
+                        } // cierro la carga de llamadas, el foreach
 
-        // BUSCO procesos abiertos de VEN_LLAMADAS, que comienzan en ave_campania
-        if($id_area == 2) { // Comienza área 2. TODO: Sacar como formulario nuevo a Asist Ventas el ven_llamadas.
+                    } // cierro el if first_process)ave_campania
 
+                } // cierro el fireach de los ave_campania cerrados
 
-        }
+            } // si no es null ava_campania cerrados
+
+        } // cierro si pertenece al 'area 2', acá termina la busqueda del los VEN_LLAMADAS
 
 
 

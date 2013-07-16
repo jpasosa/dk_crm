@@ -141,8 +141,39 @@ class _ProcessOpen {
         ";
     }
 
+    // Busca todos los ave_campania que ya están cerrados
+    //  IN:     ()
+    public  function ave_campania_cerrados ($valores=NULL){
+        return "
+            SELECT *
+            FROM ave_campania
+            WHERE id_ave_campania_proc = 0
+            ;
+        ";
+    }
 
+    // Busca todos los ave_campania_proc relacionados con id_tabla q están ya cerrados
+    //  IN:     (0->$id_tabla)
+    public  function acc_proc ($valores=NULL){
+        return "
+            SELECT *
+            FROM ave_campania_proc
+            WHERE id_ave_campania = $valores[0]
+            ;
+        ";
+    }
 
+    // Busca todas las llamadas relacionadad un un tabla_proc
+    //  IN:     (0->$id_tabla_proc)
+    public  function campania_llamadas ($valores=NULL){
+        return "
+            SELECT *
+            FROM ave_campania_clientes
+            WHERE id_ave_campania_proc = $valores[0]
+                            AND activo = 1
+            ;
+        ";
+    }
 
 
 }

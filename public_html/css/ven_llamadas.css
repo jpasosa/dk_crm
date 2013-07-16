@@ -96,14 +96,14 @@ form .box-entrada input.agregar_fechas {
 .tipoLlamada select, .prioridad select, .prioridad input{
     float: left;
     background-color: #FFF;
-    margin: 10px 0 0 20px; 
+    margin: 10px 0 0 20px;
     width: 100px;
 }
 
 
 .temas label, .campania label, .vendedor label, .cliente label, .sucursal label, .contacto label, .tipoLlamada label, .prioridad label{
    float: left;
-    margin: 10px 0 0 20px; 
+    margin: 10px 0 0 20px;
 }
 
 .temas input, .campania input, .vendedor input, .cliente input, .sucursal input, .contacto input{
@@ -132,7 +132,7 @@ table tr td.box-entrada {
 
 .espacio-box-entrada {
     height: 20px;
-    
+
 }
 
 
@@ -210,7 +210,7 @@ form.box-entrada {
 }
 
 form.box-entrada .box-entrada {
-    
+
 }
 
 form.box-entrada .box-entrada label {
@@ -225,6 +225,12 @@ form.box-entrada .box-entrada input {
     font-size: 16px;
     height: 30px;
     padding: 0 0 0 2px;
+}
+
+form.box-entrada .box-entrada input.agregar_tema {
+    float: right;
+    margin: 50px 20px 20px 0;
+
 }
 
 form.box-entrada .box-entrada textarea {
@@ -250,7 +256,7 @@ form.box-entrada .box-entrada select {
 /*FORMULARIOS BOX DE ENTRADA EN LOS COMENTS*/
 
 form.box-coment {
-    
+
 }
 
 form.box-coment .title {
@@ -268,7 +274,7 @@ form.box-coment .coment_ant {
     border-top: 1px solid #197EB4;
     color: #197EB4;
     background-color: #F7F6F2;
-    
+
 }
 
 form.box-coment .coment_ant .area {
@@ -326,7 +332,7 @@ form.box-coment .coment_actual .comentario .fecha {
     color: #197EB4;
     font-size: 15px;
     width: 150px;
-    font-weight: bold;  
+    font-weight: bold;
     float: left;
 }
 

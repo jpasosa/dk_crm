@@ -4,7 +4,7 @@ class FormCommon {
 
 
     public static function queryRespHeader($response){
-        if($response == false || null) {
+        if($response == false || $response == null) {
             $res = header("success_query: false");
         }elseif($response >= 1 || (isset($response['error']) && $response['error'] == false)) {
             $res = header("success_query: true");
