@@ -35,6 +35,20 @@ if(isset($_POST['enviar'])):
                 }
         }
 
+        // Viene de ave_campania
+        elseif($pr_proceso == 'ven_llamadas') // Viene de ave_campania, entonces en ave_campania, hay que poner  id_tabla_proc en -2, para entender
+        {                                                       // que está en un segundo paso; entonces al buscar los que están cerrados, ya no selecciona estos. . . .
+                $id_user = $_SESSION['id_user'];
+                $id_tabla = $_POST['id_tabla'];
+                $edit_ave_campania = BDConsulta::consulta('edit_ave_campania', array($id_tabla), 'n'); // Tenemos que poner en -2 id_tabla_proc de ave_campania
+                if(!is_null($edit_ave_campania)){
+                    $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
+                }else { // Hay algun error desconocido, debe ir a pantalla de ERROR
+                    header('Location: /error.html');
+                    exit();
+                }
+        }
+
         else
         { // VA AL SIGUIENTE PROCESO NORMALMENTE
             $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');

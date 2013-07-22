@@ -140,7 +140,7 @@
         </form>
 
 
-        <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/ven_llamadas/{$id_ave_campania_clientes}.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
