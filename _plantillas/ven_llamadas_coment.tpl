@@ -13,85 +13,85 @@
         <h1 class="azul bold"><span class="txt22 normal">Formulario de Llamadas</span></h1>
         <hr />
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" method="post" enctype="multipart/form-data" >
             <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label> Campaña: </label>
-                        <input readonly="yes" name="campania" type="text" value="{$campaña}"  />
-                    </div>
-                    <div class="vendedor">
-                        <label> Vendedor: </label>
-                        <input readonly="yes" name="vendedor" type="text" value="{$vendedor}"  />
+                        <input readonly="readonly" title="{$tabla[0]['campania']}" name="campania" type="text" value="{$tabla[0]['campania']}"  />
                     </div>
                     <div class="cliente">
                         <label> Cliente: </label>
-                        <input readonly="yes" name="cliente" type="text" value="{$cliente}"  />
+                        <input readonly="readonly" name="cliente" type="text" value="{$tabla_contacto[0]['empresa']}"  />
+                    </div>
+                    <div class="vendedor" style="display: none;"> <!-- no existe un campo vendedor en tabla principal. Por ahora no muesto esto -->
+                        <label> Vendedor: </label>
+                        <input readonly="readonly" name="vendedor" type="text" value="{$vendedor}"  />
+                    </div>
+                    <div class="campania">
+                        <label> Fecha: </label>
+                        <input id="fecha" readonly="readonly" name='fecha' type='text' value='{$tabla[0]["fecha"]|date_format:"d/m/Y"}'  />
                     </div>
                 </div>
                 <div class="der">
                     <div class="sucursal">
                         <label> Sucursal: </label>
-                        <input readonly="yes" name="sucursal" type="text" value="{$sucursal}"  />
+                        <input readonly="readonly" name="sucursal" type="text" value="{$tabla_contacto[0]['nombre_sucursal']}"  />
                     </div>
                     <div class="contacto">
                         <label> Contacto: </label>
-                        <input readonly="yes" name="contacto" type="text" value="{$contacto}"  />
+                        <input readonly="readonly" name="contacto" type="text" value="{$tabla_contacto[0]['apellido']}, {$tabla_contacto[0]['nombre']}"  />
                     </div>
                     <div class="tipoLlamada">
                         <label> Tipo de Llamada: </label>
-                        <select name="tipoLlamada">
-                            <option value="E">Entrante</option>
-                            <option value="S">Saliente</option>   
+                        <select name="tipo_llamada" disabled="disabled">
+                            <option value="S" {if $tabla[0][tipo_llamada] == 'S'} selected {/if}>Saliente</option>
+                            <option value="E" {if $tabla[0][tipo_llamada] == 'E'} selected {/if}>Entrante</option>
                         </select>
                     </div>
                     <div class="prioridad">
                         <label> Prioridad: </label>
-                        <select name="prioridad">
-                            <option value="MB">Muy Baja</option>
-                            <option value="B">Baja</option>
-                            <option value="M">Media</option>
-                            <option value="A">Alta</option>
-                            <option value="MA">Muy Alta</option>
+                        <select name="prioridad" disabled="disabled">
+                            <option value="MB" {if $tabla[0][prioridad] == 'MB'} selected {/if}>Muy Baja</option>
+                            <option value="B" {if $tabla[0][prioridad] == 'B'} selected {/if}>Baja</option>
+                            <option value="M" {if $tabla[0][prioridad] == 'M'} selected {/if}>Media</option>
+                            <option value="A" {if $tabla[0][prioridad] == 'A'} selected {/if}>Alta</option>
+                            <option value="MA" {if $tabla[0][prioridad] == 'MA'} selected {/if}>Muy Alta</option>
                         </select>
                     </div>
-                </div>
-                <div class="temas marginTop20">
-                    <div class="telefono">
-                        <label> Telefono: </label>
-                        <input readonly="yes" name="telefono" type="text" value="{$telefono}"  />
-                    </div>
-                    <div class="observaciones">
-                        <label class="block"> Temas a Tocar: </label>
-                        <textarea readonly="yes" id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
-                    </div>
-                </div>  
-            </div>    
-        </form>
-        <form class="box-entrada" name="add_hotel" action="/ger_planificacion_gastos.html" method="post" enctype="multipart/form-data" >
-            <div class="box-entrada" height="40" colspan="5" bgcolor="#D2E1F2">
-                <div class="temas observaciones">
-                    <label> Temas a Tocados: </label>
-                    <textarea readonly="yes" ></textarea>
-                </div>
-                <div class="clear">
-                    <div class="prioridad">
-                        <label> Fecha: </label>
-                        <input readonly="yes" name="fecha" type="text" value="{$fecha}"  />
-                    </div>
-                    <div class="prioridad">
+                    <div class="campania">
                         <label> Hora: </label>
-                        <input readonly="yes" name="hora" type="text" value="{$hora}"  />
+                        <input name="hora" type="text" value="{$tabla[0]['hora']}"  />
                     </div>
                 </div>
                 <div class="observaciones">
-                    <label class="block"> Observaciones: </label>
-                    <textarea readonly="yes" id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
-                </div>                 
-            </div>    
+                        <label class="block"> Observaciones: </label>
+                        <textarea id="ultimoElement" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                </div>
+            </div>
         </form>
 
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+
+        <!-- LISTADO DE TEMAS -->
+        <p class="azul bold">TEMAS A TRATAR o YA TRATADOS</p>
+        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
+            <tr>
+                <td width="500" bgcolor="#4685CA"><p class="blanco">Tema </p></td>
+                <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Tocado</p></td>
+            </tr>
+            {if $tabla_sec['error'] == false }
+                {foreach item=tema from=$tabla_sec }
+                <tr id="id_tema-{$$tema[id_ven_llamadas_temas]}">
+                    <td><span class="tema">{$$tema[tema]}</span></td>
+                    <td>
+                        <span id="{$$tema[tema_tocado]}" class="tema_tocado">{if $$tema['tema_tocado'] == 1}SI{else}NO{/if}</span>
+                    </td>
+                </tr>
+                {/foreach}
+            {/if}
+        </table>
+
+        <form class="box-coment" name="box_coment" action="/ven_llamadas_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
@@ -125,6 +125,8 @@
                 </div>
             </div>
         </form>
+
+
     </div>
     <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
     <br style="clear:both;" />
