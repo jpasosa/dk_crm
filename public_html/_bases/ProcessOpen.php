@@ -175,5 +175,15 @@ class _ProcessOpen {
         ";
     }
 
+    // Busca todos los ave_campania que ya están cerrados
+    //  IN:     ()
+    public  function stock_limpieza_cerrados ($valores=NULL){
+        return "
+            SELECT *
+            FROM adm_audit_stock_limpieza
+            WHERE id_adm_audit_stock_limpieza_proc = 0
+            ;
+        ";
+    }
 
 }

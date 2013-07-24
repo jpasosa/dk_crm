@@ -9,7 +9,7 @@ require_once '_php/forms_start.php';
 if(isset($_POST['id_file']) && $_POST['id_file'] > 0):  // ELIMINAR ARCHIVO
         $id_tabla = $_POST['id_file'];
         $del_file = ProcessFiles::DeleteFilePrinc('adm_audit_stock_limpieza', 'archivo', $id_tabla);
-        FormCommon::queryRespHeader($del_file);        
+        FormCommon::queryRespHeader($del_file);
 endif;
 
 
@@ -20,7 +20,7 @@ if(isset($_POST['agregar'])):
     $observaciones = trim($_POST['observaciones']);
     $first_time  = $_POST['first_time'];
     $id_tabla_proc  = $_POST['id_tabla_proc'];
-    $id_tabla   = $_POST['id_tabla'];     
+    $id_tabla   = $_POST['id_tabla'];
     do { // VALIDACIONES
            $validations = Validations::General(array(
                                     array('field' => $observaciones, 'null' => false, 'notice_error' => 'Debe completar las observaciones.'),
@@ -28,7 +28,7 @@ if(isset($_POST['agregar'])):
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // 1era VEZ
                 $new_process = Process::CreateNewProcess('', $id_user, 'n' );
