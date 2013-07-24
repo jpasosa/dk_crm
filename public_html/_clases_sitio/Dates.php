@@ -1,7 +1,7 @@
 <?php
 
 class Dates {
-    
+
     public static function ConvertToUnix($date) {
         if(!Validations::IsCorrectDate($date)) {
             return false;
@@ -105,20 +105,20 @@ class Dates {
                     }
                     endwhile;
             if($restan_dias >= 0 && $restan_dias < 5) {
-                
+
                 $prioridad = 'ALTA';
-            }      
+            }
             if($restan_dias >= 5 && $restan_dias < 10) {
-                $prioridad = 'MEDIA';  
+                $prioridad = 'MEDIA';
             }
             if($restan_dias >= 10) {
-                $prioridad = 'BAJA';  
+                $prioridad = 'BAJA';
             }
             $alarma = 'verde';
         }
         // CALCULO PRIORIDAD
-        
-        
+
+
 
         $resp = array( 'fecha_vence' => $fecha_vencimiento,
                                 'pasaron_dias' => $pasaron_dias,
@@ -130,7 +130,7 @@ class Dates {
 
     public static function AddDay($date) {
         if(Validations::IsCorrectDate($date)) {
-            $date_unix = self::ConvertToUnix($date);    
+            $date_unix = self::ConvertToUnix($date);
             $date_add_one_day = $date_unix + 60 * 60 * 24;
             $date_add_one_day = self::ConvertToPhpdate($date_add_one_day);
             return $date_add_one_day; // retorna un día más. Siempre formato dd/mm/YYYY
@@ -144,7 +144,7 @@ class Dates {
             $date = self::AddDay($date);
         }
         return $date;
-    }    
+    }
 
 
 

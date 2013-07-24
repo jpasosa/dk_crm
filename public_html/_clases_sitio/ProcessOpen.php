@@ -410,40 +410,28 @@ class ProcessOpen {
         if($id_area == 7)
         { // Comienza área 7 (BODEGA).
             $stock_limpieza_cerrados = BDConsulta::consulta('stock_limpieza_cerrados', array(), 'n');
-
             if(!is_null($stock_limpieza_cerrados))
             {
                 foreach($stock_limpieza_cerrados AS $slc)
                 {
-                    $nombre_campania = $slc['campania'];
+                    $first_process_stock_limpieza = Process::getFirstProcess('adm_audit_stock_limpieza', $slc['id_adm_audit_stock_limpieza']); // agaroo el primer proceso.
 
-                    $first_process_ave_campania = Process::getFirstProcess('ave_campania', $slc['id_ave_campania']); // agaroo el primer proceso.
-
-                    if(isset($first_process_ave_campania) && !is_null($first_process_ave_campania[0])) {
-                        $last_process_ave_campania = Process::getLastProcess('ave_campania', $first_process_ave_campania[0]['id_ave_campania_proc']); // agaroo el ultimo proceso.
-                        $dias_activo = $last_process_ave_campania['dias_activo']; // guardo dias_activo
-                        $fecha_inicio = $last_process_ave_campania['fecha_alta']; // y guardo fecha_alta
+                    if(isset($first_process_stock_limpieza) && !is_null($first_process_stock_limpieza[0])) {
+                            $last_process_stock_limpieza = Process::getLastProcess('adm_audit_stock_limpieza', $first_process_stock_limpieza[0]['id_adm_audit_stock_limpieza_proc']); // agaroo el ultimo proceso.
+                            $dias_activo = $last_process_stock_limpieza['dias_activo']; // guardo dias_activo
+                            $fecha_inicio = $last_process_stock_limpieza['fecha_alta']; // y guardo fecha_alta
                     }
+                    if(!is_null($first_process_stock_limpieza))
+                    {
+                            $days = Dates::CalculateDaysExpire($fecha_inicio, $dias_activo, '1');
 
-                    if(!is_null($first_process_ave_campania)) {
 
-                        $days = Dates::CalculateDaysExpire($fecha_inicio, $dias_activo, '1');
-                        // Calculo [fecha_vence] => 19/06/2013
-                        //              [pasaron_dias] => 18
-                        //              [restan_dias] => 0
-                        //              [prioridad] => ALTA
-                        //              [alarma] => rojo
-
-                        // agarro todas las llamadas relacionadas. Por cada llamada debe abrir un item de ven_llamadas
-                        $campania_llamadas = BDConsulta::consulta('campania_llamadas', array($first_process_ave_campania[0]['id_ave_campania_proc']), 'n');
-
-                        foreach($campania_llamadas AS $llamadas)
-                        {
+                            // Calculo [fecha_vence] => 19/06/2013  [pasaron_dias] => 18    [restan_dias] => 0   [prioridad] => ALTA    [alarma] => rojo
                             if($days['alarma'] == 'verde')
                             {   // procesos de TAREAS PENDIENTES (verde)
-                                array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
                                                                                                         'proceso_proceso' => 'ven_llamadas',
-                                                                                                        'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                        'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                         'fecha_inicio' => $fecha_inicio,
                                                                                                         'fecha_vence' => $days['fecha_vence'],
                                                                                                         'pasaron_dias' => $days['pasaron_dias'],
@@ -453,9 +441,9 @@ class ProcessOpen {
                             }
                             if($days['alarma'] == 'amarillo' )
                             { // procesos de TAREAS ULTIMO DÍA (amarillo)
-                                array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
                                                                                                             'proceso_proceso' => 'ven_llamadas',
-                                                                                                            'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                            'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                             'fecha_inicio' => $fecha_inicio,
                                                                                                             'fecha_vence' => $days['fecha_vence'],
                                                                                                             'pasaron_dias' => $days['pasaron_dias'],
@@ -465,9 +453,9 @@ class ProcessOpen {
                             }
                             if($days['alarma'] == 'rojo' )
                             { // procesos de ALARMAS (rojo)
-                                array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $llamadas['id_ave_campania_clientes'],
+                                array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
                                                                                                         'proceso_proceso' => 'ven_llamadas',
-                                                                                                        'proceso_nombre' => 'Ventas |  Llamadas ' . '(' . $nombre_campania . ')',
+                                                                                                        'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                         'fecha_inicio' => $fecha_inicio,
                                                                                                         'fecha_vence' => $days['fecha_vence'],
                                                                                                         'pasaron_dias' => $days['pasaron_dias'],
@@ -475,16 +463,10 @@ class ProcessOpen {
                                                                                                         'prioridad' => $days['prioridad']
                                                                                                         ));
                             }
-
-                        } // cierro la carga de llamadas, el foreach
-
-                    } // cierro el if first_process)ave_campania
-
-                } // cierro el fireach de los ave_campania cerrados
-
-            } // si no es null ava_campania cerrados
-
-        } // cierro si pertenece al 'area 2', acá termina la busqueda del los VEN_LLAMADAS
+                    } // cierro el if first_process)
+                } // cierro foreach()
+            } // si no es null los cerrados
+        } // cierro si pertenece a la BODEGA
 
 
 
