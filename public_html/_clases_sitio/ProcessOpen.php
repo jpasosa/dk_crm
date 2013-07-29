@@ -430,7 +430,7 @@ class ProcessOpen {
                             if($days['alarma'] == 'verde')
                             {   // procesos de TAREAS PENDIENTES (verde)
                                 array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
-                                                                                                        'proceso_proceso' => 'ven_llamadas',
+                                                                                                        'proceso_proceso' => 'adm_audit_stock_limpieza_detalle',
                                                                                                         'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                         'fecha_inicio' => $fecha_inicio,
                                                                                                         'fecha_vence' => $days['fecha_vence'],
@@ -442,7 +442,7 @@ class ProcessOpen {
                             if($days['alarma'] == 'amarillo' )
                             { // procesos de TAREAS ULTIMO DÍA (amarillo)
                                 array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
-                                                                                                            'proceso_proceso' => 'ven_llamadas',
+                                                                                                            'proceso_proceso' => 'adm_audit_stock_limpieza_detalle',
                                                                                                             'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                             'fecha_inicio' => $fecha_inicio,
                                                                                                             'fecha_vence' => $days['fecha_vence'],
@@ -454,7 +454,7 @@ class ProcessOpen {
                             if($days['alarma'] == 'rojo' )
                             { // procesos de ALARMAS (rojo)
                                 array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $slc['id_adm_audit_stock_limpieza'],
-                                                                                                        'proceso_proceso' => 'ven_llamadas',
+                                                                                                        'proceso_proceso' => 'adm_audit_stock_limpieza_detalle',
                                                                                                         'proceso_nombre' => 'Administración |  Auditoria Stock Limpieza ' . '(' . $slc['observaciones'] . ')',
                                                                                                         'fecha_inicio' => $fecha_inicio,
                                                                                                         'fecha_vence' => $days['fecha_vence'],

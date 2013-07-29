@@ -25,6 +25,17 @@ class forms_start extends FormCommon {
         ";
     }
 
+    //  Ponemos en -2 id_tabla_proc de la tabla principal de adm_audit_stock_limpieza
+    //  IN:     (id_tabla)
+    public  function edit_adm_audit_stock_limpieza ($valores=NULL){
+        return "
+            UPDATE  adm_audit_stock_limpieza
+            SET  id_adm_audit_stock_limpieza_proc =  -2
+            WHERE  id_adm_audit_stock_limpieza = $valores[0]
+            ;
+        ";
+    }
+
 
 
 }

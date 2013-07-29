@@ -29,13 +29,13 @@ if(isset($_POST['agregar'])):
                                     array('field' => $observaciones, 'null' => false, 'notice_error' => 'Debe ingresar observaciones.')));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // Primera VEZ
                 $new_process = Process::CreateNewProcess('', $id_user);
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
 	$flash_notice  = $new_process['notice_success'];
 	$id_tabla      = $new_process['id_tabla'];
@@ -45,7 +45,7 @@ if(isset($_POST['agregar'])):
                 $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $id_ven_cliente, $observaciones), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = 'Registro modificado correctamente.';
                 $first_time   = 'false';
@@ -62,9 +62,9 @@ if(isset($_POST['agregar'])):
 endif;
 
 
-///////////////////////////////// AGREGAR SUCURSALES |  POST 
+///////////////////////////////// AGREGAR SUCURSALES |  POST
 if(isset($_POST['agregar_suc'])):
-        $id_pro_producto = $_POST['id_pro_producto'];                       
+        $id_pro_producto = $_POST['id_pro_producto'];
         $cantidad        = $_POST['cantidad'];
         $first_time      = $_POST['first_time'];
         $id_tabla_proc   = $_POST['id_tabla_proc'];
@@ -72,7 +72,7 @@ if(isset($_POST['agregar_suc'])):
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes los datos del cliente.';
-                break;  
+                break;
             }
             $validations = Validations::General(array(
                                        array('field' => $id_pro_producto, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar la referencia.', 'table' => 'pro_productos.id_pro_productos'),
@@ -80,7 +80,7 @@ if(isset($_POST['agregar_suc'])):
                                        ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             $tabla_sec = Process::CreateSec('', 'prod', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
@@ -91,7 +91,7 @@ if(isset($_POST['agregar_suc'])):
             $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $id_pro_producto, $cantidad), 'n');
             if(is_null($update_tabla_sec)) {
                 $flash_error = 'No pudo insertar el pedido.';
-                break;  
+                break;
             }
             $flash_notice = 'Nuevo pedido agregado correctamente.';
         }while(0);
