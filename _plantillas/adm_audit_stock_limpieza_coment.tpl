@@ -33,7 +33,7 @@
                         </a>
                     </div>
                 </div>
-            </div>    
+            </div>
         </form>
         <form class="box-coment" name="box_coment" action="/adm_audit_stock_limpieza_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
