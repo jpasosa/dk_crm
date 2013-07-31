@@ -7,39 +7,15 @@ require_once '_php/forms_start.php';
 
 
 //////////////////////////////////////////////////////////////////////////////      AJAX      ////////////////////////////////////////
-if(isset($_POST['id_file']) && $_POST['id_file'] > 0)
-{ // ELIMINAR ARCHIVO
-	$id_tabla = $_POST['id_file'];
-	$del_file = ProcessFiles::DeleteFilePrinc('', 'archivo', $id_tabla);
-	FormCommon::queryRespHeader($del_file);
-}
-
-if(isset($_POST['cuenta']))
-{ // BUSCA LA DESCRIPCIÓN POR EL NÚMERO DE CUENTA
-	$descripcion = BDConsulta::consulta('search_descripcion', array($_POST['cuenta']), 'n');
-	$desc = utf8_decode($descripcion[0]['descripcion']);
-	header("descripcion: " . $desc);
-	// FormCommon::queryRespHeader($descripcion);
-}
-
-if(isset($_POST['descripcion']))
-{   // BUSCA LA CUENTA POR LA DESCRIPCIÓN
-	$cuenta = BDConsulta::consulta('search_cuenta', array($_POST['descripcion']), 'n');
-	header("cuenta: " . $cuenta[0]['cuenta']);
-	// FormCommon::queryRespHeader($descripcion);
-}
-
-if(isset($_POST['id_gasto_del']) && $_POST['id_gasto_del'] > 0)
-{    // ELIMINAR GASTO
-	$delete_sec = Process::DeleteSec('', 'detalle', $_POST['id_gasto_del']);
+if(isset($_POST['id_prod_del']) && $_POST['id_prod_del'] > 0)
+{    // ELIMINAR PRODUCTO
+	$delete_sec = Process::DeleteSec('', 'prod', $_POST['id_prod_del']);
 	FormCommon::queryRespHeader($delete_sec);
 }
 
-if(isset($_POST['id_gasto_edit']) && $_POST['id_gasto_edit'] > 0)
-{  // MODIFICAR GASTO
-	$edit_sec = Process::ModifySec('', 'detalle', $_POST['id_gasto_edit']);
-	$area = $_POST['area'];                     $tpl->asignar('area', $area);
-	$proveedor = $_POST['proveedor'];   $tpl->asignar('proveedor', $proveedor);
+if(isset($_POST['id_prod_edit']) && $_POST['id_prod_edit'] > 0)
+{  // MODIFICAR PRODUCTO
+	$edit_sec = Process::ModifySec('', 'prod', $_POST['id_prod_edit']);
 	FormCommon::queryRespHeader($edit_sec);
 }
 

@@ -3,7 +3,6 @@
 <script> $(function() {$( "#fecha_envio" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
 <script> $(function() {$( "#fecha_llegada" ).datepicker({ dateFormat: 'dd/mm/yy' });});</script>
 <script type="text/javascript" src="/js/tra_packing_list/abm.js"></script>
-
 <script type="text/javascript" src="/js/meio.mask.min.js" charset="utf-8"></script>
 <script type="text/javascript">
     jQuery(function($) {
@@ -111,24 +110,27 @@
 			</tr>
 			{if $tabla_sec['error'] == false }
 				{foreach item=ts from=$tabla_sec }
-					<tr id="id_cl-{$$cl[solicit_cliente]}">
-						<td><span>{$$ts[referencia]}</span></td>
-						<td> <span>{$$ts[producto]}</span></td>
-						<td> <span>{$$ts[detalle]}</span></td>
-						<td> <span>{$$ts[nro_caja_tpl]}</span></td>
-						<td> <span>{$$ts[productos_por_caja_tpl]}</span></td>
+					<tr id="id_prod-{$$ts[id_tra_packing_list_prod]}">
+						<td><span id="{$$ts[id_pro_productos]}" class="referencia">{$$ts[referencia]}</span></td>
+						<td> <span class="producto">{$$ts[producto]}</span></td>
+						<td> <span class="detalle">{$$ts[detalle]}</span></td>
+						<td> <span class="nro_caja_tpl">{$$ts[nro_caja_tpl]}</span></td>
+						<td> <span class="productos_por_caja_tpl">{$$ts[productos_por_caja_tpl]}</span></td>
 						<td>
-							<span title="Alto: {$$ts[alto_tpl]} | Ancho: {$$ts[ancho_tpl]} | Fondo: {$$ts[fondo_tpl]}">
+							<span class="volumen_tpl" title="Alto: {$$ts[alto_tpl]} | Ancho: {$$ts[ancho_tpl]} | Fondo: {$$ts[fondo_tpl]}">
 								{$$ts[volumen_tpl]}
 							</span>
 						</td>
-						<td> <span>{$$ts[peso_tpl]}</span></td>
+						<td> <span class="peso_tpl">{$$ts[peso_tpl]}</span></td>
+						<input name="alto_tpl" type="hidden" value="{$$ts[alto_tpl]}" />
+						<input name="ancho_tpl" type="hidden" value="{$$ts[ancho_tpl]}" />
+						<input name="fondo_tpl" type="hidden" value="{$$ts[fondo_tpl]}" />
 						<td>
 							<a href="#">
-							<img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-						</a>
-						<a href="#">
-							<img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
+								<img id="id_prod-{$$ts[id_tra_packing_list_prod]}" class="del_prod" src="/img/iconos/delete.gif" alt="quitar" border="0" />
+							</a>
+							<a href="#">
+								<img id="id_prod-{$$ts[id_tra_packing_list_prod]}" class="edit_prod" src="/img/iconos/edit.gif" alt="editar" border="0" />
 							</a>
 						</td>
 					</tr>
@@ -152,29 +154,29 @@
 					</div>
 					<div class="campania">
 						<label> Nro. Caja: </label>
-						<input name="nro_caja" type="text" value="{$nro}"  />
+						<input name="nro_caja" class="nro_caja" type="text" value="{$nro}"  />
 					</div>
 					<div class="campania">
 						<label> x caja: </label>
-						<input class="ultimoElement" name="productos_por_caja" type="text" value="{$cantCaja}" />
+						<input class="ultimoElement productos_por_caja" name="productos_por_caja" type="text" value="{$cantCaja}" />
 					</div>
 				</div>
 				<div class="der">
 					<div class="campania">
 						<label class="primerElement">Alto: </label>
-						<input name="alto" alt="decimal" type="text" value="{$alto}"  />
+						<input name="alto" class="alto" alt="decimal" type="text" value="{$alto}"  />
 					</div>
 					<div class="campania">
 						<label>Ancho: </label>
-						<input name="ancho" alt="decimal" type="text" value="{$ancho}"  />
+						<input name="ancho" class="ancho" alt="decimal" type="text" value="{$ancho}"  />
 					</div>
 					<div class="campania">
 						<label> Fondo: </label>
-						<input name="fondo" alt="decimal" type="text" value="{$fondo}"  />
+						<input name="fondo" class="fondo" alt="decimal" type="text" value="{$fondo}"  />
 					</div>
 					<div class="campania">
 						<label> Peso Kg.: </label>
-						<input name="peso" alt="decimal" type="text" value="{$peso}"  />
+						<input name="peso" class="peso" alt="decimal" type="text" value="{$peso}"  />
 					</div>
 				</div>
 				<input name="first_time" type="hidden" value="{$first_time}" />
@@ -184,7 +186,7 @@
 			</div>
 		</form>
 
-		<form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
+		<form class="box-entrada" name="add_hotel" action="/tra_packing_list.html" method="post" enctype="multipart/form-data" >
 			<div class="enviar_proceso">
 				<input name="id_tabla" type="hidden" value="{$id_tabla}" />
 				<input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
