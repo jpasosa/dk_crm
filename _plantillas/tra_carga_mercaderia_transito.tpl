@@ -38,7 +38,7 @@
                     <div class="campania">
                         <label>Fecha Llegada:</label>
                         <input name="fechaLlegada" type="text" value=''  alt="Fecha Llegada" />
-                    </div>                    
+                    </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
@@ -51,67 +51,28 @@
         </form>
         <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
             <tr>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Referencia</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Precio</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Nro. Caja</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">x Caja</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Peso Kg.</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Foto</p></td>
                 <td align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
             {if $tabla_sec['error'] == false }
                 {foreach item=ts from=$tabla_sec }
                     <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>{$$ts[referencia]}</span></td>
                         <td> <span>{$$ts[producto]}</span></td>
-                        <td> <span>{$$ts[detalle]}</span></td>
                         <td> <span>{$$ts[precio]}</span></td>
-                        <td> <span>{$$ts[nroCaja]}</span></td>
-                        <td> <span>{$$ts[xCaja]}</span></td>
-                        <td> <span>{$$ts[peso]}</span></td>
-                        <td> <span>[VER]</span></td>
+                        <td> <span>{$$ts[foto]}</span></td>
                         <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
+                            <a href="#">
+                                <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
+                            </a>
                         </td>
                     </tr>
                 {/foreach}
             {/if}
         </table>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
-            <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
-                <div class="campania">
-                    <label class="primerElement">Precio:</label>
-                    <input name="precio" type="text" value=''  alt="Precio" />
-                </div>
-                <div class="archivo">
-                    <label class="block"> Foto : </label>
-                    <input type="file" class="inline"name="archivo" value="quepasavieja" />
-                    <input type="submit" class="inline" name="subir_archivo"value="Subir Foto" />
-                </div>
-                <div class="archivos clear">
-                    {foreach item=n from=$nombres_archivos}
-                        <div class="file marginLat10">
-                            <a class="file_name" id="file_name-{$$n[id]}" href="/upload_archivos/adm_ytd_mantenimientos/{$$n[nombre]}">
-                            <span>Foto: Foto 1</span>
-                            </a>
-                            <a class="del_file" id="file-{$$n[id]}" href="#" style="floet:left;">
-                            <img border="0" alt="quitar" src="img/iconos/delete.gif" class="del_gasto" id="id_gastos-">
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
-                <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
-                <input name="agregar_fechas" class="agregar" type="submit" value="Agregar" />
-            </div>
-        </form>
+
+
         <form class="box-entrada" name="add_hotel" action="/form_example.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
