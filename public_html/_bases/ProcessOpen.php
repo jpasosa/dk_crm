@@ -186,4 +186,15 @@ class _ProcessOpen {
         ";
     }
 
+    // Busca todos los tra_packing_list que ya están cerrados
+    //  IN:     ()
+    public  function tra_packing_list_cerrados ($valores=NULL){
+        return "
+            SELECT *
+            FROM tra_packing_list
+            WHERE id_tra_packing_list_proc = 0
+            ;
+        ";
+    }
+
 }

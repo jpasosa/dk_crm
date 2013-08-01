@@ -3,13 +3,8 @@
 class ProcessOpen {
 
 // Arma el array con todos los Procesos ABIERTOS | También pueden ser cerrados que levantan a otros formularios una vez cerrados.
-    public static function getAll($id_user, $debug = 'n') {
+	public static function getAll($id_user, $debug = 'n') {
         $debug == 's' ? $deb = 's' : $deb = 'n';
-        // $test = '14/4/2013';
-                                // $test_unix = Dates::ConvertToUnix($test);
-                                // echo 'fecha: ' , $test , ' Fecha Unix: ' , $test_unix;
-                                // echo '<hr />' , $pasaron_dias , ' dias que pasaron';
-                                // die();
         do {
 
             // Comprueba que exista el usuario
@@ -467,6 +462,89 @@ class ProcessOpen {
                 } // cierro foreach()
             } // si no es null los cerrados
         } // cierro si pertenece a la BODEGA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //
+        //
+        // BUSCO procesos cerrados de TRA_PACKING_LIST, que pueden ser los items nuevos de TRA_CARGA_MERCADERIA_TRANSITO
+        //
+        //
+        if($id_area == 4)
+        { // Comienza área 4 (ADMINISTRACIÓN).
+            $tra_packing_list_cerrados = BDConsulta::consulta('tra_packing_list_cerrados', array(), 'n');
+            if(!is_null($tra_packing_list_cerrados))
+            {
+                foreach($tra_packing_list_cerrados AS $tplc)
+                {
+                    $first_process_tpl = Process::getFirstProcess('tra_packing_list', $tplc['id_tra_packing_list']); // agaroo el primer proceso.
+
+                    if(isset($first_process_tpl) && !is_null($first_process_tpl[0])) {
+                            $last_process_tpl = Process::getLastProcess('tra_packing_list', $first_process_tpl[0]['id_tra_packing_list_proc']); // agaroo el ultimo proceso.
+                            $dias_activo = $last_process_tpl['dias_activo']; // guardo dias_activo
+                            $fecha_inicio = $last_process_tpl['fecha_alta']; // y guardo fecha_alta
+                    }
+                    if(!is_null($first_process_tpl))
+                    {
+                            $days = Dates::CalculateDaysExpire($fecha_inicio, $dias_activo, '1');
+                            // Calculo [fecha_vence] => 19/06/2013  [pasaron_dias] => 18    [restan_dias] => 0   [prioridad] => ALTA    [alarma] => rojo
+                            if($days['alarma'] == 'verde')
+                            {   // procesos de TAREAS PENDIENTES (verde)
+                                array_push($all_process['verde']['terceros'],
+                                				array('id_tabla_proc' => $tplc['id_tra_packing_list'],
+                                                              'proceso_proceso' => 'tra_carga_mercaderia_transito',
+                                                              'proceso_nombre' => 'Trafico |  Carga mercaderia en Transito ' . '(' . $tplc['observaciones'] . ')',
+                                                              'fecha_inicio' => $fecha_inicio,
+                                                              'fecha_vence' => $days['fecha_vence'],
+                                                              'pasaron_dias' => $days['pasaron_dias'],
+                                                              'restan_dias' => $days['restan_dias'],
+                                                              'prioridad' => $days['prioridad']
+                                                              ));
+                            }
+                            if($days['alarma'] == 'amarillo' )
+                            { // procesos de TAREAS ULTIMO DÍA (amarillo)
+                                array_push($all_process['amarillo']['terceros'],
+                                				array('id_tabla_proc' => $tplc['id_tra_packing_list'],
+                                                              'proceso_proceso' => 'tra_carga_mercaderia_transito',
+                                                              'proceso_nombre' => 'Trafico |  Carga mercaderia en Transito ' . '(' . $tplc['observaciones'] . ')',
+                                                              'fecha_inicio' => $fecha_inicio,
+                                                              'fecha_vence' => $days['fecha_vence'],
+                                                              'pasaron_dias' => $days['pasaron_dias'],
+                                                              'restan_dias' => $days['restan_dias'],
+                                                              'prioridad' => $days['prioridad']
+                                                              ));
+                            }
+                            if($days['alarma'] == 'rojo' )
+                            { // procesos de ALARMAS (rojo)
+                                array_push($all_process['rojo']['terceros'],
+                                				array('id_tabla_proc' => $tplc['id_tra_packing_list'],
+                                                              'proceso_proceso' => 'tra_carga_mercaderia_transito',
+                                                              'proceso_nombre' => 'Trafico |  Carga mercaderia en Transito ' . '(' . $tplc['observaciones'] . ')',
+                                                              'fecha_inicio' => $fecha_inicio,
+                                                              'fecha_vence' => $days['fecha_vence'],
+                                                              'pasaron_dias' => $days['pasaron_dias'],
+                                                              'restan_dias' => $days['restan_dias'],
+                                                              'prioridad' => $days['prioridad']
+                                                              ));
+                            }
+                    } // cierro el if first_process)
+                } // cierro foreach()
+            } // si no es null los cerrados
+        } // cierro si pertenece a la BODEGA
+
 
 
 
