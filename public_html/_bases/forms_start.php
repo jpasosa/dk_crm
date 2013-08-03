@@ -36,6 +36,17 @@ class forms_start extends FormCommon {
         ";
     }
 
+    //  Ponemos en -2 id_tabla_proc de la tabla principal de tra_packing_list
+    //  IN:     (id_tabla)
+    public  function edit_tra_packing_list ($valores=NULL){
+        return "
+            UPDATE  tra_packing_list
+            SET  id_tra_packing_list_proc =  -2
+            WHERE  id_tra_packing_list = $valores[0]
+            ;
+        ";
+    }
+
 
 
 }
