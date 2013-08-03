@@ -12,76 +12,74 @@
         <hr />
         <h1 class="azul bold"><span class="txt22 normal">Carga de Mercadería en Tránsito</span></h1>
         <hr />
-        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/ven_cliente.html" method="post" enctype="multipart/form-data" >
+        <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$fecha_inicio}</span></p>
+        <p>Empleado:<span class="azul">{$nombre_inicio}</span></p>
+        <form class="box-entrada" name="add_hotel" action="/tra_carga_mercaderia_transito/{$id_tra_packing_list}.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
                         <label class="primerElement">Proveedor:</label>
-                        <input clasS="ultimoElement" readonly="yes" name="proveedor" type="text" value=''  alt="Proveedor" />
+                        <input class="ultimoElement" readonly="readonly" type="text" value='{$tabla[0]["nombre"]}' />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
                         <label class="primerElement">Packing List:</label>
-                        <input readonly="yes" name="packingList" type="text" value=''  alt="Packing List" />
+                        <input type="text" readonly="readonly" value='{$tabla[0]["nombre_trapackinglist"]}'  alt="Packing List" />
                     </div>
                 </div>
                 <div class="izq clear"><p class="azul bold">ENTREGA</p></div>
                 <div class="izq clear">
                     <div class="campania">
-                        <label class="primerElement">Fecha Envío:</label>
-                        <input readonly="yes" name="" type="text" value=''  alt="" />
+                        <label >Fecha Envío:</label>
+                        <input type="text" readonly="readonly" value='{$tabla[0]["fecha_envio"]|date_format:"d/m/Y"}'  alt="" />
                     </div>
                 </div>
                 <div class="der">
                     <div class="campania">
-                        <label class="primerElement">Fecha Llegada:</label>
-                        <input readonly="yes" name="fechaLlegada" type="text" value=''  alt="Fecha Llegada" />
-                    </div>                    
+                        <label>Fecha Llegada:</label>
+                        <input type="text" readonly="readonly" value='{$tabla[0]["fecha_llegada"]|date_format:"d/m/Y"}' />
+                    </div>
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea readonly="yes" name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
                 </div>
             </div>
         </form>
-        <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
-            <tr>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Referencia</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Detalle</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Precio</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Nro. Caja</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">x Caja</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Peso Kg.</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Foto</p></td>
-                <td align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
-            </tr>
-            {if $tabla_sec['error'] == false }
-                {foreach item=ts from=$tabla_sec }
-                    <tr id="id_cl-{$$cl[solicit_cliente]}">
-                        <td><span>{$$ts[referencia]}</span></td>
-                        <td> <span>{$$ts[producto]}</span></td>
-                        <td> <span>{$$ts[detalle]}</span></td>
-                        <td> <span>{$$ts[precio]}</span></td>
-                        <td> <span>{$$ts[nroCaja]}</span></td>
-                        <td> <span>{$$ts[xCaja]}</span></td>
-                        <td> <span>{$$ts[peso]}</span></td>
-                        <td> <span>[VER]</span></td>
-                        <td>
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="del_gasto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
-                        <a href="#">
-                            <img id="id_gastos-{$$gd[id]}" class="edit_gasto" src="img/iconos/edit.gif" alt="editar" border="0" />
-                        </a>
-                        </td>
+
+        <form class="box-entrada" action="/tra_carga_mercaderia_transito/{$id_tra_packing_list}.html" method="post" enctype="multipart/form-data" >
+            <table width="642" border="0" cellpadding="0" cellspacing="0" class="formulario">
+                <tr>
+                    <td align="left" bgcolor="#4685CA"><p class="blanco">Producto</p></td>
+                        <td align="left" bgcolor="#4685CA"><p class="blanco">Precio</p></td>
+                        <td align="left" bgcolor="#4685CA"><p class="blanco">Foto</p></td>
                     </tr>
-                {/foreach}
-            {/if}
-        </table>
-        <form class="box-coment" name="box_coment" action="/form_example_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
+                    {if $tabla_sec['error'] == false }
+                        {foreach item=tpl from=$tabla_sec }
+                            <tr id="id_cl-{$$cl[solicit_cliente]}">
+                                <td> <span title="{$$tpl[detalle]}  |  Productos por Caja: {$$tpl[productos_por_caja_tcmt]}  |  Alto: {$$tpl[alto_tcmt]}   |  Ancho: {$$tpl[ancho_tcmt]}  | Fondo: {$$tpl[fondo_tcmt]} |  Volumen:  {$$tpl[volumen_tcmt]} ">{$$tpl[producto]}</span></td>
+                                <td>
+                                    <span>{$$tpl[precio_tcmt]}</span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <a href="#">ver foto</a>
+                                    </span>
+                                </td>
+                            </tr>
+                        {/foreach}
+                    {/if}
+            </table>
+
+            <input name="first_time" type="hidden" value="{$first_time}" />
+            <input name="id_tra_packing_list" type="hidden" value="{$id_tra_packing_list}" /> <!-- el id principal de la tabla anterior, de tra_packing_list -->
+            <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
+            <input name="id_tabla" type="hidden" value="{$id_tabla}" />
+            <!-- <inpuut type="hidden" name="precio[]" value="" /> -->
+        </form>
+
+        <form class="box-coment" name="box_coment" action="/tra_carga_mercaderia_transito_coment/{$id_tabla_proc}.html" method="post" enctype="multipart/form-data" >
             <div class="title"> Comentarios: </div>
             {if $all_comments['error'] != true }
                 {foreach item=com from=$all_comments }
@@ -119,3 +117,16 @@
     <div style="width:741px; height:46px; float:right;" class="png_bg"></div>
     <br style="clear:both;" />
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
