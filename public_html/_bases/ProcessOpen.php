@@ -197,4 +197,14 @@ class _ProcessOpen {
         ";
     }
 
+    // Busca todos los tra_carga_mercaderia_transito que ya están cerrados
+    public  function tra_carga_mercaderia_transito_cerrados ($valores=NULL){
+        return "
+            SELECT *
+            FROM tra_carga_mercaderia_transito
+            WHERE id_tra_carga_mercaderia_transito_proc = 0
+            ;
+        ";
+    }
+
 }
