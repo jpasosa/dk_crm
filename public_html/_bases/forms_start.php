@@ -47,6 +47,29 @@ class forms_start extends FormCommon {
         ";
     }
 
+    //  Ponemos en -2 id_tabla_proc de la tabla principal de tra_carga_mercaderia_transito
+    //  IN:     (id_tabla)
+    public  function edit_tra_carga_mercaderia_transito ($valores=NULL){
+        return "
+            UPDATE  tra_carga_mercaderia_transito
+            SET  id_tra_carga_mercaderia_transito_proc =  -2
+            WHERE  id_tra_carga_mercaderia_transito = $valores[0]
+            ;
+        ";
+    }
+
+    //  IN:     (0->$id_tabla_prod_tmp
+    public  function insert_tra_ytd_entrada_prod ($valores=NULL){
+        return "
+            INSERT INTO tra_ytd_entrada_prod
+                (
+                    SELECT * from tra_ytd_entrada_prod_tmp
+                        WHERE id_tra_ytd_entrada_prod_tmp = $valores[0]
+                )
+            ;
+        ";
+    }
+
 
 
 }

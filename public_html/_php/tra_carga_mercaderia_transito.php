@@ -3,7 +3,7 @@
 
 
 $precios_tcmt = array();	// Precios pasados a la vista.
-function getPrecios($precios) {
+function getPrecios($precios) {  // TODO: volar de acá esta función.
 	$precios_arr = array();
 	if(isset($precios)) {
 		foreach($precios as $pr) {
@@ -15,23 +15,17 @@ function getPrecios($precios) {
 
 
 if($_GET[1] != '' && $_GET[1] > 0)
-
 {  // Si NO TIENE EL NÚMERO DE ID DE UN PROCESO, VUELVE AL MENU.TPL
-
 	$tpl = new PlantillaReemplazos();
 	require_once '_php/forms_start.php';
 
-
 	//////////////////////////////////////////////////////////////////////////////      AJAX      ////////////////////////////////////////
-	if(isset($_POST['id_prod_del']) && $_POST['id_prod_del'] > 0)
+	if(isset($_POST['id_prod_del']) && $_POST['id_prod_del'] > 0)  // TODO: no está en funcionamiento la elimincación de productos.
 	{  // ELIMINAR un PRODUCTO
 	        $id_prod_del = $_POST['id_prod_del'];
 	        $del_tabla_sec = Process::DeleteSec('adm_audit_stock_limpieza_detalle', 'prod', $id_prod_del);
 	        FormCommon::queryRespHeader($del_tabla_sec);
 	}
-
-
-
 
 	///////////////////////////////// AGREGAR TABLA PRINCIPAL  |  POST
 	if(isset($_POST['agregar']))
@@ -56,7 +50,8 @@ if($_GET[1] != '' && $_GET[1] > 0)
 				$flash_error = $validations['notice_error'];
 				break;
 			}
-			if($first_time == 'true' ) { // Primera VEZ
+			if($first_time == 'true' )
+			{ // Primera VEZ
 				$new_process = Process::CreateNewProcess('', $id_user, 'n');
 				if($new_process['error'] == true) {
 					$flash_error = 'No pudo agregar el registro principal';
@@ -74,7 +69,9 @@ if($_GET[1] != '' && $_GET[1] > 0)
 				}
 				$flash_notice = 'Registro modificado correctamente.';
 				$first_time = 'false';
-			}else{ // Modificar tabla principal
+			}
+			else
+			{ // Modificar tabla principal
 				$update_tabla_princ =
 				BDConsulta::consulta('update_tabla_princ', array($id_tabla, $proveedor, $packing_list, $fecha_envio_unix, $fecha_llegada_unix, $observaciones), 'n');
 				if(is_null($update_tabla_princ)) {
@@ -94,10 +91,10 @@ if($_GET[1] != '' && $_GET[1] > 0)
 	if(isset($_POST['agregar_precio']))
 	{
 		$id_tra_packing_list = $_POST['id_tra_packing_list'];
-		$first_time = $_POST['first_time'];
-		$id_tabla_proc = $_POST['id_tabla_proc'];
-		$id_tabla = $_POST['id_tabla'];
-		$precios_tcmt = getPrecios($_POST['precio']);
+		$first_time 			= $_POST['first_time'];
+		$id_tabla_proc 		= $_POST['id_tabla_proc'];
+		$id_tabla 			= $_POST['id_tabla'];
+		$precios_tcmt 		= getPrecios($_POST['precio']);
 		do
 		{
 			if($first_time == 'true') { // TODAVIA no llenó la tabla principal
@@ -120,10 +117,10 @@ if($_GET[1] != '' && $_GET[1] > 0)
 	if(isset($_POST['subir_foto']))
 	{
 		// TODO: falta realizar esta funcionalidad.
-		$precios_tcmt = getPrecios($_POST['precio']);
-		$first_time = $_POST['first_time'];
-		$id_tabla_proc = $_POST['id_tabla_proc'];
-		$id_tabla = $_POST['id_tabla'];
+		$precios_tcmt 	= getPrecios($_POST['precio']);
+		$first_time 		= $_POST['first_time'];
+		$id_tabla_proc 	= $_POST['id_tabla_proc'];
+		$id_tabla 		= $_POST['id_tabla'];
 		$tpl->asignar('first_time', $first_time);
 		$tpl->asignar('precios', $precios_tcmt);
 	}
@@ -160,7 +157,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 						$tabla_sec_anterior_prod[$k]['precio_nuevo'] = Common::PutDot($price);
 					}
 				}
-				foreach($tabla_sec_anterior_prod as $ant) {
+				foreach($tabla_sec_anterior_prod as $ant) { // Inserto los datos traidos de tabla anterior en la tabla secudaria de tra_carga_mercaderia_transito.
 					$insert_tabla_sec = BDConsulta::consulta('insert_tabla_sec', array($id_tabla_proc, $ant['id_pro_productos'], $ant['nro_caja_tpl'], $ant['productos_por_caja_tpl'],
 																$ant['alto_tpl'], $ant['ancho_tpl'], $ant['fondo_tpl'], $ant['volumen_tpl'], $ant['peso_tpl'], $ant['precio_nuevo']), 'n');
 				}

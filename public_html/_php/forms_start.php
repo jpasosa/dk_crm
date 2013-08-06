@@ -76,6 +76,32 @@ if(isset($_POST['enviar'])):
                 }
         }
 
+        elseif($pr_proceso == 'tra_ytd_entrada')
+        {
+                if(isset($_POST['id_prod']) && isset($_SESSION['id_user']) && isset($_POST['id_tra_carga_mercaderia_transito']) && isset($_POST['id_tabla_proc']))
+                {
+                    $id_user = $_SESSION['id_user'];
+                    $id_tra_carga_mercaderia_transito = $_POST['id_tra_carga_mercaderia_transito']; // el id_tabla anterior.
+                    $edit_tra_carga_mercaderia_transito = BDConsulta::consulta('edit_tra_carga_mercaderia_transito', array($id_tra_carga_mercaderia_transito), 'n'); // Tenemos que poner en -2 id_tabla_proc de ave_campania
+                    if(!is_null($edit_tra_carga_mercaderia_transito)){
+                        foreach($_POST['id_prod'] AS $id_prod) {
+                            $insert_tra_ytd_entrada_prod = BDConsulta::consulta('insert_tra_ytd_entrada_prod', array($id_prod), 'n');
+                        }
+
+                        $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
+                    }else { // Hay algun error desconocido, debe ir a pantalla de ERROR
+                        header('Location: /error.html');
+                        exit();
+                    }
+                }
+                else
+                {
+                    header('Location: /error.html');
+                    exit();
+                }
+
+        }
+
         else
         { // VA AL SIGUIENTE PROCESO NORMALMENTE
             $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
