@@ -4,175 +4,84 @@ class ProcessOpen {
 
 // Arma el array con todos los Procesos ABIERTOS | También pueden ser cerrados que levantan a otros formularios una vez cerrados.
 	public static function getAll($id_user, $debug = 'n') {
-				$debug == 's' ? $deb = 's' : $deb = 'n';
-				do {
+		$debug == 's' ? $deb = 's' : $deb = 'n';
+		do
+		{
+			// Comprueba que exista el usuario
+			$exist_user = BDConsulta::consulta('exist_user', array($id_user), $deb);
+			if(is_null($exist_user)) {
+					$error = true;
+					$notice_error = 'El usuario ingresado no existe.';
+					break;
+			}
+			// Obtengo id del area
+			$id_user_area = BDConsulta::consulta('user_area', array($id_user), $deb);
+			if(is_null($id_user_area)) { // comprueba el área del user
+					$error = true;
+					$notice_error = 'Área desconocida.';
+					break;
+			}
+			$id_area = reset($id_user_area);
+			$id_area = $id_area['id_sis_areas'];
 
-						// Comprueba que exista el usuario
-						$exist_user = BDConsulta::consulta('exist_user', array($id_user), $deb);
-						if(is_null($exist_user)) {
-								$error = true;
-								$notice_error = 'El usuario ingresado no existe.';
-								break;
-						}
-						// Obtengo id del area
-						$id_user_area = BDConsulta::consulta('user_area', array($id_user), $deb);
-						if(is_null($id_user_area)) { // comprueba el área del user
-								$error = true;
-								$notice_error = 'Área desconocida.';
-								break;
-						}
-						$id_area = reset($id_user_area);
-						$id_area = $id_area['id_sis_areas'];
-
-						// Obtengo los id_fl_dias, a los que puede acceder este user según su área.
-						$fl_dias_accesibles = BDConsulta::consulta('fl_dias_accesibles', array($id_area), $deb);
-						if(is_null($fl_dias_accesibles)) {
-								$error = true;
-								$notice_error = 'El área no tiene asignado ningún proceso al cual acceder.';
-								break;
-						}
-						// Creo los Arrays para ir guardando todos los procesos abiertos.
-						$all_process['rojo']['propia'] = Array();
-						$all_process['rojo']['terceros'] = Array();
-						$all_process['amarillo']['propia'] = Array();
-						$all_process['amarillo']['terceros'] = Array();
-						$all_process['verde']['propia'] = Array();
-						$all_process['verde']['terceros'] = Array();
-						$all_process['azul'] = Array();
-						// Fecha actual, para luego calcular.
-						$date = date('d/m/Y');
-						$date_unix = Dates::ConvertToUnix($date);
-						$dia = 60 * 60 * 24;
-
-
-
-
-						//
-						//
-						// TODOS LOS Procesos accesibles, según su área. SON LOS MAS COMUNES, LOS QUE NO SE RELACIONAN CON OTROS PROCESOS PARA SER ABIERTOS
-						//
-						//
-						$sis_procesos_accesibles = BDConsulta::consulta('sis_procesos_accesibles', array($id_area), $deb);
-
-						foreach($sis_procesos_accesibles as $k => $pa) { // Cada Proceso que tenga acceso.
-
-								$procesos_activos = BDConsulta::consulta('procesos_activos', array($pa['proceso'], $id_area), $deb);
-								if(!is_null($procesos_activos)) {
-
-										foreach($procesos_activos as $k => $pr_act) { // Todos los procesos que están activos
-											 $last_process = Process::isLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
-
-												if($last_process) {
-														// Obtengo Ultimo Proceso
-														$last_process = Process::getLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
-														$dias_activo = $last_process['dias_activo']; // los días que puede estar activo. Por alarmas.
-														if($last_process['fecha_alta'] == null) { // tengo que agarrar el anterior al último para leer fecha de alta.
-																$last_last_process = Process::getLastLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
-																$last_process = $last_last_process[0];
-														}
-
-														$fecha_alta = $last_process['fecha_alta'];
-														$dias_activo = $last_process['dias_activo'];
-
-														$days = Dates::CalculateDaysExpire($fecha_alta, $dias_activo, '1');
+			// Obtengo los id_fl_dias, a los que puede acceder este user según su área.
+			$fl_dias_accesibles = BDConsulta::consulta('fl_dias_accesibles', array($id_area), $deb);
+			if(is_null($fl_dias_accesibles)) {
+					$error = true;
+					$notice_error = 'El área no tiene asignado ningún proceso al cual acceder.';
+					break;
+			}
+			// Creo los Arrays para ir guardando todos los procesos abiertos.
+			$all_process['rojo']['propia'] 		= Array();
+			$all_process['rojo']['terceros'] 	= Array();
+			$all_process['amarillo']['propia'] 	= Array();
+			$all_process['amarillo']['terceros'] = Array();
+			$all_process['verde']['propia'] 	= Array();
+			$all_process['verde']['terceros'] 	= Array();
+			$all_process['azul'] 				= Array();
+			// Fecha actual, para luego calcular.
+			$date 		= date('d/m/Y');
+			$date_unix 	= Dates::ConvertToUnix($date);
+			$dia 		= 60 * 60 * 24;
 
 
 
 
-														$fecha_alta_unix = Dates::ConvertToUnix($fecha_alta);
-														// $pasaron_dias = ($fecha_alta_unix - $date_unix) / $dia;
-														// $pasaron_dias = Dates::RealDays($fecha_alta, $date, 1);
+			//
+			//
+			// TODOS LOS Procesos accesibles, según su área. SON LOS MAS COMUNES, LOS QUE NO SE RELACIONAN CON OTROS PROCESOS PARA SER ABIERTOS
+			//
+			//
+			$sis_procesos_accesibles = BDConsulta::consulta('sis_procesos_accesibles', array($id_area), $deb);
+			foreach($sis_procesos_accesibles as $k => $pa)
+			{ // Cada Proceso que tenga acceso.
+				$procesos_activos = BDConsulta::consulta('procesos_activos', array($pa['proceso'], $id_area), $deb);
+				if(!is_null($procesos_activos))
+				{
+					foreach($procesos_activos as $k => $pr_act)
+					{ // Todos los procesos que están activos
+						$last_process = Process::isLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
+						if($last_process) {
+							// Obtengo Ultimo Proceso
+							$last_process = Process::getLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
+							$dias_activo = $last_process['dias_activo']; // los días que puede estar activo. Por alarmas.
+							if($last_process['fecha_alta'] == null) { // tengo que agarrar el anterior al último para leer fecha de alta.
+								$last_last_process = Process::getLastLastProcess($pr_act['proceso_proceso'], $pr_act['id_tabla_proc']);
+								$last_process = $last_last_process[0];
+							}
+							$fecha_alta = $last_process['fecha_alta'];
+							$dias_activo = $last_process['dias_activo'];
+							$days = Dates::CalculateDaysExpire($fecha_alta, $dias_activo, '1');
+							$fecha_alta_unix = Dates::ConvertToUnix($fecha_alta);
+							// Obtengo 1er proceso.
+							$first_process = Process::getFirstProcess($pr_act['proceso_proceso'], $pr_act['id_tabla']);
+							$first_process = $first_process[0];
+							$fecha_inicio = Dates::ConvertToPhpdate($first_process['fecha_alta']);
 
-
-
-														// $pasaron_dias = $pasaron_dias['pasaron_dias'];
-														// $restan_dias = $last_process['dias_activo'] - (($date_unix - $fecha_alta_unix) / $dia);
-														// $fecha_vence_unix = $fecha_alta_unix + ( $last_process['dias_activo'] * $dia);
-														// $fecha_vence = Dates::ConvertToPhpdate($fecha_vence_unix);
-														// $prioridad = 'MEDIA';
-														// Obtengo 1er proceso.
-
-														$first_process = Process::getFirstProcess($pr_act['proceso_proceso'], $pr_act['id_tabla']);
-														$first_process = $first_process[0];
-														$fecha_inicio = Dates::ConvertToPhpdate($first_process['fecha_alta']);
-
-														// procesos PROPIOS
-														if($first_process['id_sis_areas'] == $id_area):
-																if($days['alarma'] == 'verde'): // procesos de TAREAS PENDIENTES (verde)
-																				array_push($all_process['verde']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
-																													'id_tabla' => $pr_act['id_tabla'],
-																													'id_fl_dias' => $pr_act['id_fl_dias'],
-																													'proceso_orden' => $pr_act['proceso_orden'],
-																													'dias_activo' => $pr_act['dias_activo'],
-																													'id_proceso' => $pr_act['id_proceso'],
-																													'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
-																													'proceso_nombre' => $pr_act['proceso_nombre'],
-																													'id_areas' => $pr_act['id_areas'],
-																													'fecha_inicio' => $fecha_inicio,
-																													'fecha_vence' => $days['fecha_vence'],
-																													'pasaron_dias' => $days['pasaron_dias'],
-																													'restan_dias' => $days['restan_dias'],
-																													'prioridad' => $days['prioridad']
-																													));
-																endif;
-																// if($days['pasaron_dias'] == $dias_activo): // procesos de TAREAS ULTIMO DÍA (amarillo)
-																if($days['alarma'] == 'amarillo'): // procesos de TAREAS ULTIMO DÍA (amarillo)
-																				array_push($all_process['amarillo']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
-																										'id_tabla' => $pr_act['id_tabla'],
-																										'id_fl_dias' => $pr_act['id_fl_dias'],
-																										'proceso_orden' => $pr_act['proceso_orden'],
-																										'dias_activo' => $pr_act['dias_activo'],
-																										'id_proceso' => $pr_act['id_proceso'],
-																										'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
-																										'proceso_nombre' => $pr_act['proceso_nombre'],
-																										'id_areas' => $pr_act['id_areas'],
-																										'fecha_inicio' => $fecha_inicio,
-																										'fecha_vence' => $days['fecha_vence'],
-																										'pasaron_dias' => $days['pasaron_dias'],
-																										'restan_dias' => $days['restan_dias'],
-																										'prioridad' => $days['prioridad']
-																										));
-																endif;
-																if($days['alarma'] == 'rojo'): // procesos de ALARMAS (rojo)
-																				array_push($all_process['rojo']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
-																								'id_tabla' => $pr_act['id_tabla'],
-																								'id_fl_dias' => $pr_act['id_fl_dias'],
-																								'proceso_orden' => $pr_act['proceso_orden'],
-																								'dias_activo' => $pr_act['dias_activo'],
-																								'id_proceso' => $pr_act['id_proceso'],
-																								'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
-																								'proceso_nombre' => $pr_act['proceso_nombre'],
-																								'id_areas' => $pr_act['id_areas'],
-																								'fecha_inicio' => $fecha_inicio,
-																								'fecha_vence' => $days['fecha_vence'],
-																								'pasaron_dias' => $days['pasaron_dias'],
-																								'restan_dias' => $days['restan_dias'],
-																								'prioridad' => $days['prioridad']
-																								));
-																endif;
-														endif;
-
-														// Son los procesos de TERCEROS
-														if($first_process['id_sis_areas'] != $id_area):
-																if($days['alarma'] == 'verde'): // procesos de TAREAS PENDIENTES (verde)
-																				array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
-																												'id_tabla' => $pr_act['id_tabla'],
-																												'id_fl_dias' => $pr_act['id_fl_dias'],
-																												'proceso_orden' => $pr_act['proceso_orden'],
-																												'dias_activo' => $pr_act['dias_activo'],
-																												'id_proceso' => $pr_act['id_proceso'],
-																												'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
-																												'proceso_nombre' => $pr_act['proceso_nombre'],
-																												'id_areas' => $pr_act['id_areas'],
-																												'fecha_inicio' => $fecha_inicio,
-																												'fecha_vence' => $days['fecha_vence'],
-																												'pasaron_dias' => $days['pasaron_dias'],
-																												'restan_dias' => $days['restan_dias'],
-																												'prioridad' => $days['prioridad']
-																												));
-																endif;
-																if($days['alarma'] == 'amarillo' ): // procesos de TAREAS ULTIMO DÍA (amarillo)
-																				array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+							// procesos PROPIOS
+							if($first_process['id_sis_areas'] == $id_area):
+									if($days['alarma'] == 'verde'): // procesos de TAREAS PENDIENTES (verde)
+													array_push($all_process['verde']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
 																						'id_tabla' => $pr_act['id_tabla'],
 																						'id_fl_dias' => $pr_act['id_fl_dias'],
 																						'proceso_orden' => $pr_act['proceso_orden'],
@@ -187,33 +96,106 @@ class ProcessOpen {
 																						'restan_dias' => $days['restan_dias'],
 																						'prioridad' => $days['prioridad']
 																						));
-																endif;
-																if($days['alarma'] == 'rojo' ): // procesos de ALARMAS (rojo)
-																				array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
-																										'id_tabla' => $pr_act['id_tabla'],
-																										'id_fl_dias' => $pr_act['id_fl_dias'],
-																										'proceso_orden' => $pr_act['proceso_orden'],
-																										'dias_activo' => $pr_act['dias_activo'],
-																										'id_proceso' => $pr_act['id_proceso'],
-																										'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
-																										'proceso_nombre' => $pr_act['proceso_nombre'],
-																										'id_areas' => $pr_act['id_areas'],
-																										'fecha_inicio' => $fecha_inicio,
-																										'fecha_vence' => $days['fecha_vence'],
-																										'pasaron_dias' => $days['pasaron_dias'],
-																										'restan_dias' => $days['restan_dias'],
-																										'prioridad' => $days['prioridad']
-																										));
-																endif;
-														endif;
+									endif;
+									// if($days['pasaron_dias'] == $dias_activo): // procesos de TAREAS ULTIMO DÍA (amarillo)
+									if($days['alarma'] == 'amarillo'): // procesos de TAREAS ULTIMO DÍA (amarillo)
+													array_push($all_process['amarillo']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+																			'id_tabla' => $pr_act['id_tabla'],
+																			'id_fl_dias' => $pr_act['id_fl_dias'],
+																			'proceso_orden' => $pr_act['proceso_orden'],
+																			'dias_activo' => $pr_act['dias_activo'],
+																			'id_proceso' => $pr_act['id_proceso'],
+																			'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
+																			'proceso_nombre' => $pr_act['proceso_nombre'],
+																			'id_areas' => $pr_act['id_areas'],
+																			'fecha_inicio' => $fecha_inicio,
+																			'fecha_vence' => $days['fecha_vence'],
+																			'pasaron_dias' => $days['pasaron_dias'],
+																			'restan_dias' => $days['restan_dias'],
+																			'prioridad' => $days['prioridad']
+																			));
+									endif;
+									if($days['alarma'] == 'rojo'): // procesos de ALARMAS (rojo)
+													array_push($all_process['rojo']['propia'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+																	'id_tabla' => $pr_act['id_tabla'],
+																	'id_fl_dias' => $pr_act['id_fl_dias'],
+																	'proceso_orden' => $pr_act['proceso_orden'],
+																	'dias_activo' => $pr_act['dias_activo'],
+																	'id_proceso' => $pr_act['id_proceso'],
+																	'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
+																	'proceso_nombre' => $pr_act['proceso_nombre'],
+																	'id_areas' => $pr_act['id_areas'],
+																	'fecha_inicio' => $fecha_inicio,
+																	'fecha_vence' => $days['fecha_vence'],
+																	'pasaron_dias' => $days['pasaron_dias'],
+																	'restan_dias' => $days['restan_dias'],
+																	'prioridad' => $days['prioridad']
+																	));
+									endif;
+							endif;
 
-												}else{
-														// no me sirve por que no es el último proceso.
-												}
+							// Son los procesos de TERCEROS
+							if($first_process['id_sis_areas'] != $id_area):
+									if($days['alarma'] == 'verde'): // procesos de TAREAS PENDIENTES (verde)
+													array_push($all_process['verde']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+																					'id_tabla' => $pr_act['id_tabla'],
+																					'id_fl_dias' => $pr_act['id_fl_dias'],
+																					'proceso_orden' => $pr_act['proceso_orden'],
+																					'dias_activo' => $pr_act['dias_activo'],
+																					'id_proceso' => $pr_act['id_proceso'],
+																					'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
+																					'proceso_nombre' => $pr_act['proceso_nombre'],
+																					'id_areas' => $pr_act['id_areas'],
+																					'fecha_inicio' => $fecha_inicio,
+																					'fecha_vence' => $days['fecha_vence'],
+																					'pasaron_dias' => $days['pasaron_dias'],
+																					'restan_dias' => $days['restan_dias'],
+																					'prioridad' => $days['prioridad']
+																					));
+									endif;
+									if($days['alarma'] == 'amarillo' ): // procesos de TAREAS ULTIMO DÍA (amarillo)
+													array_push($all_process['amarillo']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+															'id_tabla' => $pr_act['id_tabla'],
+															'id_fl_dias' => $pr_act['id_fl_dias'],
+															'proceso_orden' => $pr_act['proceso_orden'],
+															'dias_activo' => $pr_act['dias_activo'],
+															'id_proceso' => $pr_act['id_proceso'],
+															'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
+															'proceso_nombre' => $pr_act['proceso_nombre'],
+															'id_areas' => $pr_act['id_areas'],
+															'fecha_inicio' => $fecha_inicio,
+															'fecha_vence' => $days['fecha_vence'],
+															'pasaron_dias' => $days['pasaron_dias'],
+															'restan_dias' => $days['restan_dias'],
+															'prioridad' => $days['prioridad']
+															));
+									endif;
+									if($days['alarma'] == 'rojo' ): // procesos de ALARMAS (rojo)
+													array_push($all_process['rojo']['terceros'], array('id_tabla_proc' => $pr_act['id_tabla_proc'],
+																			'id_tabla' => $pr_act['id_tabla'],
+																			'id_fl_dias' => $pr_act['id_fl_dias'],
+																			'proceso_orden' => $pr_act['proceso_orden'],
+																			'dias_activo' => $pr_act['dias_activo'],
+																			'id_proceso' => $pr_act['id_proceso'],
+																			'proceso_proceso' => $pr_act['proceso_proceso'] . '_coment',
+																			'proceso_nombre' => $pr_act['proceso_nombre'],
+																			'id_areas' => $pr_act['id_areas'],
+																			'fecha_inicio' => $fecha_inicio,
+																			'fecha_vence' => $days['fecha_vence'],
+																			'pasaron_dias' => $days['pasaron_dias'],
+																			'restan_dias' => $days['restan_dias'],
+																			'prioridad' => $days['prioridad']
+																			));
+									endif;
+							endif;
 
-										} //Cierra el foreach de los procesos que están activos.
-								} // Cierra el if, que pregunta si de los procesos accesibles, encontró algun proceso abierto.
-						} // cierra el foreach de los procesos accesibles.
+								}else{
+										// no me sirve por que no es el último proceso.
+								}
+
+						} //Cierra el foreach de los procesos que están activos.
+				} // Cierra el if, que pregunta si de los procesos accesibles, encontró algun proceso abierto.
+		} // cierra el foreach de los procesos accesibles.
 
 
 
@@ -593,6 +575,113 @@ class ProcessOpen {
 		} // si no es null los cerrados
 
 	} // cierro si pertenece ADMINISTRACIÓN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+	//
+	// BUSCO procesos cerrados de TRA_YTD_ENTRADA, que pueden ser los items nuevos de BOD_ENTRADA_MERCADERIA
+	//
+	//
+	if($id_area == 6) //(TRAFICO)
+	{
+		$tra_ytd_entrada_cerrados = BDConsulta::consulta('tra_ytd_entrada_cerrados', array(), 'n');
+		if(!is_null($tra_ytd_entrada_cerrados))
+		{
+			foreach($tra_ytd_entrada_cerrados AS $tyec)
+			{
+				$first_process_tye = Process::getFirstProcess('tra_ytd_entrada', $tyec['id_tra_ytd_entrada']); // agaroo el primer proceso.
+
+				if(isset($first_process_tye) && !is_null($first_process_tye[0])) {
+								$last_process_tpl = Process::getLastProcess('tra_ytd_entrada', $first_process_tye[0]['id_tra_ytd_entrada_proc']); // agaroo el ultimo proceso.
+								$dias_activo = $last_process_tpl['dias_activo']; // guardo dias_activo
+								$fecha_inicio = $last_process_tpl['fecha_alta']; // y guardo fecha_alta
+				}
+				if(!is_null($first_process_tye))
+				{
+								$days = Dates::CalculateDaysExpire($fecha_inicio, $dias_activo, '1');
+								// Calculo [fecha_vence] => 19/06/2013  [pasaron_dias] => 18    [restan_dias] => 0   [prioridad] => ALTA    [alarma] => rojo
+								if($days['alarma'] == 'verde')
+								{   // procesos de TAREAS PENDIENTES (verde)
+										array_push($all_process['verde']['terceros'],
+														array('id_tabla_proc' 	=> $tyec['id_tra_ytd_entrada'],
+															'proceso_proceso' 	=> 'bod_entrada_mercaderia',
+															'proceso_nombre' 	=> 'Bodega |  Entrada de Mercaderia ' . '(' . $tyec['observaciones'] . ')',
+															'fecha_inicio' 		=> $fecha_inicio,
+															'fecha_vence' 		=> $days['fecha_vence'],
+															'pasaron_dias' 		=> $days['pasaron_dias'],
+															'restan_dias' 		=> $days['restan_dias'],
+															'prioridad' 			=> $days['prioridad']
+															));
+								}
+								if($days['alarma'] == 'amarillo' )
+								{ // procesos de TAREAS ULTIMO DÍA (amarillo)
+										array_push($all_process['amarillo']['terceros'],
+														array('id_tabla_proc' 	=> $tyec['id_tra_ytd_entrada'],
+															'proceso_proceso' 	=> 'bod_entrada_mercaderia',
+															'proceso_nombre' 	=> 'Bodega |  Entrada de Mercaderia ' . '(' . $tyec['observaciones'] . ')',
+															'fecha_inicio' 		=> $fecha_inicio,
+															'fecha_vence' 		=> $days['fecha_vence'],
+															'pasaron_dias' 		=> $days['pasaron_dias'],
+															'restan_dias' 		=> $days['restan_dias'],
+															'prioridad' 			=> $days['prioridad']
+															));
+								}
+								if($days['alarma'] == 'rojo' )
+								{ // procesos de ALARMAS (rojo)
+										array_push($all_process['rojo']['terceros'],
+														array('id_tabla_proc' 	=> $tyec['id_tra_ytd_entrada'],
+															'proceso_proceso' 	=> 'bod_entrada_mercaderia',
+															'proceso_nombre' 	=> 'Bodega |  Entrada de Mercaderia ' . '(' . $tyec['observaciones'] . ')',
+															'fecha_inicio' 		=> $fecha_inicio,
+															'fecha_vence' 		=> $days['fecha_vence'],
+															'pasaron_dias' 		=> $days['pasaron_dias'],
+															'restan_dias' 		=> $days['restan_dias'],
+															'prioridad' 			=> $days['prioridad']
+															));
+								}
+				} // cierro el if first_process)
+			} // cierro foreach()
+		} // si no es null los cerrados
+	}
 
 
 

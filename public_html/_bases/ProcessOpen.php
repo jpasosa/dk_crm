@@ -207,4 +207,13 @@ class _ProcessOpen {
         ";
     }
 
+    public  function tra_ytd_entrada_cerrados ($valores=NULL){
+        return "
+            SELECT *
+            FROM tra_ytd_entrada
+            WHERE id_tra_ytd_entrada_proc = 0
+            ;
+        ";
+    }
+
 }
