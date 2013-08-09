@@ -18,6 +18,10 @@
             <div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
+                        <label class="primerElement">Proveedor:</label>
+                            <input class="ultimoElement" name="proveedor_nombre" readonly="readonly" type="text" value='{$tabla[0]["nombre"]}'  alt="Proveedor" />
+                    </div>
+                    <div class="campania">
                         <label class="primerElement">Packing List:</label>
                         <input name="packing_list" type="text" readonly="readonly" value="{$tabla[0]['nombre_trapackinglist']}"  alt="Packing List" />
                     </div>

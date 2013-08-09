@@ -5,7 +5,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 {
 	require_once '_php/forms_start_coment.php';
 	// TABLA PRINCIPAL
-	$get_tabla = Process::getTabla('', $id_tabla_proc, 'n');
+	$get_tabla = Process::getTabla('', $id_tabla_proc, 'n', 'cpr_proveedores');
 	$tpl->asignar('tabla', $get_tabla);
 
 	// TABLA SECUNDARIA, PRODUCTOS

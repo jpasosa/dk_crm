@@ -20,6 +20,16 @@
 			<div class="box-entrada padding10   " height="40" colspan="5" bgcolor="#D2E1F2">
 				<div class="izq">
 					<div class="campania">
+						<label class="primerElement">Proveedor:</label>
+						{if $first_time == 'true'}
+							<input class="ultimoElement" name="proveedor_nombre" readonly="readonly" type="text" value='{$tabla_princ_tmp[0]["nombre"]}'  alt="Proveedor" />
+							<input name="id_cpr_proveedor" type="hidden" value='{$tabla_princ_tmp[0]["id_cpr_proveedores"]}' />
+						{else}
+							<input class="ultimoElement" name="proveedor_nombre" readonly="readonly" type="text" value='{$tabla[0]["nombre"]}'  alt="Proveedor" />
+							<input name="id_cpr_proveedor" type="hidden" value='{$tabla[0]["id_cpr_proveedores"]}' />
+						{/if}
+					</div>
+					<div class="campania">
 						<label class="primerElement">Packing List:</label>
 						{if $first_time == 'true'}
 							<input name="packing_list" type="text" readonly="readonly" value="{$tabla_princ_tmp[0]['nombre_trapackinglist']}"  alt="Packing List" />

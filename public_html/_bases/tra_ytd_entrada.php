@@ -2,12 +2,13 @@
 
 class tra_ytd_entrada extends FormCommon {
 
-    //  IN:     (0->$$id_tabla  |  1->$packing_list  |  2->observaciones)
+    //  IN:     (0->$$id_tabla  |  1->$packing_list  |  2->$cpr_proveedores  |  3->observaciones)
     public  function update_tabla_princ ($valores=NULL){
         return "
             UPDATE tra_ytd_entrada
             SET nombre_trapackinglist = $valores[1],
-                    observaciones = '$valores[2]'
+                    id_cpr_proveedores = $valores[2],
+                    observaciones = '$valores[3]'
             WHERE id_tra_ytd_entrada = $valores[0]
             ;
         ";
@@ -46,7 +47,9 @@ class tra_ytd_entrada extends FormCommon {
     public  function get_tra_carga_mercaderia_transito ($valores=NULL){
         return "
             SELECT *
-            FROM tra_carga_mercaderia_transito
+            FROM tra_carga_mercaderia_transito princ
+            JOIN cpr_proveedores prov
+                ON princ.id_cpr_proveedores=prov.id_cpr_proveedores
             WHERE id_tra_carga_mercaderia_transito = $valores[0]
             ;
         ";

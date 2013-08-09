@@ -12,6 +12,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 		$packing_list 		=$_POST['packing_list'];
 		$observaciones 		=$_POST['observaciones'];
 		$id_tra_carga_mercaderia_transito = $_POST['id_tra_carga_mercaderia_transito'];
+		$id_cpr_proveedor 	= $_POST['id_cpr_proveedor'];
 		$prod_tmp			=$_POST['prod_tmp'];
 		$first_time			=$_POST['first_time'];
 		$id_tabla_proc		=$_POST['id_tabla_proc'];
@@ -37,7 +38,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 				$id_tabla 		= $new_process['id_tabla'];
 				$id_tabla_proc 	= $new_process['id_tabla_proc'];
 
-				$update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $packing_list, $observaciones), 'n');
+				$update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $packing_list, $id_cpr_proveedor, $observaciones), 'n');
 				if(is_null($update_tabla_princ)) {
 					$flash_error = 'No pudo agregar el registro principal';
 					break;
@@ -73,7 +74,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 			else
 			{ // Modificar tabla principal
 				$update_tabla_princ =
-				BDConsulta::consulta('update_tabla_princ', array($id_tabla, $packing_list, $observaciones), 'n');
+				BDConsulta::consulta('update_tabla_princ', array($id_tabla, $packing_list, $id_cpr_proveedor, $observaciones), 'n');
 				if(is_null($update_tabla_princ)) {
 					$flash_error = 'No se pudo modificar el registro';
 					break;
@@ -164,7 +165,7 @@ if($_GET[1] != '' && $_GET[1] > 0)
 	$tpl->asignar('prod_tmp', $prod_tmp);
 
 	// Tabla PRINCIPAL
-	$get_tabla = Process::getTabla('', $id_tabla_proc, 'n');
+	$get_tabla = Process::getTabla('', $id_tabla_proc, 'n', 'cpr_proveedores');
 	$tpl->asignar('tabla', $get_tabla);
 
 	// PARA EL SELECT de FAMILIA
