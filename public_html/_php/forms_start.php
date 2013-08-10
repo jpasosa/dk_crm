@@ -99,7 +99,31 @@ if(isset($_POST['enviar'])):
                     header('Location: /error.html');
                     exit();
                 }
+        }
 
+        elseif($pr_proceso == 'bod_entrada_mercaderia')
+        {
+                if(isset($_POST['id_prod']) && isset($_SESSION['id_user']) && isset($_POST['id_tra_ytd_entrada']) && isset($_POST['id_tabla_proc']))
+                {
+                    $id_user = $_SESSION['id_user'];
+                    $id_tra_ytd_entrada = $_POST['id_tra_ytd_entrada']; // el id_tabla anterior.
+                    $edit_tra_ytd_entrada = BDConsulta::consulta('edit_tra_ytd_entrada', array($id_tra_ytd_entrada), 'n'); // Tenemos que poner en -2 id_tabla_proc de ave_campania
+                    if(!is_null($edit_tra_ytd_entrada)){
+                        foreach($_POST['id_prod'] AS $id_prod) {
+                            $insert_bod_entrada_mercaderia_prod = BDConsulta::consulta('insert_bod_entrada_mercaderia_prod', array($id_prod), 'n');
+                        }
+
+                        $send = ProcessSends::toNextProcess($pr_proceso, $id_user, $_POST['id_tabla_proc'], '', 'enviar', 'n');
+                    }else { // Hay algun error desconocido, debe ir a pantalla de ERROR
+                        header('Location: /error.html');
+                        exit();
+                    }
+                }
+                else
+                {
+                    header('Location: /error.html');
+                    exit();
+                }
         }
 
         else
