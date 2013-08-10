@@ -841,6 +841,19 @@ class _Process {
     }
 
 
+    //  IN:     (0->$pr_proceso  |  1->$name_sec  |  2->$name_column  |  3->$id_tabla)
+
+    public  function get_last_fl_dias ($valores=NULL){
+        return "
+            SELECT *
+            FROM sis_procesos_flujos_dias
+            WHERE proceso_orden = (select (proceso_orden + 1) from sis_procesos_flujos_dias where id_sis_procesos_flujos_dias = $valores[0])
+                AND id_sis_procesos = (SELECT id_sis_procesos from sis_procesos_flujos_dias where id_sis_procesos_flujos_dias = $valores[0])
+            ;
+        ";
+    }
+
+
 
 
 

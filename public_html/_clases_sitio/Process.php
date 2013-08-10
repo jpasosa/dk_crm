@@ -908,6 +908,24 @@ class Process {
         return $is_last;
     }
 
+    public static function isLastFlDias($pr_proceso, $id_tabla_proc) {
+        try {
+            $notice_error = ''; $notice_success = ''; $is_last = false;
+
+            $fl_dias = self::getFlDias($pr_proceso, $id_tabla_proc);
+            $fl_dias = (int)$fl_dias;
+            $get_last_fl_dias = BDConsulta::consulta('get_last_fl_dias', array($fl_dias), 'n');
+            if(is_null($get_last_fl_dias)) {
+                $is_last = true;
+            }
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return $is_last;
+    }
+
 
     public static function isFirstProcess($pr_proceso, $id_tabla_proc) {
         if($pr_proceso == '') {
