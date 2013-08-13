@@ -134,15 +134,15 @@ if(isset($_POST['agregar_gasto'])):
 		   $flash_error = $validations['notice_error'];
 			break;
 		}
-		$tabla_sec = Process::CreateSec('', 'detalle', $id_tabla_proc, 'n');
+		$tabla_sec = Process::CreateSec('', 'detalle', $id_tabla_proc, 's');
 		if($tabla_sec['error'] == true) {
 			$flash_error = $tabla_sec['notice_error'];
 			break;
 		}
 		$id_tabla_sec = $tabla_sec['id_tabla_sec'];
-		$id_sc = BDConsulta::consulta('search_sis_cuentas', array($cuenta), 'n');
+		$id_sc = BDConsulta::consulta('search_sis_cuentas', array($cuenta), 's');
 		$id_sis_cuenta = $id_sc[0]['id_sc'];
-		$update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $id_sis_cuenta, $detalle, $factura, $area, $monto, $proveedor), 'n');
+		$update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $id_sis_cuenta, $detalle, $factura, $area, $monto, $proveedor), 's');
 		if(is_null($update_tabla_sec)) {
 			$flash_error = 'No pudo insertar el gasto.';
 			break;
