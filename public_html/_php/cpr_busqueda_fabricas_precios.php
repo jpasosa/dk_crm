@@ -103,10 +103,10 @@ if(isset($_POST['agregar_prod'])):
             $id_tabla_sec = $tabla_sec['id_tabla_sec'];
             $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $producto, $detalle, $precio, $cantidad_min), 'n');
             if(is_null($update_tabla_sec)) {
-                $flash_error = 'No pudo insertar el gasto.';
+                $flash_error = 'No pudo insertar el producto.';
                 break;
             }
-            $flash_notice = 'Nuevo cliente agregado correctamente.';
+            $flash_notice = 'Nuevo producto agregado correctamente.';
         }while(0);
         $tpl->asignar('first_time', $first_time);
 endif;
