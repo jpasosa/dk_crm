@@ -16,7 +16,7 @@
         <p class="txt10 uppercase">Fecha de inicio del trámite:<span class="azul">{$date}</span></p>
         <p>Sector:<span class="azul">{$area}</span></p>
         <p>Nombre:<span class="azul">{$nombre_empleado}</span></p>
-        <form class="box-entrada" name="add_hotel" action="/cpr_alta_proveedores.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/cpr_proveedores.html" method="post" enctype="multipart/form-data" >
             <div class="box-entrada padding10" height="40" colspan="5" bgcolor="#D2E1F2">
                 <div class="izq">
                     <div class="campania">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="observacionesChico clear">
                     <label> Observaciones: </label>
-                    <textarea name="observaciones">{$tabla[0]['observaciones']}</textarea>
+                    <textarea name="observaciones">{$tabla[0]['observaciones_proveedores']}</textarea>
                 </div>
                 <div class="archivo">
                     <label class="block"> Adjuntar Archivos : </label>
@@ -72,7 +72,7 @@
             </div>
         </form>
 
-        <form class="box-entrada" name="add_hotel" action="/cpr_alta_proveedores.html" method="post" enctype="multipart/form-data" >
+        <form class="box-entrada" name="add_hotel" action="/cpr_proveedores.html" method="post" enctype="multipart/form-data" >
             <div class="enviar_proceso">
                 <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />

@@ -37,14 +37,14 @@ if(isset($_POST['agregar'])):
                 break;
             }
             if($first_time == 'true'  ) { // 1era VEZ
-                $new_process = Process::CreateNewProcess('', $id_user, 'n' );
+                $new_process = Process::CreateNewProcess('', $id_user, 's' );
                 if($new_process['error'] == true) {
                     $flash_error = $new_process['notice_error'];
                     break;
                 }
                 $id_tabla_proc = $new_process['id_tabla_proc'];     $id_tabla = $new_process['id_tabla'];
                 $tpl->asignar('id_tabla_proc', $id_tabla_proc);       $tpl->asignar('id_tabla', $new_process['id_tabla']);
-                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $nombre, $clave_ident, $direccion, $tipo, $observaciones), 'n');
+                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $nombre, $clave_ident, $direccion, $tipo, $observaciones), 's');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo cargar el registro.';
                     break;
@@ -52,7 +52,7 @@ if(isset($_POST['agregar'])):
                 $flash_notice = 'Se cargó correctamente';
                 $first_time = 'false';
             }else{ // MODIFICA
-                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $nombre, $clave_ident, $direccion, $tipo, $observaciones), 'n');
+                $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $nombre, $clave_ident, $direccion, $tipo, $observaciones), 's');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo hacer la actualización.';
                     break;
