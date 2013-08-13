@@ -11,7 +11,7 @@ require_once '_php/forms_start.php';
 if(isset($_POST['id_file']) && $_POST['id_file'] > 0):          // ELIMINAR ARCHIVO
         $id_tabla_arch = $_POST['id_file'];
         $del_file = ProcessFiles::DeleteFile('', $id_tabla_arch);
-        FormCommon::queryRespHeader($del_file);        
+        FormCommon::queryRespHeader($del_file);
 endif;
 
 
@@ -23,7 +23,7 @@ if(isset($_POST['agregar'])):
     $id_sis_areas = $_POST['area'];
     $first_time = $_POST['first_time'];
     $id_tabla_proc  = $_POST['id_tabla_proc'];
-    $id_tabla   = $_POST['id_tabla'];     
+    $id_tabla   = $_POST['id_tabla'];
     do { // VALIDACIONES
            $validations = Validations::General(array(
                                     array('field' => $asunto, 'null' => false, 'notice_error' => 'Debe ingresar el asunto.'),
@@ -31,7 +31,7 @@ if(isset($_POST['agregar'])):
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // 1era VEZ
                 $new_process = Process::CreateNewProcess('', $id_user, 'n' );
@@ -63,6 +63,8 @@ endif;
 ///////////  Por POST, del FORM. SUBIDA DE ARCHIVOS.//////////////////////////////////
 if(isset($_POST['subir_archivo'])):
     do {
+            $first_time = $_POST['first_time'];
+
         if($first_time == 'true'):
                 $flash_error = 'Debe cargar primero el pedido.';
                 break;
@@ -100,6 +102,9 @@ $tpl->asignar('files', $files);
 // SELECT DE AREA
 $areas = Process::getValuesSelect('sis_areas', 'id_sis_areas', 'area', 'n');
 $tpl->asignar('areas', $areas);
+// PARA EL SELECT de VEN_CLIENTE
+$ven_cliente_contacto = Process::getValuesSelectRel('ven_cliente_contacto', 'ven_cliente_sucursales', '', '', '', 'n');
+$tpl->asignar('ven_cliente_contacto', $ven_cliente_contacto);
 // MENSAJES FLASH
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);

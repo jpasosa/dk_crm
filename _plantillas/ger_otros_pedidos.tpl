@@ -21,17 +21,19 @@
                 <div class="cliente">
                     <label> Cliente: </label>
                     <select name="cliente" class="cliente">
-                            {foreach item=pr from=$clientes}
-                                <option value="{$$pr[id_valor]}" {if $$pr['id_valor'] == $cliente } selected {/if}> {$$pr[valor]} </option>
-                            {/foreach}    
-                    </select>
+                            {foreach item=vc from=$ven_cliente_contacto}
+                                <option value="{$$vc[id_ven_cliente]}" {if $$vc['id_ven_cliente'] == $id_ven_cliente } selected {/if}>
+                                    {$$vc[nombre_sucursal]} |  {$$vc[apellido]}, {$$vc[nombre]}
+                                </option>
+                            {/foreach}
+                        </select>
                 </div>
                 <div class="area">
                     <label> Area: </label>
                     <select name="area" class="area">
                             {foreach item=pr from=$areas}
                                 <option value="{$$pr[id_valor]}" {if $$pr['id_valor'] == $area } selected {/if}> {$$pr[valor]} </option>
-                            {/foreach}    
+                            {/foreach}
                     </select>
                 </div>
                 <div class="asunto">
