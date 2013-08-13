@@ -45,7 +45,7 @@ if(isset($_POST['agregar_prod'])):
                 break;
             }
             if($first_time == 'true'){ // Si es la primera vez, debe crear tabla principal
-                $new_process = Process::CreateNewProcess('', $id_user, 's');
+                $new_process = Process::CreateNewProcess('', $id_user, 'n');
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
                     break;
@@ -73,7 +73,7 @@ if(isset($_POST['agregar_prod'])):
                 }
                 $id_tabla_sec = $tabla_sec['id_tabla_sec'];
             }
-            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $nombre, $detalle, $cantidad, $precio_deseado, $observaciones), 's');
+            $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $nombre, $detalle, $cantidad, $precio_deseado, $observaciones), 'n');
             if(is_null($update_tabla_sec)) {
                 $flash_error = 'No pudo insertar el detalle.';
                 break;
@@ -100,7 +100,7 @@ if(isset($_POST['subir_archivo'])):
     $actual_key = $_POST['actual_key'];
     do {
         if($first_time == 'true'){ // Si es la primera vez, debe crear tabla principal
-                $new_process = Process::CreateNewProcess('', $id_user, 's');
+                $new_process = Process::CreateNewProcess('', $id_user, 'n');
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
                     break;
@@ -129,15 +129,15 @@ if(isset($_POST['subir_archivo'])):
             $id_tabla_sec = $tabla_sec['id_tabla_sec'];
         }
         $file = $_FILES['archivo'];
-        if(Process::isEmptyColumn('', 'prod', 'archivo_1', $id_tabla_sec, 's')) {
+        if(Process::isEmptyColumn('', 'prod', 'archivo_1', $id_tabla_sec, 'n')) {
             $campo = 'archivo_1';
-        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_2', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_2', $id_tabla_sec, 'n')) {
             $campo = 'archivo_2';
-        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_3', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_3', $id_tabla_sec, 'n')) {
             $campo = 'archivo_3';
-        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_4', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_4', $id_tabla_sec, 'n')) {
             $campo = 'archivo_4';
-        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_5', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'archivo_5', $id_tabla_sec, 'n')) {
             $campo = 'archivo_5';
         }else{
             $flash_error = 'Ya subió 5(cinco) archivos. No puede subir más.';
@@ -165,7 +165,7 @@ if(isset($_POST['subir_foto'])):
     $actual_key = $_POST['actual_key'];
     do {
         if($first_time == 'true') { // Si es la primera vez, debe crear tabla principal
-                $new_process = Process::CreateNewProcess('', $id_user, 's');
+                $new_process = Process::CreateNewProcess('', $id_user, 'n');
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
                     break;
@@ -194,21 +194,21 @@ if(isset($_POST['subir_foto'])):
             }
             $id_tabla_sec = $tabla_sec['id_tabla_sec'];
         }
-        if(Process::isEmptyColumn('', 'prod', 'foto_1', $id_tabla_sec, 's')) {
+        if(Process::isEmptyColumn('', 'prod', 'foto_1', $id_tabla_sec, 'n')) {
             $campo = 'foto_1';
-        }elseif(Process::isEmptyColumn('', 'prod', 'foto_2', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'foto_2', $id_tabla_sec, 'n')) {
             $campo = 'foto_2';
-        }elseif(Process::isEmptyColumn('', 'prod', 'foto_3', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'foto_3', $id_tabla_sec, 'n')) {
             $campo = 'foto_3';
-        }elseif(Process::isEmptyColumn('', 'prod', 'foto_4', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'foto_4', $id_tabla_sec, 'n')) {
             $campo = 'foto_4';
-        }elseif(Process::isEmptyColumn('', 'prod', 'foto_5', $id_tabla_sec, 's')) {
+        }elseif(Process::isEmptyColumn('', 'prod', 'foto_5', $id_tabla_sec, 'n')) {
             $campo = 'foto_5';
         }else{
             $flash_error = 'Ya subió 5(cinco) archivos. No puede subir más.';
             break;
         }
-        $file_upload = ProcessFiles::FileUploadOne('', 'prod', $campo, $id_tabla_sec, $file, 'foto', 's');
+        $file_upload = ProcessFiles::FileUploadOne('', 'prod', $campo, $id_tabla_sec, $file, 'foto', 'n');
         if($file_upload['error'] == true) {
             $flash_error = $file_upload['notice_error'];
             break;

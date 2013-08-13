@@ -32,9 +32,9 @@
                 <div class="campania">
                         <label class="primerElement">Pedido:</label>
                         {if $tabla[0]['nombre_pedido'] == '' }
-                            <input name="nombre_pedido" type="text" value='{$nombre_pedido}' alt="Pedido" />
+                            <input name="nombre_pedido" type="text" readonly="readonly" value='{$nombre_pedido}' alt="Pedido" />
                         {else}
-                            <input name="nombre_pedido" type="text" value='{$tabla[0]["nombre_pedido"]}' alt="Pedido" />
+                            <input name="nombre_pedido" type="text" readonly="readonly" value='{$tabla[0]["nombre_pedido"]}' alt="Pedido" />
                         {/if}
                     </div>
             </div>
