@@ -27,7 +27,7 @@
                             <select name="cliente">
                                 {foreach item=cl from=$clientes}
                                     <option value="{$$cl[id_ven_cliente]}" {if $$cl['id_ven_cliente'] == $tabla[0]['id_ven_cliente'] } selected {/if}> {$$cl[empresa]}</option>
-                                {/foreach}    
+                                {/foreach}
                             </select>
                         </div>
                         <!-- <p class="azul bold clear">LUGAR DE LA REUNION</p> -->
@@ -43,12 +43,12 @@
                     </div>
                     <div class="der">
                         <div class="campania">
-                            <label> País / Ciudad: </label> 
+                            <label> País / Ciudad: </label>
                             <select name="provincia">
                                 <option value=0> en nuestras oficinas </option>
                                 {foreach item=pais from=$paises}
                                     <option value="{$$pais[id_sis_provincia]}" {if $$pais['id_sis_provincia'] == $tabla[0]['id_sis_provincia'] } selected {/if}> {$$pais[pais]} | {$$pais[provincia]}  </option>
-                                {/foreach}    
+                                {/foreach}
                             </select>
                         </div>
                         <div class="campania">
@@ -60,12 +60,12 @@
                             {/if}
                         </div>
                     </div>
-                    
+
                     <input name="first_time" type="hidden" value="{$first_time}" />
                     <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                    <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
+                    <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                     <input type="submit" name="agregar" class="agregar" value="Agregar"/>
-                </div>    
+                </div>
         </form>
 
 
@@ -87,7 +87,7 @@
                         <td>
                             <a href="#">
                                 <img id="id_suc-{$$ts[id_ven_visitas_de_clientes_sucursales]}" class="del_suc" src="/img/iconos/delete.gif" alt="quitar" border="0" />
-                            </a> 
+                            </a>
                             <a href="#">
                                 <img id="id_suc-{$$ts[id_ven_visitas_de_clientes_sucursales]}" class="edit_suc" src="/img/iconos/edit.gif" alt="editar" border="0" />
                             </a>
@@ -112,9 +112,9 @@
                 <div class="der"></div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
+                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input type="submit" name="agregar_suc" class="agregar agregar_suc" value="Agregar"/>
-            </div>    
+            </div>
         </form>
 
 
@@ -142,7 +142,7 @@
                         <td>
                         <a href="#">
                             <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}" class="del_contacto" src="img/iconos/delete.gif" alt="quitar" border="0" />
-                        </a> 
+                        </a>
                         <a href="#">
                             <img id="id_contacto-{$$ts[id_ven_visitas_de_clientes_contactos]}" class="edit_contacto" src="img/iconos/edit.gif" alt="editar" border="0" />
                         </a>
@@ -167,9 +167,9 @@
                 <div class="der"></div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
+                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input type="submit" name="agregar_contacto" class="agregar agregar_contacto" value="Agregar" />
-            </div>    
+            </div>
         </form>
         <!-- LISTADO DE TEMAS -->
         <p class="azul bold">TEMAS A TOCAR O TOCADOS</p>
@@ -179,19 +179,19 @@
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Tocado</p></td>
                 <td width="50" align="left" bgcolor="#4685CA"><p class="blanco">Acción</p></td>
             </tr>
-            {if $tabla_sec['error'] == false }
+            {if $temas['error'] == false }
                 {foreach item=t from=$temas }
                     <tr id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}">
                         <td><span id="{$$t[id_ven_visitas_de_clientes_temas]}" class="tema">{$$t[tema]}</span></td>
                         <td>
                             <span class="tema_tocado">
-                                {if $$t[tema_tocado] == 1 } SI {else} NO {/if}
+                                {if $$t['tema_tocado'] == 1 } SI {else} NO {/if}
                             </span>
                         </td>
                         <td>
                             <a href="#">
                                 <img id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}" class="del_temas" src="/img/iconos/delete.gif" alt="quitar" border="0" />
-                            </a> 
+                            </a>
                             <a href="#">
                                 <img id="id_tema-{$$t[id_ven_visitas_de_clientes_temas]}" class="edit_temas" src="/img/iconos/edit.gif" alt="editar" border="0" />
                             </a>
@@ -215,9 +215,9 @@
                 </div>
                 <input name="first_time" type="hidden" value="{$first_time}" />
                 <input name="id_tabla_proc" type="hidden" value="{$id_tabla_proc}" />
-                <input name="id_tabla" type="hidden" value="{$id_tabla}" />                              
+                <input name="id_tabla" type="hidden" value="{$id_tabla}" />
                 <input type="submit" name="agregar_tema" class="agregar agregar_tema" value="Agregar"/>
-            </div>    
+            </div>
         </form>
 
 

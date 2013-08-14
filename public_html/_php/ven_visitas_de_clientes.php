@@ -44,7 +44,7 @@ if(isset($_POST['agregar'])):
         $id_sis_provincia = $_POST['provincia'];
         $cliente = trim($_POST['cliente']);
         $fecha = trim($_POST['fecha']);
-        $fecha_unix = Dates::ConvertToUnix($fecha);                             
+        $fecha_unix = Dates::ConvertToUnix($fecha);
         $hora = trim($_POST['hora']);
         $direccion = trim($_POST['direccion']);
         $first_time = $_POST['first_time'];
@@ -59,13 +59,13 @@ if(isset($_POST['agregar'])):
                                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             if($first_time == 'true' ) { // Primera VEZ
                 $new_process = Process::CreateNewProcess('', $id_user);
                 if($new_process['error'] == true) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = $new_process['notice_success'];
                 $id_tabla = $new_process['id_tabla'];
@@ -75,7 +75,7 @@ if(isset($_POST['agregar'])):
                 $update_tabla_princ = BDConsulta::consulta('update_tabla_princ', array($id_tabla, $cliente, $fecha_unix, $hora, $id_sis_provincia, $direccion), 'n');
                 if(is_null($update_tabla_princ)) {
                     $flash_error = 'No pudo agregar el registro principal';
-                    break;    
+                    break;
                 }
                 $flash_notice = 'Registro modificado correctamente.';
                 $first_time = 'false';
@@ -92,23 +92,23 @@ if(isset($_POST['agregar'])):
 endif;
 
 
-///////////////////////////////// AGREGAR SUCURSALES |  POST 
+///////////////////////////////// AGREGAR SUCURSALES |  POST
 if(isset($_POST['agregar_suc'])):
-        $sucursal = $_POST['sucursal'];                       
+        $sucursal = $_POST['sucursal'];
         $first_time = $_POST['first_time'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes los datos del cliente.';
-                break;  
+                break;
             }
             $validations = Validations::General(array(
                                        array('field' => $sucursal, 'null' => false, 'validation' => 'field_search', 'notice_error' => 'Debe ingresar la sucursal.', 'table' => 'ven_cliente_sucursales.id_ven_cliente_sucursales')
                                        ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             $tabla_sec = Process::CreateSec('', 'sucursales', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
@@ -119,7 +119,7 @@ if(isset($_POST['agregar_suc'])):
             $update_tabla_sec = BDConsulta::consulta('update_tabla_sec', array($id_tabla_sec, $sucursal), 'n');
             if(is_null($update_tabla_sec)) {
                 $flash_error = 'No pudo insertar el pedido.';
-                break;  
+                break;
             }
             $flash_notice = 'Nueva sucursal cargada correctamente.';
         }while(0);
@@ -128,16 +128,16 @@ endif;
 
 
 
-///////////////////////////////// AGREGAR CONTACTO |  POST 
+///////////////////////////////// AGREGAR CONTACTO |  POST
 if(isset($_POST['agregar_contacto'])):
-        $contacto = $_POST['contacto'];                       
+        $contacto = $_POST['contacto'];
         $first_time = $_POST['first_time'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes los datos del cliente.';
-                break;  
+                break;
             }
             $validations =
                 Validations::General(array(
@@ -145,7 +145,7 @@ if(isset($_POST['agregar_contacto'])):
                     ));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             $tabla_sec = Process::CreateSec('', 'contactos', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
@@ -156,36 +156,42 @@ if(isset($_POST['agregar_contacto'])):
             $update_tabla_sec_contactos = BDConsulta::consulta('update_tabla_sec_contactos', array($id_tabla_sec, $contacto), 'n');
             if(is_null($update_tabla_sec_contactos)) {
                 $flash_error = 'No pudo insertar el contacto.';
-                break;  
+                break;
             }
             $flash_notice = 'Nuevo contacto agregado correctamente.';
         }while(0);
         $tpl->asignar('first_time', $first_time);
 endif;
 
-///////////////////////////////// AGREGAR TEMAS |  POST 
+///////////////////////////////// AGREGAR TEMAS |  POST
 if(isset($_POST['agregar_tema'])):
         $tema = $_POST['tema'];
-        $tema_tocado = $_POST['tema_tocado'];
+        if(isset($_POST['tema_tocado'])) {
+            $tema_tocado = $_POST['tema_tocado'];
+        } else {
+            $tema_tocado = 'false';
+        }
+
+
         if($tema_tocado == 'true') {
             $tema_tocado = 1;
         }else{
             $tema_tocado = 0;
         }
-        echo 'tema: ' , $tema , ' tema_tocado' , $tema_tocado;
+        echo ' tema_tocado: ' , $tema_tocado;
         $first_time = $_POST['first_time'];
         $id_tabla_proc = $_POST['id_tabla_proc'];
         $id_tabla = $_POST['id_tabla'];
         do {
             if($first_time == 'true') { // TODAVIA no llenó la tabla principal
                 $flash_error = 'Debe ingresar antes los datos del cliente.';
-                break;  
+                break;
             }
             $validations = Validations::General(array(
                                                         array('field' => $tema, 'null' => false, 'notice_error' => 'Debe ingresar el tema.')));
             if($validations['error'] == true) {
                $flash_error = $validations['notice_error'];
-                break; 
+                break;
             }
             $tabla_sec = Process::CreateSec('', 'temas', $id_tabla_proc, 'n');
             if($tabla_sec['error'] == true) {
@@ -196,7 +202,7 @@ if(isset($_POST['agregar_tema'])):
             $update_tabla_sec_temas = BDConsulta::consulta('update_tabla_sec_temas', array($id_tabla_sec, $tema, $tema_tocado), 'n');
             if(is_null($update_tabla_sec_temas)) {
                 $flash_error = 'No pudo insertar el tema.';
-                break;  
+                break;
             }
             $flash_notice = 'Nuevo tema agregado correctamente.';
         }while(0);
@@ -222,8 +228,11 @@ $tpl->asignar('clientes', $clientes);
 
 
 // PARA EL SELECT de SUCURSALES -> en función del cliente que seleccionamos en la tabla principal.
-$get_sucursales = BDConsulta::consulta('get_sucursales', array($get_tabla[0]['id_ven_cliente']), 'n');
+if(isset($get_tabla[0]['id_ven_cliente'])) {
+    $get_sucursales = BDConsulta::consulta('get_sucursales', array($get_tabla[0]['id_ven_cliente']), 'n');
 $tpl->asignar('get_sucursales', $get_sucursales);
+}
+
 
 // TABLA SECUNDARIA (sucursales)
 $sucursales = BDConsulta::consulta('sucursales', array($id_tabla_proc), 'n');
@@ -240,6 +249,8 @@ $tpl->asignar('contactos', $contactos);
 // TABLA SECUNDARIA (temas)
 $temas = Process::getTablaSec('', 'temas', $id_tabla_proc, 'n');
 $tpl->asignar('temas', $temas);
+
+
 
 $tpl->asignar('flash_error', $flash_error);
 $tpl->asignar('flash_notice', $flash_notice);
